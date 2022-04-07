@@ -1,20 +1,25 @@
 ![BrightCoders Logo](img/logo-bc.png)
 
 # Nombre del proyecto
-Definan un nombre para su proyecto
-
+PET ME
 ## Problematica que atiende
-Describan la problemática que pretenden atender con su proyecto
-
+No cuidado de las mascotas , la creciente cantidad de mascotas sin hogar.
 ## Propuesta de solución
-Describan de manera general las características de tu propuesta así como la forma en que atiende o resuelve la problemática que definieron.
-
+Crear una comunidad en diversas ubicaciones para el registro y seguimiento de las adopciones de mascotas y lograr así crear una cultura y erradicar los malos tratos o violencia hacia los animales.
 ## Definición de requerimientos del MVP
 
 ### Requerimientos funcionales
+   REQUERIMIENTOS
+
+ - Visitas bimensuales trimesuales
+ - usuario que hace la visita
+ - estado de la mascota
+ - bien - mal - regular
+ - fotografías de evidencia
+ - observaciones y comentarios
+ - usuario que hace la visita sugiere rescatar y reubicar a la mascota
 
 ### Requerimientos no funcionales
-
 ## Diseño del MVP
 
 Incluyan en [esta carpeta](/design) su propuesta de diseño
