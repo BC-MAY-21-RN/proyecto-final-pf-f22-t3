@@ -26,7 +26,7 @@ const ButtonPet = props => {
 export default ButtonPet;
 
 const styles = StyleSheet.create({
-  general: {fontFamily: 'BebasNeue Bold', fontSize: 25},
+  general: {fontFamily: 'BebasNeue Bold', fontSize: 30},
   textA: {color: colors.Gray_400},
   textB: {color: colors.Gray_100},
   buttonA: {
