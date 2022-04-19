@@ -15,12 +15,12 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 30,
-    fontFamily: 'BebasNeue Bold',
+    fontFamily: 'BebasNeueBold',
     color: colors.Gray_100,
   },
   subTitle: {
     fontSize: 20,
-    fontFamily: 'ArchivoNarrow-VariableFont_wght',
+    fontFamily: 'ArchivoNarrow-Regular',
     color: colors.Gray_200,
   },
 });
