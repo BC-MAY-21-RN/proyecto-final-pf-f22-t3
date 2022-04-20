@@ -1,5 +1,7 @@
 import {Image} from 'react-native';
 import React from 'react';
+import Icon from 'react-native-vector-icons/FontAwesome';
+
 
 import ButtonPet from './src/components/ButtonPet';
 import BgPaws from './src/components/BgPaws';
@@ -22,6 +24,8 @@ const App = () => {
         typeButton="D"
         onPressFunction={() => console.log('my function')}
       />
+    <Icon name="rocket" size={30} color="#900" />
+
     </BgPaws>
   );
 };
