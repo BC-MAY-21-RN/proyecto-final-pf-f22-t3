@@ -1,25 +1,27 @@
-import {Pressable, StyleSheet, Text} from 'react-native';
+import {View, Pressable, StyleSheet, Text} from 'react-native';
 import React from 'react';
 import colors from '../utils/colors';
 
 const ButtonPet = props => {
-  const {text, typeButton, onPressFunction} = props;
+  const {text, typeButton, onPressFunction, style} = props;
   return (
-    <Pressable
-      style={
-        typeButton === 'A'
-          ? containerA
-          : typeButton === 'B'
-          ? containerB
-          : typeButton === 'C'
-          ? containerC
-          : containerD
-      }
-      onPress={onPressFunction}>
-      <Text style={typeButton === 'A' || typeButton === 'B' ? TextA : TextB}>
-        {text}
-      </Text>
-    </Pressable>
+    <View style={style}>
+      <Pressable
+        style={
+          typeButton === 'A'
+            ? containerA
+            : typeButton === 'B'
+            ? containerB
+            : typeButton === 'C'
+            ? containerC
+            : containerD
+        }
+        onPress={onPressFunction}>
+        <Text style={typeButton === 'A' || typeButton === 'B' ? TextA : TextB}>
+          {text}
+        </Text>
+      </Pressable>
+    </View>
   );
 };
 
