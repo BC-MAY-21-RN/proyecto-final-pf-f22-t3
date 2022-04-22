@@ -2,6 +2,7 @@ import {Text, StyleSheet} from 'react-native';
 import React from 'react';
 import ButtonPet from './ButtonPet';
 import Title from './Title';
+import colors from '../utils/colors';
 
 const LoginFooter = () => {
   return (
@@ -23,6 +24,7 @@ const styles = StyleSheet.create({
   forgetPass: {
     alignSelf: 'flex-end',
     marginTop: -30,
+    color: colors.Gray_200,
   },
   loginButton: {
     marginVertical: 18,

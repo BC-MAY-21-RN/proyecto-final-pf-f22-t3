@@ -3,7 +3,6 @@ import React, {useState} from 'react';
 import {useField} from 'formik';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import colors from '../utils/colors';
-import {Colors} from 'react-native/Libraries/NewAppScreen';
 
 const FieldForm = ({label, securePass, ...props}) => {
   const [field, meta, helpers] = useField(props);
@@ -33,6 +32,7 @@ const FieldForm = ({label, securePass, ...props}) => {
           value={field.value}
           onBlur={() => helpers.setTouched(!meta.touched)}
           placeholder={label}
+          placeholderTextColor={colors.Gray_200}
           onChangeText={helpers.setValue}
           style={styles.inputText}
         />
