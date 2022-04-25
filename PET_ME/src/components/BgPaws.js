@@ -1,15 +1,19 @@
-import {StyleSheet, View, ImageBackground} from 'react-native';
+import {StyleSheet, View, ImageBackground, ScrollView} from 'react-native';
 import React from 'react';
 
 const image = require('../assets/bgPaws.png');
 const BgPaws = props => {
-  const {children, opacity} = props;
+  const {children, opacity, scroll} = props;
   return (
     <ImageBackground
       source={image}
-      resizeMode="cover"
+      resizeMode={'cover'}
       style={styles.imgBackground}>
-      <View style={content(opacity)}>{children}</View>
+      {scroll ? (
+        <ScrollView style={contentScroll(opacity)}>{children}</ScrollView>
+      ) : (
+        <View style={content(opacity)}>{children}</View>
+      )}
     </ImageBackground>
   );
 };
@@ -29,7 +33,20 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
     };
   },
+  contentScroll: opacity => {
+    return {
+      backgroundColor: `rgba(37,51,52, ${opacity})`,
+      paddingHorizontal: 20,
+    };
+  },
 });
 
 const content = opacity =>
-  StyleSheet.compose(styles.imgBackground, styles.content(opacity));
+  StyleSheet.compose(
+    styles.content(opacity),
+    styles.imgBackground,
+    styles.staticContent,
+  );
+
+const contentScroll = opacity =>
+  StyleSheet.compose(styles.imgBackground, styles.contentScroll(opacity));

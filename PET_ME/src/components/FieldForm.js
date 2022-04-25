@@ -35,6 +35,7 @@ const FieldForm = ({label, securePass, ...props}) => {
           placeholderTextColor={colors.Gray_200}
           onChangeText={helpers.setValue}
           style={styles.inputText}
+          keyboardType={props.keyboard}
         />
         {label == 'Contraseña*' && (
           <>

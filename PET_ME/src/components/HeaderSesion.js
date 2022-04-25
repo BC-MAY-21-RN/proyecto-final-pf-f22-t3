@@ -1,15 +1,15 @@
 import {Image} from 'react-native';
 import React from 'react';
-import Title from '../components/Title';
+import Title from './Title';
 
-const HeaderLogin = props => {
+const HeaderSesion = props => {
   return (
     <>
       <Image
         source={require('../assets/logos/Brand.png')}
         style={props.style}
       />
-      <Title text={'INICIAR SESIÓN'} textType={'title'} />
+      <Title text={props.title} textType={'title'} />
       <Title
         text={'Ingresa para encontrar tu a mejor amigo'}
         textType={'subTitle'}
@@ -18,4 +18,4 @@ const HeaderLogin = props => {
   );
 };
 
-export default HeaderLogin;
+export default HeaderSesion;
