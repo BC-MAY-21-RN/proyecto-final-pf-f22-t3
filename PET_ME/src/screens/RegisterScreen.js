@@ -1,4 +1,4 @@
-import {View, StyleSheet, ScrollView} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import React from 'react';
 
 import BgPaws from '../components/BgPaws';
@@ -44,8 +44,8 @@ export default RegisterScreen;
 const styles = StyleSheet.create({
   img: {
     alignSelf: 'center',
-    marginBottom: 0,
-    marginTop: 5,
+    marginBottom: 40,
+    marginTop: 20,
   },
   form: {marginTop: 40},
 });

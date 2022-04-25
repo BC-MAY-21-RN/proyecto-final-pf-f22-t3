@@ -7,7 +7,7 @@ const RegisterSchema = Yup.object().shape({
     .required('*Requerido'),
   email: Yup.string().email('*Correo inválido').required('*Requerido'),
   phone: Yup.string()
-    .required('*Aún no ha ingresado un número de télefono')
+    .required('*Requerido')
     .max(10, '*Ingrese un número de teléfono válido')
     .matches(/^[0-9]$/, 'Por favor ingresa solo números'),
   password: Yup.string()

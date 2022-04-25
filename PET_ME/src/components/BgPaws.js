@@ -7,7 +7,7 @@ const BgPaws = props => {
   return (
     <ImageBackground
       source={image}
-      resizeMode="cover"
+      resizeMode={'cover'}
       style={styles.imgBackground}>
       {scroll ? (
         <ScrollView style={contentScroll(opacity)}>{children}</ScrollView>
@@ -30,20 +30,23 @@ const styles = StyleSheet.create({
     return {
       backgroundColor: `rgba(37,51,52, ${opacity})`,
       paddingHorizontal: 20,
+      justifyContent: 'center',
     };
   },
-  staticContent: {
-    justifyContent: 'center',
-    backgroundColor: 'red',
+  contentScroll: opacity => {
+    return {
+      backgroundColor: `rgba(37,51,52, ${opacity})`,
+      paddingHorizontal: 20,
+    };
   },
 });
 
 const content = opacity =>
   StyleSheet.compose(
-    styles.imgBackground,
     styles.content(opacity),
+    styles.imgBackground,
     styles.staticContent,
   );
 
 const contentScroll = opacity =>
-  StyleSheet.compose(styles.imgBackground, styles.content(opacity));
+  StyleSheet.compose(styles.imgBackground, styles.contentScroll(opacity));
