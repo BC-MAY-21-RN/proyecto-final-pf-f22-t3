@@ -1,30 +1,37 @@
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, ScrollView} from 'react-native';
 import React from 'react';
-import {Formik} from 'formik';
-import LoginSchema from '../utils/LoginSchema';
+
 import BgPaws from '../components/BgPaws';
-import FieldForm from '../components/FieldForm';
 import HeaderSesion from '../components/HeaderSesion';
-import LoginFooter from '../components/FooterSesion';
+import {Formik} from 'formik';
+import FieldForm from '../components/FieldForm';
+import FooterSesion from '../components/FooterSesion';
+import RegisterSchema from '../utils/RegisterSchema';
 
 const RegisterScreen = () => {
   return (
-    <BgPaws opacity={0.78}>
-      <HeaderSesion style={styles.img} title="INICIAR SESIÓN" />
+    <BgPaws opacity={0.78} scroll={true}>
+      <HeaderSesion style={styles.img} title="REGISTRO" />
       <Formik
         initialValues={{email: '', password: ''}}
         validateOnMount={true}
-        validationSchema={LoginSchema}
+        validationSchema={RegisterSchema}
         onSubmit={() => console.log('Iniciar sesión')}>
         {({handleSubmit, isValid}) => (
           <View style={styles.form}>
+            <FieldForm label={'Nombre'} name={'name'} />
+            <FieldForm
+              label={'Número de teléfono'}
+              name={'phone'}
+              keyboard={'numeric'}
+            />
             <FieldForm label={'Correo electrónico'} name={'email'} />
             <FieldForm
               label={'Contraseña*'}
               name={'password'}
               securePass={true}
             />
-            <LoginFooter title="INGRESAR" />
+            <FooterSesion title={'REGISTRAR'} />
           </View>
         )}
       </Formik>
@@ -37,7 +44,8 @@ export default RegisterScreen;
 const styles = StyleSheet.create({
   img: {
     alignSelf: 'center',
-    marginBottom: 40,
+    marginBottom: 0,
+    marginTop: 5,
   },
   form: {marginTop: 40},
 });

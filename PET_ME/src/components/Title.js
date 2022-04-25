@@ -1,10 +1,21 @@
-import {StyleSheet, Text} from 'react-native';
+import {StyleSheet, Text, Pressable} from 'react-native';
 import React from 'react';
 import colors from '../utils/colors';
 
 const Title = props => {
-  const {text, textType} = props;
-  return <Text style={textType === 'subTitle' ? subTitle : title}>{text}</Text>;
+  const {text, textType, option} = props;
+  return (
+    <Text style={textType === 'subTitle' ? subTitle : title}>
+      {text}
+      {props.option ? (
+        <Pressable onPress={() => console.log(`ir a ${props.option}`)}>
+          <Text style={styles.option}>{option}</Text>
+        </Pressable>
+      ) : (
+        ' '
+      )}
+    </Text>
+  );
 };
 
 export default Title;
@@ -23,6 +34,14 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontFamily: 'ArchivoNarrow-Regular',
     color: colors.Gray_200,
+  },
+  option: {
+    fontSize: 19,
+    fontFamily: 'ArchivoNarrow-Regular',
+    color: colors.Gray_100,
+    marginLeft: 5,
+    fontWeight: 'bold',
+    top: 5,
   },
 });
 
