@@ -48,7 +48,7 @@ export default function NavigationTab() {
             />
           ),
         }}
-      />
+      />      
       <Tab.Screen
         name="AddPet"
         component={AddPetScreen}
