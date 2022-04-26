@@ -1,31 +1,41 @@
-import {View, Text, StyleSheet, Image, FlatList} from 'react-native';
+import {View, StyleSheet, Image, ScrollView, TextInput} from 'react-native';
+
 import React from 'react';
 
-import VectorImage from 'react-native-vector-image';
 import BgPaws from '../components/BgPaws';
 import Title from '../components/Title';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import CardPet from '../components/CardPet';
+import ListPets from '../components/pets/ListPets';
 
+import ListIcons from '../components/pets/ListIcons';
+import colors from '../utils/colors';
 
 export default function HomeScreen() {
   return (
     <BgPaws opacity={0.7}>
-      <View style={styles.container}>
-        <Image
-          source={require('../assets/logos/Brand.png')}
-          style={styles.logo}
-        />
-        <Icon name="bell" size={30} color="#fff" />
-      </View>
-      <Title text="Ultimos Agregados" />
-      <View style={styles.containerList}>
-        <FlatList
-          data={pets}
-          keyExtractor={pets => pets.id}
-          renderItem={({item}) => <CardPet pet={item} />}
-        />
-      </View>
+      <ScrollView horizontal={false}>
+        <View style={styles.container}>
+          <Image
+            source={require('../assets/logos/Brand.png')}
+            style={styles.logo}
+          />
+          <Icon name="bell" size={30} color="#fff" />
+        </View>
+        <View style={styles.searchInput}>
+          <TextInput placeholder='Buscar'></TextInput>
+        </View>
+        <View>
+          <ListIcons />
+        </View>
+        <Title text="Ultimos Agregados" />
+        <View style={styles.containerList}>
+          <ListPets pets={pets} />
+        </View>
+        <Title text="Favoritos" />
+        <View style={styles.containerList}>
+          <ListPets pets={pets} />
+        </View>
+      </ScrollView>
     </BgPaws>
   );
 }
@@ -37,6 +47,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginBottom: 20,
   },
+  containerList: {
+    width: '100%',
+    height: 300,
+  },
   title: {
     color: '#fff',
     fontSize: 30,
@@ -45,6 +59,12 @@ const styles = StyleSheet.create({
     width: 150,
     height: 80,
   },
+  searchInput: {
+    backgroundColor: colors.Gray_100,
+    borderRadius: 8,
+    height: 40,
+    marginBottom: 10,
+  }
 });
 
 const pets = [

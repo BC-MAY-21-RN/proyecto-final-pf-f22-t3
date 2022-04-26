@@ -43,7 +43,7 @@ export default function NavigationTab() {
             <Icon name="users" size={25} color={color} style={{marginRight: -4}}/>
           ),
         }}
-      />
+      />      
       <Tab.Screen
         name="AddPet"
         component={AddPetScreen}
@@ -91,5 +91,5 @@ const styles = StyleSheet.create({
     width: 35,
     height: 35,
     marginTop: -8,
-  }
+  },
 });
