@@ -1,6 +1,14 @@
-import {View, StyleSheet, Image, ScrollView, TextInput} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  Image,
+  ScrollView,
+  TextInput,
+  Text,
+  Pressable,
+} from 'react-native';
 
-import React from 'react';
+import React, {useState} from 'react';
 
 import BgPaws from '../components/BgPaws';
 import Title from '../components/Title';
@@ -9,6 +17,9 @@ import ListPets from '../components/pets/ListPets';
 
 import ListIcons from '../components/pets/ListIcons';
 import colors from '../utils/colors';
+
+import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
+import {faArrowDownAZ, faArrowUpAZ} from '@fortawesome/free-solid-svg-icons';
 
 export default function HomeScreen() {
   return (
@@ -22,11 +33,9 @@ export default function HomeScreen() {
           <Icon name="bell" size={30} color="#fff" />
         </View>
         <View style={styles.searchInput}>
-          <TextInput placeholder='Buscar'></TextInput>
+          <TextInput placeholder="Buscar" />
         </View>
-        <View>
-          <ListIcons />
-        </View>
+        <ListFilters />
         <Title text="Ultimos Agregados" />
         <View style={styles.containerList}>
           <ListPets pets={pets} />
@@ -39,6 +48,25 @@ export default function HomeScreen() {
     </BgPaws>
   );
 }
+
+function ListFilters() {
+  const [isFilter, setIsFilter] = useState(false);
+  return (
+    <View>
+      <Pressable
+        style={styles.containerFilters}
+        onPress={() => setIsFilter(!isFilter)}>
+        <Text style={styles.textFilter}>Filtros</Text>
+        <FontAwesomeIcon
+          icon={isFilter ? faArrowUpAZ : faArrowDownAZ}
+          size={30}
+          color={colors.Gray_200}
+        />
+      </Pressable>
+      {isFilter ? <ListIcons /> : <View style={{marginBottom: 10}}></View>}
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -64,7 +92,16 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     height: 40,
     marginBottom: 10,
-  }
+  },
+  containerFilters: {
+    flexDirection: 'row',
+    marginTop: 5,
+  },
+  textFilter: {
+    color: colors.Gray_200,
+    fontSize: 20,
+    marginRight: 10,
+  },
 });
 
 const pets = [
