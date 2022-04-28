@@ -1,8 +1,8 @@
 import React from 'react';
 import StartScreen from './src/screens/StartScreen';
-
+import DetailsPet from './src/screens/DetailsPet';
 const App = () => {
-  return <StartScreen />;
+  return <DetailsPet />;
 };
 
 export default App;
