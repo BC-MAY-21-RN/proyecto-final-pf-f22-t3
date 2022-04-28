@@ -3,8 +3,9 @@ import React, {useState} from 'react';
 import {useField} from 'formik';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import colors from '../utils/colors';
+import Title from './Title';
 
-const FieldForm = ({label, securePass, ...props}) => {
+const FieldForm = ({label, title, securePass, styleField, ...props}) => {
   const [field, meta, helpers] = useField(props);
   const [showPass, setShowPass] = useState(securePass);
   const [rightIcon, setRightIcon] = useState('eye');
@@ -25,16 +26,21 @@ const FieldForm = ({label, securePass, ...props}) => {
           <Text style={{color: colors.Orange}}>{meta.error}</Text>
         )}
       </View>
-      <View style={styles.Field}>
+      {styleField === 'addPet' && (
+        <Title text={title} textType={'TitleProfile'} />
+      )}
+      <View style={styleField === 'addPet' ? fieldAddPet : fieldDefault}>
         <TextInput
           {...props}
           secureTextEntry={showPass}
           value={field.value}
           onBlur={() => helpers.setTouched(!meta.touched)}
           placeholder={label}
-          placeholderTextColor={colors.Gray_200}
+          placeholderTextColor={
+            styleField === 'addPet' ? colors.Gray_300 : colors.Gray_200
+          }
           onChangeText={helpers.setValue}
-          style={styles.inputText}
+          style={styleField === 'addPet' ? inputTextAddPet : inputTextDefaul}
           keyboardType={props.keyboard}
         />
         {label == 'Contraseña*' && (
@@ -62,14 +68,35 @@ const FieldForm = ({label, securePass, ...props}) => {
 export default FieldForm;
 
 const styles = StyleSheet.create({
-  Field: {
+  field: {
     borderBottomColor: colors.Gray_400,
     borderBottomWidth: 1,
     marginBottom: 40,
   },
+  fieldAddPet: {
+    backgroundColor: colors.Gray_100,
+    borderRadius: 32,
+  },
   inputText: {
     fontFamily: 'ArchivoNarrow-Regular',
     fontSize: 18,
+  },
+  inputTextAddPet: {
+    color: colors.Gray_400,
+    paddingLeft: 25,
+  },
+  inputTextDefaul: {
     color: colors.Gray_200,
   },
 });
+
+const inputTextAddPet = StyleSheet.compose(
+  styles.inputText,
+  styles.inputTextAddPet,
+);
+const inputTextDefaul = StyleSheet.compose(
+  styles.inputText,
+  styles.inputTextDefaul,
+);
+const fieldDefault = StyleSheet.compose(styles.field);
+const fieldAddPet = StyleSheet.compose(styles.fieldAddPet);
