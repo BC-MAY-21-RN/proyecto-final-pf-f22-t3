@@ -19,6 +19,7 @@ export default function NavigationTab() {
     <Tab.Navigator
       initialRouteName="Login"
       inactiveColor={colors.Gray_400}
+      activeColor={colors.Gray_500}
       barStyle={{backgroundColor: colors.Gray_200}}>
       <Tab.Screen
         name="Inicio"
