@@ -1,8 +1,11 @@
 import React from 'react';
-import AddPetScreen from './src/screens/AddPetScreen';
+import AddPetScreenOne from './src/screens/AddPetScreenOne';
+import AddPetScreenTwo from './src/screens/AddPetScreenTwo';
+import LoginScreen from './src/screens/LoginScreen';
+import RegisterScreen from './src/screens/RegisterScreen';
 
 const App = () => {
-  return <AddPetScreen />;
+  return <AddPetScreenTwo />;
 };
 
 export default App;
