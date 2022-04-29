@@ -43,10 +43,10 @@ const FieldForm = ({label, title, securePass, styleField, ...props}) => {
           style={styleField === 'addPet' ? inputTextAddPet : inputTextDefaul}
           keyboardType={props.keyboard}
         />
-        {label == 'Contraseña*' && (
+        {label === 'Contraseña*' && (
           <>
-            {props.screen == 'signup' && (
-              <Text style={{fontSize: 14}}>
+            {props.screen === 'signup' && (
+              <Text style={styles.passInfo}>
                 Use 8 or more characters with a mix letters, numbers and
                 symbols.
               </Text>
@@ -55,7 +55,7 @@ const FieldForm = ({label, title, securePass, styleField, ...props}) => {
               onPress={() => {
                 handleShowPass();
               }}
-              style={{position: 'absolute', right: 10, top: 10}}>
+              style={styles.iconShowPass}>
               <Icon name={rightIcon} size={20} color={colors.Gray_200} />
             </Pressable>
           </>
@@ -83,10 +83,18 @@ const styles = StyleSheet.create({
   },
   inputTextAddPet: {
     color: colors.Gray_400,
-    paddingLeft: 25,
+    paddingHorizontal: 25,
   },
   inputTextDefaul: {
     color: colors.Gray_200,
+  },
+  passInfo: {
+    fontSize: 14,
+  },
+  iconShowPass: {
+    position: 'absolute',
+    right: 10,
+    top: 10,
   },
 });
 
