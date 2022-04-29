@@ -9,6 +9,7 @@ import AddPetSchema from '../utils/AddPetSchema';
 import FieldForm from '../components/FieldForm';
 import Checkbox from '../components/Checkbox';
 import TextAreaInput from '../components/TextAreaInput';
+import PickerPet from '../components/PickerPet';
 
 const AddPetScreenTwo = () => {
   return (
@@ -25,11 +26,15 @@ const AddPetScreenTwo = () => {
           onSubmit={() => console.log('Se añadio la mascota')}>
           {({handleSubmit, isValid}) => (
             <View style={styles.form}>
-              <FieldForm
-                title={'Tamaño'}
-                label={'Tamaño de la raza'}
-                name={'petsize'}
-                styleField={'addPet'}
+              <PickerPet
+                label={'Tamaño'}
+                style={styles.marginTop10}
+                prompt={'Elige uno'}
+                items={[
+                  {label: 'Pequeño', value: 'small'},
+                  {label: 'Mediano', value: 'medium'},
+                  {label: 'Grande', value: 'big'},
+                ]}
               />
               <View style={styles.fieldDouble}>
                 <FieldForm
@@ -38,11 +43,14 @@ const AddPetScreenTwo = () => {
                   name={'petage'}
                   styleField={'addPet'}
                 />
-                <FieldForm
-                  title={'Sexo'}
-                  label={'Selecciona'}
-                  name={'petgender'}
-                  styleField={'addPet'}
+                <PickerPet
+                  label={'Sexo'}
+                  style={{width: '45%'}}
+                  prompt={'Elige uno'}
+                  items={[
+                    {label: 'Hembra', value: 'female'},
+                    {label: 'Macho', value: 'male'},
+                  ]}
                 />
               </View>
               <View style={styles.marginTop10}>

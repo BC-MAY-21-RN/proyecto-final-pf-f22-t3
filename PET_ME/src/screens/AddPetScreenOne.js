@@ -1,4 +1,4 @@
-import {StyleSheet, Text, TextInput, View} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import BgPaws from '../components/BgPaws';
 import ButtonPet from '../components/ButtonPet';
@@ -8,6 +8,7 @@ import colors from '../utils/colors';
 import {Formik} from 'formik';
 import AddPetSchema from '../utils/AddPetSchema';
 import FieldForm from '../components/FieldForm';
+import PickerPet from '../components/PickerPet';
 
 const AddPetScreenOne = () => {
   return (
@@ -41,17 +42,22 @@ const AddPetScreenOne = () => {
                 name={'location'}
                 styleField={'addPet'}
               />
-              <FieldForm
-                title={'Tipo de mascota'}
-                label={'Selecciona tipo'}
-                name={'pettype'}
-                styleField={'addPet'}
+              <PickerPet
+                label={'Tipo de mascota'}
+                style={styles.marginTop10}
+                prompt={'Selecciona tipo'}
+                items={[
+                  {label: 'Perro', value: 'dog'},
+                  {label: 'Gato', value: 'cat'},
+                ]}
               />
-              <FieldForm
-                title={'Raza'}
-                label={'Selecciona raza'}
-                name={'petbreed'}
-                styleField={'addPet'}
+              <PickerPet
+                label={'Raza'}
+                prompt={'Selecciona raza'}
+                items={[
+                  {label: 'Labrador', value: 'labrador'},
+                  {label: 'Shiba Inu', value: 'shiba-inu'},
+                ]}
               />
               <ButtonPet
                 text={'Siguiente'}

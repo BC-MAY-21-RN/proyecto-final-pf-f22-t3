@@ -84,6 +84,7 @@ const styles = StyleSheet.create({
   inputTextAddPet: {
     color: colors.Gray_400,
     paddingHorizontal: 25,
+    paddingVertical: 13,
   },
   inputTextDefaul: {
     color: colors.Gray_200,
