@@ -1,12 +1,13 @@
 import {View, Pressable, StyleSheet, Text} from 'react-native';
 import React from 'react';
 import colors from '../utils/colors';
+import RNBounceable from '@freakycoder/react-native-bounceable';
 
 const ButtonPet = props => {
   const {text, typeButton, onPressFunction, style} = props;
   return (
     <View style={style}>
-      <Pressable
+      <RNBounceable
         style={
           typeButton === 'A'
             ? containerA
@@ -29,7 +30,7 @@ const ButtonPet = props => {
           }>
           {text}
         </Text>
-      </Pressable>
+      </RNBounceable>
     </View>
   );
 };
