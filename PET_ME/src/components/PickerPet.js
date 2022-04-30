@@ -3,6 +3,7 @@ import React, {useState} from 'react';
 import {Picker} from '@react-native-picker/picker';
 import colors from '../utils/colors';
 import Title from './Title';
+import RNBounceable from '@freakycoder/react-native-bounceable';
 
 const PickerPet = props => {
   const {style, items, label} = props;
@@ -11,19 +12,18 @@ const PickerPet = props => {
   return (
     <View style={style}>
       <Title text={label} textType={'TitleProfile'} />
-      <View style={styles.fieldAddPet}>
+      <RNBounceable style={styles.fieldAddPet}>
         <Picker
           {...props}
           style={styles.inputText}
           selectedValue={selectedItem}
           dropdownIconColor={colors.Gray_400}
-          numberOfLines={1}
           onValueChange={(itemValue, itemIndex) => setSelectedItem(itemValue)}>
-          {items.map(item => (
-            <Picker.Item label={item.label} value={item.value} />
+          {items.map((item, index) => (
+            <Picker.Item label={item.label} value={item.value} key={index} />
           ))}
         </Picker>
-      </View>
+      </RNBounceable>
     </View>
   );
 };
