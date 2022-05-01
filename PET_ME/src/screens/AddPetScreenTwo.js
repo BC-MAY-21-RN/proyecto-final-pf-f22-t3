@@ -9,7 +9,7 @@ import AddPetSchema from '../utils/AddPetSchema';
 import FieldForm from '../components/FieldForm';
 import Checkbox from '../components/Checkbox';
 import TextAreaInput from '../components/TextAreaInput';
-import PickerPet from '../components/PickerPet';
+import InputPickerPet from '../components/InputPickerPet';
 
 const AddPetScreenTwo = () => {
   return (
@@ -26,7 +26,7 @@ const AddPetScreenTwo = () => {
           onSubmit={() => console.log('Se añadio la mascota')}>
           {({handleSubmit, isValid}) => (
             <View style={styles.form}>
-              <PickerPet
+              <InputPickerPet
                 label={'Tamaño'}
                 style={styles.marginTop10}
                 prompt={'Elige uno'}
@@ -43,7 +43,7 @@ const AddPetScreenTwo = () => {
                   name={'petage'}
                   styleField={'addPet'}
                 />
-                <PickerPet
+                <InputPickerPet
                   label={'Sexo'}
                   style={{width: '45%'}}
                   prompt={'Elige uno'}

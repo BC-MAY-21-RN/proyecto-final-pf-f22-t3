@@ -13,9 +13,8 @@ import Title from '../components/Title';
 import {Formik} from 'formik';
 import AddPetSchema from '../utils/AddPetSchema';
 import FieldForm from '../components/FieldForm';
-import PickerPet from '../components/PickerPet';
+import InputPickerPet from '../components/InputPickerPet';
 import PickerImage from '../components/PickerImage';
-import MultipleImagePicker from '@baronha/react-native-multiple-image-picker';
 
 const AddPetScreenOne = () => {
   return (
@@ -28,10 +27,10 @@ const AddPetScreenOne = () => {
 
       <View>
         <Formik
-          initialValues={{email: '', password: ''}}
+          initialValues={{petname: '', location: '', pettype: '', petbreed: ''}}
           validateOnMount={true}
           validationSchema={AddPetSchema}
-          onSubmit={() => console.log('Se añadio la mascota')}>
+          onSubmit={values => console.log('Form values: ', values)}>
           {({handleSubmit, isValid}) => (
             <View style={styles.form}>
               <FieldForm
@@ -46,8 +45,10 @@ const AddPetScreenOne = () => {
                 name={'location'}
                 styleField={'addPet'}
               />
-              <PickerPet
+              <InputPickerPet
                 label={'Tipo de mascota'}
+                defaultSelect={'Elige un tipo de mascota'}
+                name={'pettype'}
                 style={styles.marginTop10}
                 prompt={'Selecciona tipo'}
                 items={[
@@ -55,8 +56,11 @@ const AddPetScreenOne = () => {
                   {label: 'Gato', value: 'cat'},
                 ]}
               />
-              <PickerPet
+              <InputPickerPet
                 label={'Raza'}
+                defaultSelect={'Elige un tipo de mascota'}
+                name={'petbreed'}
+                style={styles.marginTop10}
                 prompt={'Selecciona raza'}
                 items={[
                   {label: 'Labrador', value: 'labrador'},
@@ -67,6 +71,8 @@ const AddPetScreenOne = () => {
                 text={'Siguiente'}
                 typeButton={'B'}
                 style={styles.nextButtom}
+                onPressFunction={handleSubmit}
+                disabled={!isValid}
               />
             </View>
           )}
@@ -75,8 +81,6 @@ const AddPetScreenOne = () => {
     </BgPaws>
   );
 };
-const {width} = Dimensions.get('window');
-const IMAGE_WIDTH = (width - 24) / 3;
 export default AddPetScreenOne;
 
 const styles = StyleSheet.create({

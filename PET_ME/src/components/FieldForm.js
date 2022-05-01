@@ -4,6 +4,8 @@ import {useField} from 'formik';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import colors from '../utils/colors';
 import Title from './Title';
+import FieldErrors from './FieldErrors';
+import FormFieldLabel from './FormFieldLabel';
 
 const FieldForm = ({label, title, securePass, styleField, ...props}) => {
   const [field, meta, helpers] = useField(props);
@@ -21,14 +23,7 @@ const FieldForm = ({label, title, securePass, styleField, ...props}) => {
   };
   return (
     <View>
-      <View>
-        {meta.error && meta.touched && (
-          <Text style={{color: colors.Orange}}>{meta.error}</Text>
-        )}
-      </View>
-      {styleField === 'addPet' && (
-        <Title text={title} textType={'TitleProfile'} />
-      )}
+      <FormFieldLabel label={title} meta={meta} styleField={styleField} />
       <View style={styleField === 'addPet' ? fieldAddPet : fieldDefault}>
         <TextInput
           {...props}
@@ -72,6 +67,11 @@ const styles = StyleSheet.create({
     borderBottomColor: colors.Gray_400,
     borderBottomWidth: 1,
     marginBottom: 40,
+  },
+  label: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
   },
   fieldAddPet: {
     backgroundColor: colors.Gray_100,

@@ -4,29 +4,34 @@ import colors from '../utils/colors';
 import RNBounceable from '@freakycoder/react-native-bounceable';
 
 const ButtonPet = props => {
-  const {text, typeButton, onPressFunction, style} = props;
+  const {text, typeButton, onPressFunction, style, disabled = false} = props;
   return (
     <View style={style}>
       <RNBounceable
+        disabled={disabled}
         style={
-          typeButton === 'A'
-            ? containerA
-            : typeButton === 'B'
-            ? containerB
-            : typeButton === 'C'
-            ? containerC
-            : typeButton === 'D'
-            ? containerD
-            : containerE
+          !disabled
+            ? typeButton === 'A'
+              ? containerA
+              : typeButton === 'B'
+              ? containerB
+              : typeButton === 'C'
+              ? containerC
+              : typeButton === 'D'
+              ? containerD
+              : containerE
+            : disableButton
         }
         onPress={onPressFunction}>
         <Text
           style={
-            typeButton === 'A' || typeButton === 'B'
-              ? TextA
-              : typeButton === 'E'
-              ? TextC
-              : TextB
+            !disabled
+              ? typeButton === 'A' || typeButton === 'B'
+                ? TextA
+                : typeButton === 'E'
+                ? TextC
+                : TextB
+              : DisableText
           }>
           {text}
         </Text>
@@ -74,13 +79,23 @@ const styles = StyleSheet.create({
     borderColor: colors.Orange,
     borderWidth: 2,
   },
+  disableButton: {
+    backgroundColor: '#ABABAB',
+  },
+  disabletext: {
+    color: '#FFFF',
+  },
 });
-
 const containerA = StyleSheet.compose(styles.buttonA, styles.buttonContainer);
 const containerB = StyleSheet.compose(styles.buttonB, styles.buttonContainer);
 const containerC = StyleSheet.compose(styles.buttonC, styles.buttonContainer);
 const containerD = StyleSheet.compose(styles.buttonD, styles.buttonContainer);
 const containerE = StyleSheet.compose(styles.buttonE, styles.buttonContainerE);
+const disableButton = StyleSheet.compose(
+  styles.disableButton,
+  styles.buttonContainer,
+);
+const DisableText = StyleSheet.compose(styles.general, styles.disabletext);
 const TextA = StyleSheet.compose(styles.general, styles.textA);
 const TextB = StyleSheet.compose(styles.general, styles.textB);
 const TextC = StyleSheet.compose(styles.textC);

@@ -15,10 +15,7 @@ const PickerImage = ({maxSelectedAssets = 3}) => {
         selectedAssets: images,
         maxSelectedAssets: maxSelectedAssets,
         isExportThumbnail: true,
-        maxVideo: 1,
-        usedCameraButton: true,
-        isCrop: true,
-        isCropCircle: true,
+        usedCameraButton: false,
         doneTitle: 'Terminar',
         selectedColor: 'red',
       });

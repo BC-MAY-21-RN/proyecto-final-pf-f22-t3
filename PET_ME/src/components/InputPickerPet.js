@@ -1,26 +1,39 @@
 import {StyleSheet, View} from 'react-native';
-import React, {useState} from 'react';
+import React from 'react';
 import {Picker} from '@react-native-picker/picker';
 import colors from '../utils/colors';
-import Title from './Title';
 import RNBounceable from '@freakycoder/react-native-bounceable';
+import {useField} from 'formik';
+import FormFieldLabel from './FormFieldLabel';
 
-const PickerPet = props => {
-  const {style, items, label} = props;
-  const [selectedItem, setSelectedItem] = useState();
-
+const InputPickerPet = ({
+  style,
+  items,
+  label,
+  defaultSelect = 'Selecciona uno',
+  ...props
+}) => {
+  const [field, meta, helpers] = useField(props);
+  items = [{label: defaultSelect, value: null}, ...items];
   return (
     <View style={style}>
-      <Title text={label} textType={'TitleProfile'} />
+      <FormFieldLabel label={label} meta={meta} styleField={'addPet'} />
       <RNBounceable style={styles.fieldAddPet}>
         <Picker
           {...props}
           style={styles.inputText}
-          selectedValue={selectedItem}
+          selectedValue={field.value}
           dropdownIconColor={colors.Gray_400}
-          onValueChange={(itemValue, itemIndex) => setSelectedItem(itemValue)}>
+          onValueChange={(itemValue, itemIndex) => {
+            helpers.setValue(itemValue);
+          }}>
           {items.map((item, index) => (
-            <Picker.Item label={item.label} value={item.value} key={index} />
+            <Picker.Item
+              enabled={index !== 0}
+              label={item.label}
+              value={item.value}
+              key={index}
+            />
           ))}
         </Picker>
       </RNBounceable>
@@ -28,7 +41,7 @@ const PickerPet = props => {
   );
 };
 
-export default PickerPet;
+export default InputPickerPet;
 
 const styles = StyleSheet.create({
   inputText: {
