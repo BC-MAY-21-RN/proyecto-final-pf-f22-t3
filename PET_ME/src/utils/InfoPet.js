@@ -22,7 +22,7 @@ export default {
   healState: [
     {
       title: 'Esterilizado',
-      state: false,
+      state: true,
     },
     {
       title: 'Vacunado',
