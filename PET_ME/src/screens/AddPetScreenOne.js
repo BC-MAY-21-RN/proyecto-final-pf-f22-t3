@@ -1,12 +1,5 @@
-import {
-  StyleSheet,
-  Dimensions,
-  Pressable,
-  Text,
-  Image,
-  View,
-} from 'react-native';
-import React, {useState} from 'react';
+import {StyleSheet, View} from 'react-native';
+import React from 'react';
 import BgPaws from '../components/BgPaws';
 import ButtonPet from '../components/ButtonPet';
 import Title from '../components/Title';
@@ -16,23 +9,29 @@ import FieldForm from '../components/FieldForm';
 import InputPickerPet from '../components/InputPickerPet';
 import PickerImage from '../components/PickerImage';
 
+const initialValues = {
+  petname: '',
+  location: '',
+  pettype: '',
+  petbreed: '',
+  petimages: [],
+};
 const AddPetScreenOne = () => {
   return (
     <BgPaws opacity={0.54}>
       <View style={styles.headerContainer}>
         <ButtonPet text={'Cancelar'} typeButton={'E'} />
-        <Title style={{marginBottom: 0}} text={'1/2'} textType={'title'} />
+        <Title style={styles.pagination} text={'1/2'} textType={'title'} />
       </View>
-      <PickerImage maxSelectedAssets={3} />
-
       <View>
         <Formik
-          initialValues={{petname: '', location: '', pettype: '', petbreed: ''}}
+          initialValues={initialValues}
           validateOnMount={true}
           validationSchema={AddPetSchema}
           onSubmit={values => console.log('Form values: ', values)}>
           {({handleSubmit, isValid}) => (
-            <View style={styles.form}>
+            <View>
+              <PickerImage maxSelectedAssets={3} name={'petimages'} />
               <FieldForm
                 title={'Nombre'}
                 label={'Ingresa el nombre de tu mascota'}
@@ -84,13 +83,14 @@ const AddPetScreenOne = () => {
 export default AddPetScreenOne;
 
 const styles = StyleSheet.create({
-  nextButtom: {
-    marginTop: 27,
-  },
   headerContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
     marginBottom: 15,
   },
+  nextButtom: {
+    marginTop: 27,
+  },
+  pagination: {marginBottom: 0},
 });

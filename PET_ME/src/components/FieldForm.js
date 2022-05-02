@@ -3,11 +3,9 @@ import React, {useState} from 'react';
 import {useField} from 'formik';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import colors from '../utils/colors';
-import Title from './Title';
-import FieldErrors from './FieldErrors';
 import FormFieldLabel from './FormFieldLabel';
 
-const FieldForm = ({label, title, securePass, styleField, ...props}) => {
+const FieldForm = ({label, title, securePass, styleField, style, ...props}) => {
   const [field, meta, helpers] = useField(props);
   const [showPass, setShowPass] = useState(securePass);
   const [rightIcon, setRightIcon] = useState('eye');
@@ -22,7 +20,7 @@ const FieldForm = ({label, title, securePass, styleField, ...props}) => {
     }
   };
   return (
-    <View>
+    <View style={style}>
       <FormFieldLabel label={title} meta={meta} styleField={styleField} />
       <View style={styleField === 'addPet' ? fieldAddPet : fieldDefault}>
         <TextInput
@@ -68,14 +66,14 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     marginBottom: 40,
   },
-  label: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
   fieldAddPet: {
     backgroundColor: colors.Gray_100,
     borderRadius: 32,
+  },
+  iconShowPass: {
+    position: 'absolute',
+    right: 10,
+    top: 10,
   },
   inputText: {
     fontFamily: 'ArchivoNarrow-Regular',
@@ -86,16 +84,16 @@ const styles = StyleSheet.create({
     paddingHorizontal: 25,
     paddingVertical: 13,
   },
+  label: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
   inputTextDefaul: {
     color: colors.Gray_200,
   },
   passInfo: {
     fontSize: 14,
-  },
-  iconShowPass: {
-    position: 'absolute',
-    right: 10,
-    top: 10,
   },
 });
 

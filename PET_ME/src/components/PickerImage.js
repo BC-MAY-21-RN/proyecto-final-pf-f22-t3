@@ -5,8 +5,10 @@ import VectorImage from 'react-native-vector-image';
 import colors from '../utils/colors';
 import MultipleImagePicker from '@baronha/react-native-multiple-image-picker';
 import Pressable from 'react-native/Libraries/Components/Pressable/Pressable';
+import {useField} from 'formik';
 
-const PickerImage = ({maxSelectedAssets = 3}) => {
+const PickerImage = ({maxSelectedAssets = 3, ...props}) => {
+  const [field, meta, helpers] = useField(props);
   const [images, setImages] = useState([]);
 
   const openPicker = async () => {
@@ -19,8 +21,8 @@ const PickerImage = ({maxSelectedAssets = 3}) => {
         doneTitle: 'Terminar',
         selectedColor: 'red',
       });
-      console.log('response: ', response);
       setImages(response);
+      helpers.setValue(response);
     } catch (e) {
       console.log(e.code, e.message);
     }
@@ -33,6 +35,7 @@ const PickerImage = ({maxSelectedAssets = 3}) => {
         item?.localIdentifier !== value?.localIdentifier,
     );
     setImages(data);
+    helpers.setValue(data);
   };
 
   const renderItem = ({item, index}) => {
@@ -41,12 +44,9 @@ const PickerImage = ({maxSelectedAssets = 3}) => {
         <Image style={styles.imgItem} source={{uri: item.path}} />
         <Pressable
           onPress={() => onDelete(item)}
-          style={{position: 'absolute', top: 2, right: 2}}>
+          style={styles.thumbnailContainer}>
           <VectorImage
-            style={{
-              width: 22,
-              height: 22,
-            }}
+            style={styles.thumbnail}
             source={require('../assets/img/removex.svg')}
           />
         </Pressable>
@@ -92,25 +92,30 @@ const styles = StyleSheet.create({
     backgroundColor: colors.Gray_100,
     alignItems: 'center',
   },
-  imgContainer: {
-    flexDirection: 'row',
-  },
   img: {
     padding: 2,
     marginRight: 8,
   },
+  imgContainer: {
+    flexDirection: 'row',
+  },
   imgItem: {height: 70, width: 70, borderRadius: 10},
+  pickImgSubTitle: {
+    fontSize: 15,
+    fontFamily: 'ArchivoNarrow-Regular',
+    color: colors.Gray_300,
+  },
   pickImgTitle: {
     fontSize: 20,
     fontFamily: 'ArchivoNarrow-Regular',
     color: colors.Gray_400,
     marginVertical: 10,
   },
-  pickImgSubTitle: {
-    fontSize: 15,
-    fontFamily: 'ArchivoNarrow-Regular',
-    color: colors.Gray_300,
+  thumbnail: {
+    width: 22,
+    height: 22,
   },
+  thumbnailContainer: {position: 'absolute', top: 2, right: 2},
 });
 
 const container = StyleSheet.compose(styles.container, styles.border);

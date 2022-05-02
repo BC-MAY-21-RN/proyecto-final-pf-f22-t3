@@ -1,19 +1,22 @@
 import {StyleSheet, TextInput, View} from 'react-native';
 import React from 'react';
-import Title from './Title';
 import colors from '../utils/colors';
+import {useField} from 'formik';
+import FormFieldLabel from './FormFieldLabel';
 
 const TextAreaInput = props => {
+  const [field, meta, helpers] = useField(props);
   const {style, placeholder, label} = props;
   return (
     <View style={style}>
-      <Title text={label} textType={'TitleProfile'} />
+      <FormFieldLabel label={label} meta={meta} styleField={'addPet'} />
       <TextInput
         {...props}
         multiline={true}
         numberOfLines={10}
         placeholder={placeholder}
         placeholderTextColor={colors.Gray_300}
+        onChangeText={helpers.setValue}
         style={styles.textInput}
       />
     </View>

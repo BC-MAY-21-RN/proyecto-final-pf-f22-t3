@@ -11,6 +11,7 @@ const AddPetSchema = Yup.object().shape({
     .required('*Requerido'),
   pettype: Yup.string().required('*Requerido'),
   petbreed: Yup.string().required('*Requerido'),
+  petimages: Yup.array().min(1, '*Minimo una imagen').required('*Requerido'),
 });
 
 export default AddPetSchema;

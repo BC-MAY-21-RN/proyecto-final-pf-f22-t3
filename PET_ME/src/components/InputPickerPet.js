@@ -44,15 +44,14 @@ const InputPickerPet = ({
 export default InputPickerPet;
 
 const styles = StyleSheet.create({
-  inputText: {
-    fontFamily: 'ArchivoNarrow-Regular',
-    fontSize: 18,
-    color: colors.Gray_400,
-  },
-
   fieldAddPet: {
     backgroundColor: colors.Gray_100,
     borderRadius: 32,
     paddingHorizontal: 10,
+  },
+  inputText: {
+    fontFamily: 'ArchivoNarrow-Regular',
+    fontSize: 18,
+    color: colors.Gray_400,
   },
 });

@@ -1,4 +1,4 @@
-import {View, Pressable, StyleSheet, Text} from 'react-native';
+import {View, StyleSheet, Text} from 'react-native';
 import React from 'react';
 import colors from '../utils/colors';
 import RNBounceable from '@freakycoder/react-native-bounceable';
@@ -43,14 +43,6 @@ const ButtonPet = props => {
 export default ButtonPet;
 
 const styles = StyleSheet.create({
-  general: {fontFamily: 'BebasNeueBold', fontSize: 30},
-  textA: {color: colors.Gray_400},
-  textB: {color: colors.Gray_100},
-  textC: {
-    color: colors.Orange,
-    fontFamily: 'ArchivoNarrow-Regular',
-    fontSize: 20,
-  },
   buttonA: {
     backgroundColor: colors.Gray_100,
   },
@@ -59,12 +51,6 @@ const styles = StyleSheet.create({
   },
   buttonC: {
     backgroundColor: colors.Gray_300,
-  },
-  buttonD: {
-    backgroundColor: colors.Gray_400,
-  },
-  buttonE: {
-    backgroundColor: colors.Gray_100,
   },
   buttonContainer: {
     borderRadius: 10,
@@ -79,11 +65,25 @@ const styles = StyleSheet.create({
     borderColor: colors.Orange,
     borderWidth: 2,
   },
+  buttonD: {
+    backgroundColor: colors.Gray_400,
+  },
+  buttonE: {
+    backgroundColor: colors.Gray_100,
+  },
   disableButton: {
     backgroundColor: '#ABABAB',
   },
   disabletext: {
     color: '#FFFF',
+  },
+  general: {fontFamily: 'BebasNeueBold', fontSize: 30},
+  textA: {color: colors.Gray_400},
+  textB: {color: colors.Gray_100},
+  textC: {
+    color: colors.Orange,
+    fontFamily: 'ArchivoNarrow-Regular',
+    fontSize: 20,
   },
 });
 const containerA = StyleSheet.compose(styles.buttonA, styles.buttonContainer);

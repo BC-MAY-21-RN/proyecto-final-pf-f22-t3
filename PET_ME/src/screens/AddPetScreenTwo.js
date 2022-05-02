@@ -5,11 +5,21 @@ import ButtonPet from '../components/ButtonPet';
 import Title from '../components/Title';
 import colors from '../utils/colors';
 import {Formik} from 'formik';
-import AddPetSchema from '../utils/AddPetSchema';
-import FieldForm from '../components/FieldForm';
+import AddPetSchemaTwo from '../utils/AddPetSchemaTwo';
 import Checkbox from '../components/Checkbox';
 import TextAreaInput from '../components/TextAreaInput';
 import InputPickerPet from '../components/InputPickerPet';
+import InputTextAndPicker from '../components/InputTextAndPicker';
+
+const initialValues = {
+  petage: [],
+  petsize: '',
+  petgender: '',
+  sterilized: false,
+  vaccinated: false,
+  dewormed: false,
+  moreinfo: '',
+};
 
 const AddPetScreenTwo = () => {
   return (
@@ -20,31 +30,38 @@ const AddPetScreenTwo = () => {
       </View>
       <View>
         <Formik
-          initialValues={{email: '', password: ''}}
+          initialValues={initialValues}
           validateOnMount={true}
-          validationSchema={AddPetSchema}
-          onSubmit={() => console.log('Se añadio la mascota')}>
+          validationSchema={AddPetSchemaTwo}
+          onSubmit={values => console.log('Form values: ', values)}>
           {({handleSubmit, isValid}) => (
             <View style={styles.form}>
-              <InputPickerPet
-                label={'Tamaño'}
+              <InputTextAndPicker
+                label={'Edad'}
+                name={'petage'}
                 style={styles.marginTop10}
                 prompt={'Elige uno'}
                 items={[
-                  {label: 'Pequeño', value: 'small'},
-                  {label: 'Mediano', value: 'medium'},
-                  {label: 'Grande', value: 'big'},
+                  {label: 'Meses', value: 'month'},
+                  {label: 'Años', value: 'year'},
                 ]}
               />
+
               <View style={styles.fieldDouble}>
-                <FieldForm
-                  title={'Edad'}
-                  label={'Edad en meses'}
-                  name={'petage'}
-                  styleField={'addPet'}
+                <InputPickerPet
+                  label={'Tamaño'}
+                  name={'petsize'}
+                  style={{width: '45%'}}
+                  prompt={'Elige uno'}
+                  items={[
+                    {label: 'Pequeño', value: 'small'},
+                    {label: 'Mediano', value: 'medium'},
+                    {label: 'Grande', value: 'big'},
+                  ]}
                 />
                 <InputPickerPet
                   label={'Sexo'}
+                  name={'petgender'}
                   style={{width: '45%'}}
                   prompt={'Elige uno'}
                   items={[
@@ -54,9 +71,21 @@ const AddPetScreenTwo = () => {
                 />
               </View>
               <View style={styles.marginTop10}>
-                <Checkbox label={'Esterilizado'} style={styles.marginTop10} />
-                <Checkbox label={'Vacunado'} style={styles.marginTop10} />
-                <Checkbox label={'Desparasitado'} style={styles.marginTop10} />
+                <Checkbox
+                  label={'Esterilizado'}
+                  name={'sterilized'}
+                  style={styles.marginTop10}
+                />
+                <Checkbox
+                  label={'Vacunado'}
+                  name={'vaccinated'}
+                  style={styles.marginTop10}
+                />
+                <Checkbox
+                  label={'Desparasitado'}
+                  name={'dewormed'}
+                  style={styles.marginTop10}
+                />
               </View>
               <TextAreaInput
                 style={styles.marginTop10}
@@ -68,6 +97,8 @@ const AddPetScreenTwo = () => {
                 text={'Siguiente'}
                 typeButton={'B'}
                 style={styles.nextButtom}
+                onPressFunction={handleSubmit}
+                disabled={!isValid}
               />
             </View>
           )}
@@ -80,15 +111,19 @@ const AddPetScreenTwo = () => {
 export default AddPetScreenTwo;
 
 const styles = StyleSheet.create({
-  marginTop10: {marginTop: 10},
-  nextButtom: {
-    marginTop: 27,
+  fieldDouble: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   headerContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
     marginBottom: 15,
+  },
+  marginTop10: {marginTop: 10},
+  nextButtom: {
+    marginTop: 27,
   },
   pickImgContainer: {
     paddingVertical: 15,
@@ -99,19 +134,15 @@ const styles = StyleSheet.create({
     borderColor: colors.Gray_400,
     borderWidth: 3,
   },
-  pickImgTitle: {
-    fontSize: 20,
-    fontFamily: 'ArchivoNarrow-Regular',
-    color: colors.Gray_400,
-    marginVertical: 10,
-  },
   pickImgSubTitle: {
     fontSize: 15,
     fontFamily: 'ArchivoNarrow-Regular',
     color: colors.Gray_300,
   },
-  fieldDouble: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+  pickImgTitle: {
+    fontSize: 20,
+    fontFamily: 'ArchivoNarrow-Regular',
+    color: colors.Gray_400,
+    marginVertical: 10,
   },
 });

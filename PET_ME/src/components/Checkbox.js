@@ -1,10 +1,12 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import React from 'react';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
 import colors from '../utils/colors';
 import Title from './Title';
+import {useField} from 'formik';
 
 const Checkbox = props => {
+  const [field, meta, helpers] = useField(props);
   const {label, style} = props;
   return (
     <View style={style}>
@@ -16,7 +18,7 @@ const Checkbox = props => {
           <Title style={{marginLeft: 10}} text={label} textType={'subTitle'} />
         }
         onPress={isChecked => {
-          console.log(isChecked);
+          helpers.setValue(isChecked);
         }}
       />
     </View>
