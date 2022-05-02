@@ -13,6 +13,12 @@ const Title = props => {
           ? subTitle
           : textType === 'TitleProfile'
           ? TitleProfile
+          : textType === 'textDescription'
+          ? TextDescription
+          : textType === 'name'
+          ? name
+          : textType === 'subName'
+          ? subName
           : subTitleProfile
       }>
       {text}
@@ -61,6 +67,11 @@ const styles = StyleSheet.create({
     paddingTop: 0,
     width: '80%',
   },
+  TextDescription: {
+    fontSize: 19,
+    fontFamily: 'ArchivoNarrow-Regular',
+    textAlign: 'justify',
+  },
   option: {
     fontSize: 19,
     fontFamily: 'ArchivoNarrow-Regular',
@@ -69,9 +80,22 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     top: 5,
   },
+  name: {
+    fontFamily: 'ArchivoNarrow-Regular',
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  subName: {
+    fontFamily: 'ArchivoNarrow-Regular',
+    fontSize: 13.5,
+    fontWeight: 'bold',
+  },
 });
 
 const title = StyleSheet.compose(styles.general, styles.title);
 const subTitle = StyleSheet.compose(styles.general, styles.subTitle);
 const TitleProfile = StyleSheet.compose(styles.TitleProfile);
 const subTitleProfile = StyleSheet.compose(styles.subTitleProfile);
+const TextDescription = StyleSheet.compose(styles.TextDescription);
+const name = StyleSheet.compose(styles.name);
+const subName = StyleSheet.compose(styles.subName);

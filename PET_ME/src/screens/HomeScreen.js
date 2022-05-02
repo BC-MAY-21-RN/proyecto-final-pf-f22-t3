@@ -63,10 +63,10 @@ function ListFilters() {
           color={colors.Gray_200}
         />
       </Pressable>
-      {isFilter ? <ListIcons /> : <View style={{marginBottom: 10}}></View>}
+      {isFilter ? <ListIcons /> : <View style={{marginBottom: 10}} />}
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
