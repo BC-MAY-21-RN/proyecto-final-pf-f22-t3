@@ -9,8 +9,8 @@ const infoDetails = props => {
   return (
     <View style={Styles.firstInfo}>
       <View style={Styles.namePet}>
-        <Title text={name} textType="name" />
-        <Title text={age} textType="subName" />
+        <Title style={Styles.marginZero} text={name} textType="name" />
+        <Title style={Styles.marginZero} text={age} textType="subName" />
       </View>
       <View style={Styles.iconsPet}>
         <FavButton stateInit={fav} />
@@ -42,5 +42,8 @@ const Styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
+  },
+  marginZero: {
+    marginBottom: 0,
   },
 });

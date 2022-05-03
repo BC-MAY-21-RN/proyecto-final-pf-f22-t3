@@ -21,7 +21,7 @@ const FooterDetails = props => {
         })}
       </View>
       <View style={styles.contButton}>
-        <ButtonPet text="Adoptar" />
+        <ButtonPet typeButton={'D'} text="Adoptar" />
       </View>
     </View>
   );
