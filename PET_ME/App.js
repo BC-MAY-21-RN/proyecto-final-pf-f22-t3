@@ -1,11 +1,11 @@
 import React from 'react';
-import StartScreen from './src/screens/StartScreen';
-import DetailsPet from './src/screens/DetailsPet';
-import HomeScreen from './src/screens/HomeScreen';
-import Navigation from './src/navigation/Navigation';
-import InfoPet from './src/utils/InfoPet';
+import AddPetScreenOne from './src/screens/AddPetScreenOne';
+import AddPetScreenTwo from './src/screens/AddPetScreenTwo';
+import LoginScreen from './src/screens/LoginScreen';
+import RegisterScreen from './src/screens/RegisterScreen';
+
 const App = () => {
-  return <DetailsPet details={InfoPet} />;
+  return <AddPetScreenTwo />;
 };
 
 export default App;

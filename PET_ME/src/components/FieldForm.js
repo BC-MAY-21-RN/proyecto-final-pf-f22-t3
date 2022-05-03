@@ -3,8 +3,9 @@ import React, {useState} from 'react';
 import {useField} from 'formik';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import colors from '../utils/colors';
+import FormFieldLabel from './FormFieldLabel';
 
-const FieldForm = ({label, securePass, ...props}) => {
+const FieldForm = ({label, title, securePass, styleField, style, ...props}) => {
   const [field, meta, helpers] = useField(props);
   const [showPass, setShowPass] = useState(securePass);
   const [rightIcon, setRightIcon] = useState('eye');
@@ -19,28 +20,26 @@ const FieldForm = ({label, securePass, ...props}) => {
     }
   };
   return (
-    <View>
-      <View>
-        {meta.error && meta.touched && (
-          <Text style={{color: colors.Orange}}>{meta.error}</Text>
-        )}
-      </View>
-      <View style={styles.Field}>
+    <View style={style}>
+      <FormFieldLabel label={title} meta={meta} styleField={styleField} />
+      <View style={styleField === 'addPet' ? fieldAddPet : fieldDefault}>
         <TextInput
           {...props}
           secureTextEntry={showPass}
           value={field.value}
           onBlur={() => helpers.setTouched(!meta.touched)}
           placeholder={label}
-          placeholderTextColor={colors.Gray_200}
+          placeholderTextColor={
+            styleField === 'addPet' ? colors.Gray_300 : colors.Gray_200
+          }
           onChangeText={helpers.setValue}
-          style={styles.inputText}
+          style={styleField === 'addPet' ? inputTextAddPet : inputTextDefaul}
           keyboardType={props.keyboard}
         />
-        {label == 'Contraseña*' && (
+        {label === 'Contraseña*' && (
           <>
-            {props.screen == 'signup' && (
-              <Text style={{fontSize: 14}}>
+            {props.screen === 'signup' && (
+              <Text style={styles.passInfo}>
                 Use 8 or more characters with a mix letters, numbers and
                 symbols.
               </Text>
@@ -49,7 +48,7 @@ const FieldForm = ({label, securePass, ...props}) => {
               onPress={() => {
                 handleShowPass();
               }}
-              style={{position: 'absolute', right: 10, top: 10}}>
+              style={styles.iconShowPass}>
               <Icon name={rightIcon} size={20} color={colors.Gray_200} />
             </Pressable>
           </>
@@ -62,14 +61,49 @@ const FieldForm = ({label, securePass, ...props}) => {
 export default FieldForm;
 
 const styles = StyleSheet.create({
-  Field: {
+  field: {
     borderBottomColor: colors.Gray_400,
     borderBottomWidth: 1,
     marginBottom: 40,
   },
+  fieldAddPet: {
+    backgroundColor: colors.Gray_100,
+    borderRadius: 32,
+  },
+  iconShowPass: {
+    position: 'absolute',
+    right: 10,
+    top: 10,
+  },
   inputText: {
     fontFamily: 'ArchivoNarrow-Regular',
     fontSize: 18,
+  },
+  inputTextAddPet: {
+    color: colors.Gray_400,
+    paddingHorizontal: 25,
+    paddingVertical: 13,
+  },
+  label: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  inputTextDefaul: {
     color: colors.Gray_200,
   },
+  passInfo: {
+    fontSize: 14,
+  },
 });
+
+const inputTextAddPet = StyleSheet.compose(
+  styles.inputText,
+  styles.inputTextAddPet,
+);
+const inputTextDefaul = StyleSheet.compose(
+  styles.inputText,
+  styles.inputTextDefaul,
+);
+const fieldDefault = StyleSheet.compose(styles.field);
+const fieldAddPet = StyleSheet.compose(styles.fieldAddPet);

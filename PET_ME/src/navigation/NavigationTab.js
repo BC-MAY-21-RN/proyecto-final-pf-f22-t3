@@ -40,7 +40,12 @@ export default function NavigationTab() {
         options={{
           headerShown: false,
           tabBarIcon: ({color}) => (
-            <Icon name="users" size={25} color={color} style={{marginRight: -4}}/>
+            <Icon
+              name="users"
+              size={25}
+              color={color}
+              style={{marginRight: -4}}
+            />
           ),
         }}
       />      
@@ -74,7 +79,12 @@ export default function NavigationTab() {
         options={{
           headerShown: false,
           tabBarIcon: ({color}) => (
-            <Icon name="user-circle-o" size={25} color={color} style={{marginLeft: -2}}/>
+            <Icon
+              name="user-circle-o"
+              size={25}
+              color={color}
+              style={{marginLeft: -2}}
+            />
           ),
         }}
       />
