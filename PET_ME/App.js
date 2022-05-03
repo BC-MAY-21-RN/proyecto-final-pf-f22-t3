@@ -5,7 +5,7 @@ import LoginScreen from './src/screens/LoginScreen';
 import RegisterScreen from './src/screens/RegisterScreen';
 
 const App = () => {
-  return <AddPetScreenOne />;
+  return <AddPetScreenTwo />;
 };
 
 export default App;
