@@ -1,4 +1,4 @@
-import {Text, StyleSheet} from 'react-native';
+import {Text, StyleSheet, Pressable} from 'react-native';
 import React from 'react';
 import ButtonPet from './ButtonPet';
 import Title from './Title';
@@ -7,7 +7,11 @@ import colors from '../utils/colors';
 const FooterSesion = props => {
   return (
     <>
-      <Text style={styles.forgetPass}>¿Olvidaste tu contraseña?</Text>
+      {props.title === 'INGRESAR' ? (
+        <Pressable onPress={() => console.log('Olvidé mí contraseña')}>
+          <Text style={styles.forgetPass}>¿Olvidaste tu contraseña?</Text>
+        </Pressable>
+      ) : null}
       <ButtonPet
         text={props.title}
         typeButton={'A'}
