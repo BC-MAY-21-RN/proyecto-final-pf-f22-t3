@@ -5,29 +5,31 @@ import colors from '../utils/colors';
 const Title = props => {
   const {text, textType, option, style} = props;
   return (
-    <Text
-      style={
-        textType === 'title'
-          ? title
-          : textType === 'subTitle'
-          ? subTitle
-          : textType === 'TitleProfile'
-          ? TitleProfile
-          : textType === 'textDescription'
-          ? TextDescription
-          : textType === 'name'
-          ? name
-          : textType === 'subName'
-          ? subName
-          : subTitleProfile
-      }>
-      {text}
-      {props.option ? (
-        <Pressable onPress={() => console.log(`ir a ${props.option}`)}>
-          <Text style={styles.option}>{option}</Text>
-        </Pressable>
-      ) : null}
-    </Text>
+    <View style={style ? style : styles.container}>
+      <Text
+        style={
+          textType === 'title'
+            ? title
+            : textType === 'subTitle'
+            ? subTitle
+            : textType === 'TitleProfile'
+            ? TitleProfile
+            : textType === 'textDescription'
+            ? TextDescription
+            : textType === 'name'
+            ? name
+            : textType === 'subName'
+            ? subName
+            : subTitleProfile
+        }>
+        {text}
+        {props.option ? (
+          <Pressable onPress={() => console.log(`ir a ${props.option}`)}>
+            <Text style={styles.option}>{option}</Text>
+          </Pressable>
+        ) : null}
+      </Text>
+    </View>
   );
 };
 
