@@ -5,7 +5,7 @@ import HomeScreen from '../screens/HomeScreen';
 import BusquedaScreen from '../screens/BusquedaScreen';
 import ComunidadScreen from '../screens/ComunidadScreen';
 import PerfilScreen from '../screens/PerfilScreen';
-import AddPetScreen from '../screens/AddPetScreen';
+import AddPetScreenOne from '../screens/AddPetScreenOne';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 import VectorImage from 'react-native-vector-image';
@@ -40,13 +40,18 @@ export default function NavigationTab() {
         options={{
           headerShown: false,
           tabBarIcon: ({color}) => (
-            <Icon name="users" size={25} color={color} style={{marginRight: -4}}/>
+            <Icon
+              name="users"
+              size={25}
+              color={color}
+              style={{marginRight: -4}}
+            />
           ),
         }}
-      />      
+      />
       <Tab.Screen
         name="AddPet"
-        component={AddPetScreen}
+        component={AddPetScreenOne}
         options={{
           tabBarLabel: 'Add Pet',
           headerShown: false,
@@ -74,7 +79,12 @@ export default function NavigationTab() {
         options={{
           headerShown: false,
           tabBarIcon: ({color}) => (
-            <Icon name="user-circle-o" size={25} color={color} style={{marginLeft: -2}}/>
+            <Icon
+              name="user-circle-o"
+              size={25}
+              color={color}
+              style={{marginLeft: -2}}
+            />
           ),
         }}
       />
