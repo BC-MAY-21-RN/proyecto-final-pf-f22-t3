@@ -1,42 +1,46 @@
-import {StyleSheet, Text, Pressable} from 'react-native';
+import {StyleSheet, Text, Pressable, View} from 'react-native';
 import React from 'react';
 import colors from '../utils/colors';
 
 const Title = props => {
-  const {text, textType, option} = props;
+  const {text, textType, option, style} = props;
   return (
-    <Text
-      style={
-        textType === 'title'
-          ? title
-          : textType === 'subTitle'
-          ? subTitle
-          : textType === 'TitleProfile'
-          ? TitleProfile
-          : textType === 'textDescription'
-          ? TextDescription
-          : textType === 'name'
-          ? name
-          : textType === 'subName'
-          ? subName
-          : subTitleProfile
-      }>
-      {text}
-      {props.option ? (
-        <Pressable onPress={() => console.log(`ir a ${props.option}`)}>
-          <Text style={styles.option}>{option}</Text>
-        </Pressable>
-      ) : null}
-    </Text>
+    <View style={style ? style : styles.container}>
+      <Text
+        style={
+          textType === 'title'
+            ? title
+            : textType === 'subTitle'
+            ? subTitle
+            : textType === 'TitleProfile'
+            ? TitleProfile
+            : textType === 'textDescription'
+            ? TextDescription
+            : textType === 'name'
+            ? name
+            : textType === 'subName'
+            ? subName
+            : subTitleProfile
+        }>
+        {text}
+        {props.option ? (
+          <Pressable onPress={() => console.log(`ir a ${props.option}`)}>
+            <Text style={styles.option}>{option}</Text>
+          </Pressable>
+        ) : null}
+      </Text>
+    </View>
   );
 };
 
 export default Title;
 
 const styles = StyleSheet.create({
+  container: {
+    marginBottom: 8,
+  },
   general: {
     textAlign: 'center',
-    marginBottom: 8,
   },
   title: {
     fontSize: 30,

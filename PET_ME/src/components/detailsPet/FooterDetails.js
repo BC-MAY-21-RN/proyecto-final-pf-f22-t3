@@ -8,14 +8,15 @@ const FooterDetails = props => {
   return (
     <View style={styles.cont}>
       <View style={styles.check}>
-        {DataText.map(index => {
+        {DataText.map((item, index) => {
           return (
             <IconTitle
               icon="check-square"
               size={20}
-              color={index.state === true ? colors.Orange : colors.Gray_400}
-              title={index.title}
+              color={item.state === true ? colors.Orange : colors.Gray_400}
+              title={item.title}
               type="I"
+              key={index}
             />
           );
         })}
