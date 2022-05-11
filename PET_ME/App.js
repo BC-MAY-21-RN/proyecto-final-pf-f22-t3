@@ -8,8 +8,7 @@ import AddPetScreenTwo from './src/screens/AddPetScreenTwo';
 import InfoPet from './src/utils/InfoPet';
 import VolunteerScreen from './src/screens/VolunteerScreen';
 const App = () => {
-//return <DetailsPet details={InfoPet} />;
-  return <VolunteerScreen/>
+   return <DetailsPet details={InfoPet} />;
 };
 
 export default App;

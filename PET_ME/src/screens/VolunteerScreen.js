@@ -22,18 +22,16 @@ const VolunteerScreen = () => {
 	El voluntario principalmente consiste en revisar que el usuario interesado en adoptar una mascota, cumple con los requerimientos necesarios para su cuidado integral.
       </Text>
       <Text  style={styles.text}> "No vamos a cambiar el mundo ayudando a un animal, pero al menos el mundo habrá cambiado para el"
-
       </Text>
       <ButtonPet text={'SER VOLUNTARIO'} typeButton={'B'} style={styles.button}/>
       </View>
     </BgPaws>
   );
 };
-//<Icon name={rightIcon} size={20} color={colors.Gray_200} />
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    
   },
   title:{
     marginTop: 20,
@@ -47,7 +45,5 @@ const styles = StyleSheet.create({
     marginTop: 20,		
    }
 });
-
-const container = StyleSheet.compose(styles.container);
 
 export default VolunteerScreen;
