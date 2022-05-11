@@ -6,8 +6,10 @@ import Navigation from './src/navigation/Navigation';
 import AddPetScreenOne from './src/screens/AddPetScreenOne.js';
 import AddPetScreenTwo from './src/screens/AddPetScreenTwo';
 import InfoPet from './src/utils/InfoPet';
+import VolunteerScreen from './src/screens/VolunteerScreen';
 const App = () => {
-  return <DetailsPet details={InfoPet} />;
+//return <DetailsPet details={InfoPet} />;
+  return <VolunteerScreen/>
 };
 
 export default App;
