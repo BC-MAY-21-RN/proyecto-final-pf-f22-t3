@@ -5,8 +5,15 @@ import Border from '../components/Border';
 import ButtonPet from '../components/ButtonPet';
 import Img from '../components/Image';
 import Title from '../components/Title';
+import {useNavigation} from '@react-navigation/native';
 
 const Start = () => {
+  const navigation = useNavigation();
+
+  const loginScreen = () => {
+    navigation.navigate('Login');
+  };
+
   return (
     <BgPaws opacity={0.78}>
       <Image
@@ -53,7 +60,7 @@ const Start = () => {
           textAgeType={'subTitleProfile'}
         />
       </View>
-      <ButtonPet text={'INGRESAR'} typeButton={'B'} />
+      <ButtonPet text={'INGRESAR'} typeButton={'B'} onPressFunction={loginScreen} />
     </BgPaws>
   );
 };
