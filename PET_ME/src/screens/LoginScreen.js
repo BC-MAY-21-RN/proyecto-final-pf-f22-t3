@@ -16,37 +16,39 @@ GoogleSignin.configure({
 });
 
 const loginUser = async (values, login) => {
-  let res = undefined;
   try {
     await auth()
     .signInWithEmailAndPassword(values.email, values.password)
     .then(user => {
       login(user.user.email);
     })
-    return res;
+    return true;
   } catch (er) {
-    Alert.alert("Login Fail", `Usuario o contraseña incorrectos ${er}`);
+    return false;
   }
 }
 
-const loginGoogle = async() => {
+const loginGoogle = async(loginG, navigation, authUser) => {
   try {
     await GoogleSignin.hasPlayServices();
     const userInfo = await GoogleSignin.signIn();
-    console.log('User google: ', userInfo);
+    const res = await loginG(userInfo.user);
+    if (res) {
+      navigation.navigate('Home');
+    }
   } catch (error) {
     console.log('error: ', error);
   }
 }
 
 const LoginScreen = () => {
-  const {login, authUser} = useAuth();
+  const {login, authUser, loginG} = useAuth();
   const navigation = useNavigation();
 
   async function loginFunction(values) {
     try {
-      await loginUser(values, login);
-      if (authUser) {
+      const res = await loginUser(values, login);
+      if (res) {
         navigation.navigate('Home');
       }
     } catch (er) {
@@ -77,7 +79,7 @@ const LoginScreen = () => {
               title="INGRESAR"
               onPressFunction={handleSubmit}
               onRegistrar={onRegistrar}
-              onGoogle={loginGoogle}
+              onGoogle={() => loginGoogle(loginG, navigation, authUser)}
             />
           </View>
         )}

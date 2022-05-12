@@ -11,7 +11,7 @@ const RegisterSchema = Yup.object().shape({
   password: Yup.string()
     .required('*Por favor ingrese una contraseña')
     .matches(
-      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
+      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&_])[A-Za-z\d@$!%*#?&_]{8,}$/,
       '*La contraseña debe ser una mezcla entre letras. números y carácteres ',
     ),
 });
