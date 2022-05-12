@@ -15,18 +15,18 @@ GoogleSignin.configure({
   webClientId: '841914520438-e6s04fp9sr0aeun1fspjfdip6thjhct2.apps.googleusercontent.com',
 });
 
-async function loginUser(values, login) {
-  let userFirestore;
-  await auth()
+const loginUser = async (values, login) => {
+  let res = undefined;
+  try {
+    await auth()
     .signInWithEmailAndPassword(values.email, values.password)
     .then(user => {
       login(user.user.email);
-      userFirestore = user.user.email;
     })
-    .catch(er => {
-      Alert.alert('Login Fail', `Usuario o contraseña incorrectos ${er}`);
-    });
-  return userFirestore;
+    return res;
+  } catch (er) {
+    Alert.alert("Login Fail", `Usuario o contraseña incorrectos ${er}`);
+  }
 }
 
 const loginGoogle = async() => {
@@ -40,14 +40,17 @@ const loginGoogle = async() => {
 }
 
 const LoginScreen = () => {
-  const {login} = useAuth();
+  const {login, authUser} = useAuth();
   const navigation = useNavigation();
 
   async function loginFunction(values) {
-    const user = await loginUser(values, login);
-    console.log(user);
-    if (user) {
-      navigation.navigate('Home');
+    try {
+      await loginUser(values, login);
+      if (authUser) {
+        navigation.navigate('Home');
+      }
+    } catch (er) {
+      Alert.alert('Login Fail', `Usuario o contraseña incorrectos ${er}`);
     }
   }
 

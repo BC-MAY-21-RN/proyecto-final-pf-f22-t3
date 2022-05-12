@@ -20,6 +20,7 @@ const FooterSesion = props => {
           text="¿Ya tienes una cuenta?"
           option={'Ingresa'}
           textType="subTitle"
+          onPress={onRegistrar}
         />
       ) : (
         <View>

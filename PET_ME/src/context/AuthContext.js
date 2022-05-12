@@ -3,22 +3,22 @@ import authFirebase from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 
 export const AuthContext = createContext({
-  auth: undefined,
+  authUser: undefined,
   login: () => {},
   logout: () => {},
   bookin: undefined,
 });
 
-function getUserData(userData, setAuth) {
+function getUserData(userData, setAuthUser) {
   (async () => {
     try {
-      firestore()
-        .collection('Users')
+      await firestore()
+        .collection('users')
         .where('email', '==', userData)
         .get()
         .then(collectionSnapshot => {
           collectionSnapshot.forEach(documentSnapshot => {
-            setAuth(documentSnapshot.data());
+            setAuthUser(documentSnapshot.data());
           });
         });
     } catch (error) {
@@ -29,18 +29,30 @@ function getUserData(userData, setAuth) {
 
 export function AuthProvider(props) {
   const {children} = props;
-  const [auth, setAuth] = useState(undefined);
+  const [authUser, setAuthUser] = useState(undefined);
   const [bookin, setBooking] = useState();
 
-  function login(userData) {
-    getUserData(userData, setAuth);
+  async function login(userData) {
+    try {
+      const dataUser = await getUserData(userData, setAuthUser);
+      return true
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
   }
+
+  async function loginGooglr(user) {
+    console.log(user);
+  }
+
   const logout = () => {
-    setAuth(undefined);
+    setAuthUser(undefined);
     authFirebase().signOut();
   };
+  
   const valueContext = {
-    auth,
+    authUser,
     login,
     logout,
     bookin,
