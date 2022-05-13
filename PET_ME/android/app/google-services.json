@@ -1,0 +1,92 @@
+{
+  "project_info": {
+    "project_number": "841914520438",
+    "project_id": "bcoders-ab7f3",
+    "storage_bucket": "bcoders-ab7f3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:841914520438:android:7cea155e193e51262b6057",
+        "android_client_info": {
+          "package_name": "com.pet_me"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "841914520438-nvcom34pdo4b42aq558fhn1dc37gdkmn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.pet_me",
+            "certificate_hash": "be428961ad48dc274b5a733356a1d73df4fe2e07"
+          }
+        },
+        {
+          "client_id": "841914520438-t2hogahkknfik6cbit4k11hkvndge4ds.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.pet_me",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "841914520438-e6s04fp9sr0aeun1fspjfdip6thjhct2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBeiotrqPK57-0E1eFMQGk9Whe9QpnuY6c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "841914520438-e6s04fp9sr0aeun1fspjfdip6thjhct2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:841914520438:android:757dd1a8622439a22b6057",
+        "android_client_info": {
+          "package_name": "com.reservacionvuelos"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "841914520438-cqnpjt4qusss59p3gknht7un2k6euml7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.reservacionvuelos",
+            "certificate_hash": "86ec53ab196058853f58d93072255443a6e584c7"
+          }
+        },
+        {
+          "client_id": "841914520438-e6s04fp9sr0aeun1fspjfdip6thjhct2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBeiotrqPK57-0E1eFMQGk9Whe9QpnuY6c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "841914520438-e6s04fp9sr0aeun1fspjfdip6thjhct2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -38,11 +38,11 @@ export default function HomeScreen() {
         <ListFilters />
         <Title text="Ultimos Agregados" />
         <View style={styles.containerList}>
-          <ListPets pets={pets} />
+          <ListPets />
         </View>
         <Title text="Favoritos" />
         <View style={styles.containerList}>
-          <ListPets pets={pets} />
+          <ListPets />
         </View>
       </ScrollView>
     </BgPaws>

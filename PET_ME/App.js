@@ -1,13 +1,17 @@
 import React from 'react';
 import StartScreen from './src/screens/StartScreen';
-import DetailsPet from './src/screens/DetailsPet';
-import HomeScreen from './src/screens/HomeScreen';
-import Navigation from './src/navigation/Navigation';
-import AddPetScreenOne from './src/screens/AddPetScreenOne.js';
-import AddPetScreenTwo from './src/screens/AddPetScreenTwo';
-import InfoPet from './src/utils/InfoPet';
+import { NavigationContainer } from "@react-navigation/native";
+import Navigation from "./src/navigation/Navigation";
+import {AuthProvider} from './src/context/AuthContext';
+
 const App = () => {
-  return <DetailsPet details={InfoPet} />;
+  return (
+    <NavigationContainer>
+      <AuthProvider>
+        <Navigation />
+      </AuthProvider>
+    </NavigationContainer>
+  )
 };
 
 export default App;

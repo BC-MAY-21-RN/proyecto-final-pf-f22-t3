@@ -3,7 +3,7 @@ import React from 'react';
 import colors from '../utils/colors';
 
 const Title = props => {
-  const {text, textType, option, style} = props;
+  const {text, textType, option, style, onPress} = props;
   return (
     <View style={style ? style : styles.container}>
       <Text
@@ -24,7 +24,7 @@ const Title = props => {
         }>
         {text}
         {props.option ? (
-          <Pressable onPress={() => console.log(`ir a ${props.option}`)}>
+          <Pressable onPress={onPress}>
             <Text style={styles.option}>{option}</Text>
           </Pressable>
         ) : null}

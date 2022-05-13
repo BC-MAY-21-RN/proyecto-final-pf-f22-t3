@@ -17,7 +17,7 @@ const Tab = createMaterialBottomTabNavigator();
 export default function NavigationTab() {
   return (
     <Tab.Navigator
-      initialRouteName="Login"
+      initialRouteName="Perfil"
       inactiveColor={colors.Gray_400}
       activeColor={colors.Gray_500}
       barStyle={{backgroundColor: colors.Gray_200}}>
