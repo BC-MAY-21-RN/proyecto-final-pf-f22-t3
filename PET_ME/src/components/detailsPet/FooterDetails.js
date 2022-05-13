@@ -5,6 +5,11 @@ import ButtonPet from '../ButtonPet';
 import IconTitle from '../IconTitle';
 const FooterDetails = props => {
   const DataText = props.info;
+  const {setModalVisible} = props;
+
+  const handleAdoption = () => {
+    setModalVisible(true);
+  };
   return (
     <View style={styles.cont}>
       <View style={styles.check}>
@@ -22,7 +27,11 @@ const FooterDetails = props => {
         })}
       </View>
       <View style={styles.contButton}>
-        <ButtonPet typeButton={'D'} text="Adoptar" />
+        <ButtonPet
+          typeButton={'D'}
+          text="Adoptar"
+          onPressFunction={handleAdoption}
+        />
       </View>
     </View>
   );
