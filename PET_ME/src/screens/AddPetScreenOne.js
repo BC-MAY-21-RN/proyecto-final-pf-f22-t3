@@ -1,5 +1,5 @@
 import {StyleSheet, View} from 'react-native';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import BgPaws from '../components/BgPaws';
 import ButtonPet from '../components/ButtonPet';
 import Title from '../components/Title';
@@ -8,6 +8,8 @@ import AddPetSchema from '../utils/AddPetSchema';
 import FieldForm from '../components/FieldForm';
 import InputPickerPet from '../components/InputPickerPet';
 import PickerImage from '../components/PickerImage';
+import {useNavigation} from '@react-navigation/native';
+import {getPetTypes} from '../services/petServices';
 
 const initialValues = {
   petname: '',
@@ -17,10 +19,33 @@ const initialValues = {
   petimages: [],
 };
 const AddPetScreenOne = () => {
+  const navigation = useNavigation();
+  const [petTypes, setPetTypes] = useState([]);
+  const back = () => {
+    navigation.navigate('Inicio');
+  };
+
+  async function loadPetTypes() {
+    try {
+      const response = await getPetTypes();
+      setPetTypes(response);
+    } catch (er) {
+      console.log(er);
+    }
+  }
+  useEffect(() => {
+    loadPetTypes();
+  }, []);
   return (
     <BgPaws opacity={0.54}>
       <View style={styles.headerContainer}>
-        <ButtonPet text={'Cancelar'} typeButton={'E'} />
+        <ButtonPet
+          text={'Cancelar'}
+          typeButton={'E'}
+          onPressFunction={() => {
+            back();
+          }}
+        />
         <Title style={styles.pagination} text={'1/2'} textType={'title'} />
       </View>
       <View>
@@ -50,11 +75,9 @@ const AddPetScreenOne = () => {
                 name={'pettype'}
                 style={styles.marginTop10}
                 prompt={'Selecciona tipo'}
-                items={[
-                  {label: 'Perro', value: 'dog'},
-                  {label: 'Gato', value: 'cat'},
-                ]}
+                items={petTypes}
               />
+              {console.log('holamundo ', petTypes)}
               <InputPickerPet
                 label={'Raza'}
                 defaultSelect={'Elige un tipo de mascota'}
