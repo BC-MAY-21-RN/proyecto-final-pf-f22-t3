@@ -1,7 +1,39 @@
 import authFirebase from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
+import storage from '@react-native-firebase/storage';
 
-export const getPetTypes = async () => {
+export const savePetPost = async pet => {
+  try {
+    await firestore().collection('petpost').add(pet);
+    console.log('Pet added');
+    return true;
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+};
+
+export const uploadImage = async image => {
+  const reference = storage().ref(image.fileName);
+
+  // path to existing file on filesystem
+  const pathToFile = image.path;
+
+  // uploads file
+  const task = reference.putFile(pathToFile);
+  try {
+    await task;
+
+    const url = await reference.getDownloadURL();
+
+    // console.log('url: ', url);
+    return url;
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+export const getPetTypes = async setter => {
   const petTypes = [];
   try {
     await firestore()
@@ -12,39 +44,41 @@ export const getPetTypes = async () => {
           petTypes.push(documentSnapshot.data());
         });
       });
-    return petTypes;
+    setter(petTypes);
+    // return petTypes;
   } catch (error) {
     console.log(error);
   }
 };
-export const getDogBreeds = async () => {
+
+export const getDogBreeds = async setter => {
   const dogBreeds = [];
   try {
     await firestore()
-      .collection('dogBreed')
+      .collection('dogbreed')
       .get()
       .then(collectionSnapshot => {
         collectionSnapshot.forEach(documentSnapshot => {
           dogBreeds.push(documentSnapshot.data());
         });
       });
-    return dogBreeds;
+    setter(dogBreeds);
   } catch (error) {
     console.log(error);
   }
 };
-export const getCatBreeds = async () => {
+export const getCatBreeds = async setter => {
   const catBreeds = [];
   try {
     await firestore()
-      .collection('dogBreed')
+      .collection('catbreed')
       .get()
       .then(collectionSnapshot => {
         collectionSnapshot.forEach(documentSnapshot => {
           catBreeds.push(documentSnapshot.data());
         });
       });
-    return catBreeds;
+    setter(catBreeds);
   } catch (error) {
     console.log(error);
   }

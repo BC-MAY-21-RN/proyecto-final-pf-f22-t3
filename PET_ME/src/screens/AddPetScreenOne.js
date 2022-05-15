@@ -9,7 +9,13 @@ import FieldForm from '../components/FieldForm';
 import InputPickerPet from '../components/InputPickerPet';
 import PickerImage from '../components/PickerImage';
 import {useNavigation} from '@react-navigation/native';
-import {getPetTypes} from '../services/petServices';
+import {
+  getPetTypes,
+  getDogBreeds,
+  getCatBreeds,
+  savePetPost,
+  uploadImage,
+} from '../services/petServices';
 
 const initialValues = {
   petname: '',
@@ -21,21 +27,27 @@ const initialValues = {
 const AddPetScreenOne = () => {
   const navigation = useNavigation();
   const [petTypes, setPetTypes] = useState([]);
-  const back = () => {
-    navigation.navigate('Inicio');
+  const [dogBreeds, setDogBreeds] = useState([]);
+  const [catBreeds, setCatBreeds] = useState([]);
+
+  useEffect(() => {
+    getPetTypes(setPetTypes);
+    getDogBreeds(setDogBreeds);
+    getCatBreeds(setCatBreeds);
+  }, []);
+
+  const addPet = async values => {
+    const imageUrl = await Promise.all(
+      values.petimages.map(img => {
+        return uploadImage(img);
+      }),
+    ).then(responses => {
+      return responses;
+    });
+    values.petimages = imageUrl;
+    await savePetPost(values);
   };
 
-  async function loadPetTypes() {
-    try {
-      const response = await getPetTypes();
-      setPetTypes(response);
-    } catch (er) {
-      console.log(er);
-    }
-  }
-  useEffect(() => {
-    loadPetTypes();
-  }, []);
   return (
     <BgPaws opacity={0.54}>
       <View style={styles.headerContainer}>
@@ -43,7 +55,7 @@ const AddPetScreenOne = () => {
           text={'Cancelar'}
           typeButton={'E'}
           onPressFunction={() => {
-            back();
+            navigation.navigate('Inicio');
           }}
         />
         <Title style={styles.pagination} text={'1/2'} textType={'title'} />
@@ -53,8 +65,8 @@ const AddPetScreenOne = () => {
           initialValues={initialValues}
           validateOnMount={true}
           validationSchema={AddPetSchema}
-          onSubmit={values => console.log('Form values: ', values)}>
-          {({handleSubmit, isValid}) => (
+          onSubmit={values => addPet(values)}>
+          {({handleSubmit, values, isValid}) => (
             <View>
               <PickerImage maxSelectedAssets={3} name={'petimages'} />
               <FieldForm
@@ -77,17 +89,13 @@ const AddPetScreenOne = () => {
                 prompt={'Selecciona tipo'}
                 items={petTypes}
               />
-              {console.log('holamundo ', petTypes)}
               <InputPickerPet
                 label={'Raza'}
-                defaultSelect={'Elige un tipo de mascota'}
+                defaultSelect={'Elige la raza de tu mascota'}
                 name={'petbreed'}
                 style={styles.marginTop10}
                 prompt={'Selecciona raza'}
-                items={[
-                  {label: 'Labrador', value: 'labrador'},
-                  {label: 'Shiba Inu', value: 'shiba-inu'},
-                ]}
+                items={values.pettype == 'dog' ? dogBreeds : catBreeds}
               />
               <ButtonPet
                 text={'Siguiente'}
@@ -116,4 +124,5 @@ const styles = StyleSheet.create({
     marginTop: 27,
   },
   pagination: {marginBottom: 0},
+  imgItem: {height: 70, width: 70, borderRadius: 10},
 });
