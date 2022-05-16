@@ -4,13 +4,12 @@ import ButtonPet from '../ButtonPet';
 import colors from '../../utils/colors';
 import {useNavigation} from '@react-navigation/native';
 
-const ModalContentDetailsPet = () => {
+const ModalContentAddPet = () => {
   const navigation = useNavigation();
   return (
     <>
       <Text style={styles.contentText}>
-        Uno de nuestros voluntarios se estará comunicando contigo, para
-        continuar el proceso de adopción de tu nuevo mejor amigo. 😄
+        Tu publicación se ha realizado con éxito 😄
       </Text>
       <ButtonPet
         text={'Ir al inicio'}
@@ -23,7 +22,7 @@ const ModalContentDetailsPet = () => {
   );
 };
 
-export default ModalContentDetailsPet;
+export default ModalContentAddPet;
 
 const styles = StyleSheet.create({
   contentText: {

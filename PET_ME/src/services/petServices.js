@@ -14,7 +14,8 @@ export const savePetPost = async pet => {
 };
 
 export const uploadImage = async image => {
-  const reference = storage().ref(image.fileName);
+  let currentId = Math.floor(100000 + Math.random() * 90000).toString();
+  const reference = storage().ref(currentId + image.fileName);
 
   // path to existing file on filesystem
   const pathToFile = image.path;

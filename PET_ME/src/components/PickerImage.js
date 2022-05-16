@@ -7,9 +7,8 @@ import MultipleImagePicker from '@baronha/react-native-multiple-image-picker';
 import Pressable from 'react-native/Libraries/Components/Pressable/Pressable';
 import {useField} from 'formik';
 
-const PickerImage = ({maxSelectedAssets = 3, ...props}) => {
+const PickerImage = ({maxSelectedAssets = 3, images, setImages, ...props}) => {
   const [field, meta, helpers] = useField(props);
-  const [images, setImages] = useState([]);
 
   const openPicker = async () => {
     try {

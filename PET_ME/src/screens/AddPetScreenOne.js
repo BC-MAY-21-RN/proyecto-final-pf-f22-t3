@@ -1,5 +1,5 @@
 import {StyleSheet, View} from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import BgPaws from '../components/BgPaws';
 import ButtonPet from '../components/ButtonPet';
 import Title from '../components/Title';
@@ -9,13 +9,7 @@ import FieldForm from '../components/FieldForm';
 import InputPickerPet from '../components/InputPickerPet';
 import PickerImage from '../components/PickerImage';
 import {useNavigation} from '@react-navigation/native';
-import {
-  getPetTypes,
-  getDogBreeds,
-  getCatBreeds,
-  savePetPost,
-  uploadImage,
-} from '../services/petServices';
+import {getPetTypes, getDogBreeds, getCatBreeds} from '../services/petServices';
 
 const initialValues = {
   petname: '',
@@ -29,6 +23,8 @@ const AddPetScreenOne = () => {
   const [petTypes, setPetTypes] = useState([]);
   const [dogBreeds, setDogBreeds] = useState([]);
   const [catBreeds, setCatBreeds] = useState([]);
+  const [images, setImages] = useState([]);
+  const formikRef = useRef(null);
 
   useEffect(() => {
     getPetTypes(setPetTypes);
@@ -36,18 +32,13 @@ const AddPetScreenOne = () => {
     getCatBreeds(setCatBreeds);
   }, []);
 
-  const addPet = async values => {
-    const imageUrl = await Promise.all(
-      values.petimages.map(img => {
-        return uploadImage(img);
-      }),
-    ).then(responses => {
-      return responses;
-    });
-    values.petimages = imageUrl;
-    await savePetPost(values);
+  const resetForm = () => {
+    formikRef.current.resetForm();
+    setImages([]);
   };
-
+  const nextForm = values => {
+    navigation.navigate('AddPetPartTwo', values);
+  };
   return (
     <BgPaws opacity={0.54}>
       <View style={styles.headerContainer}>
@@ -55,6 +46,7 @@ const AddPetScreenOne = () => {
           text={'Cancelar'}
           typeButton={'E'}
           onPressFunction={() => {
+            resetForm();
             navigation.navigate('Inicio');
           }}
         />
@@ -63,12 +55,18 @@ const AddPetScreenOne = () => {
       <View>
         <Formik
           initialValues={initialValues}
+          innerRef={formikRef}
           validateOnMount={true}
           validationSchema={AddPetSchema}
-          onSubmit={values => addPet(values)}>
+          onSubmit={values => nextForm(values)}>
           {({handleSubmit, values, isValid}) => (
             <View>
-              <PickerImage maxSelectedAssets={3} name={'petimages'} />
+              <PickerImage
+                maxSelectedAssets={3}
+                name={'petimages'}
+                images={images}
+                setImages={setImages}
+              />
               <FieldForm
                 title={'Nombre'}
                 label={'Ingresa el nombre de tu mascota'}
@@ -95,7 +93,7 @@ const AddPetScreenOne = () => {
                 name={'petbreed'}
                 style={styles.marginTop10}
                 prompt={'Selecciona raza'}
-                items={values.pettype == 'dog' ? dogBreeds : catBreeds}
+                items={values.pettype === 'dog' ? dogBreeds : catBreeds}
               />
               <ButtonPet
                 text={'Siguiente'}
