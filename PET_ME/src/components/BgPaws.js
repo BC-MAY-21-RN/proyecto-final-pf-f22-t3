@@ -29,14 +29,14 @@ const styles = StyleSheet.create({
   content: opacity => {
     return {
       backgroundColor: `rgba(37,51,52, ${opacity})`,
-      paddingHorizontal: 20,
+      ppaddingHorizontal: 20,
       justifyContent: 'center',
     };
   },
   contentScroll: opacity => {
     return {
       backgroundColor: `rgba(37,51,52, ${opacity})`,
-      paddingHorizontal: 20,
+      ppaddingHorizontal: 20,
     };
   },
 });

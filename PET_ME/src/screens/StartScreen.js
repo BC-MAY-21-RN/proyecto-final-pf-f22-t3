@@ -64,7 +64,8 @@ const Start = () => {
     </BgPaws>
   );
 };
-//<Icon name={rightIcon} size={20} color={colors.Gray_200} />
+
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
