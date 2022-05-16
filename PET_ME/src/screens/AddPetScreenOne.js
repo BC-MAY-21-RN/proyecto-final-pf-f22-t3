@@ -1,5 +1,5 @@
 import {StyleSheet, View} from 'react-native';
-import React from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import BgPaws from '../components/BgPaws';
 import ButtonPet from '../components/ButtonPet';
 import Title from '../components/Title';
@@ -8,6 +8,8 @@ import AddPetSchema from '../utils/AddPetSchema';
 import FieldForm from '../components/FieldForm';
 import InputPickerPet from '../components/InputPickerPet';
 import PickerImage from '../components/PickerImage';
+import {useNavigation} from '@react-navigation/native';
+import {getPetTypes, getDogBreeds, getCatBreeds} from '../services/petServices';
 
 const initialValues = {
   petname: '',
@@ -17,21 +19,54 @@ const initialValues = {
   petimages: [],
 };
 const AddPetScreenOne = () => {
+  const navigation = useNavigation();
+  const [petTypes, setPetTypes] = useState([]);
+  const [dogBreeds, setDogBreeds] = useState([]);
+  const [catBreeds, setCatBreeds] = useState([]);
+  const [images, setImages] = useState([]);
+  const formikRef = useRef(null);
+
+  useEffect(() => {
+    getPetTypes(setPetTypes);
+    getDogBreeds(setDogBreeds);
+    getCatBreeds(setCatBreeds);
+  }, []);
+
+  const resetForm = () => {
+    formikRef.current.resetForm();
+    setImages([]);
+  };
+  const nextForm = values => {
+    navigation.navigate('AddPetPartTwo', values);
+  };
   return (
     <BgPaws opacity={0.54}>
       <View style={styles.headerContainer}>
-        <ButtonPet text={'Cancelar'} typeButton={'E'} />
+        <ButtonPet
+          text={'Cancelar'}
+          typeButton={'E'}
+          onPressFunction={() => {
+            resetForm();
+            navigation.navigate('Inicio');
+          }}
+        />
         <Title style={styles.pagination} text={'1/2'} textType={'title'} />
       </View>
       <View>
         <Formik
           initialValues={initialValues}
+          innerRef={formikRef}
           validateOnMount={true}
           validationSchema={AddPetSchema}
-          onSubmit={values => console.log('Form values: ', values)}>
-          {({handleSubmit, isValid}) => (
+          onSubmit={values => nextForm(values)}>
+          {({handleSubmit, values, isValid}) => (
             <View>
-              <PickerImage maxSelectedAssets={3} name={'petimages'} />
+              <PickerImage
+                maxSelectedAssets={3}
+                name={'petimages'}
+                images={images}
+                setImages={setImages}
+              />
               <FieldForm
                 title={'Nombre'}
                 label={'Ingresa el nombre de tu mascota'}
@@ -50,21 +85,15 @@ const AddPetScreenOne = () => {
                 name={'pettype'}
                 style={styles.marginTop10}
                 prompt={'Selecciona tipo'}
-                items={[
-                  {label: 'Perro', value: 'dog'},
-                  {label: 'Gato', value: 'cat'},
-                ]}
+                items={petTypes}
               />
               <InputPickerPet
                 label={'Raza'}
-                defaultSelect={'Elige un tipo de mascota'}
+                defaultSelect={'Elige la raza de tu mascota'}
                 name={'petbreed'}
                 style={styles.marginTop10}
                 prompt={'Selecciona raza'}
-                items={[
-                  {label: 'Labrador', value: 'labrador'},
-                  {label: 'Shiba Inu', value: 'shiba-inu'},
-                ]}
+                items={values.pettype === 'dog' ? dogBreeds : catBreeds}
               />
               <ButtonPet
                 text={'Siguiente'}
@@ -93,4 +122,5 @@ const styles = StyleSheet.create({
     marginTop: 27,
   },
   pagination: {marginBottom: 0},
+  imgItem: {height: 70, width: 70, borderRadius: 10},
 });
