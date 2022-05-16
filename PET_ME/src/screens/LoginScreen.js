@@ -1,5 +1,5 @@
-import {View, StyleSheet, Alert} from 'react-native';
-import React from 'react';
+import {View, StyleSheet, Alert, ActivityIndicator} from 'react-native';
+import React, {useState} from 'react';
 import {Formik} from 'formik';
 import LoginSchema from '../utils/LoginSchema';
 import BgPaws from '../components/BgPaws';
@@ -28,15 +28,18 @@ const loginUser = async (values, login) => {
   }
 }
 
-const loginGoogle = async(loginG, navigation, authUser) => {
+const loginGoogle = async(loginG, navigation, authUser, setIsLoading) => {
   try {
+    setIsLoading(true);
     await GoogleSignin.hasPlayServices();
     const userInfo = await GoogleSignin.signIn();
     const res = await loginG(userInfo.user);
+    setIsLoading(false);
     if (res) {
       navigation.navigate('Home');
     }
   } catch (error) {
+    setIsLoading(false);
     console.log('error: ', error);
   }
 }
@@ -44,6 +47,7 @@ const loginGoogle = async(loginG, navigation, authUser) => {
 const LoginScreen = () => {
   const {login, authUser, loginG} = useAuth();
   const navigation = useNavigation();
+  const [isLoading, setIsLoading] = useState(false);
 
   async function loginFunction(values) {
     try {
@@ -59,6 +63,8 @@ const LoginScreen = () => {
   function onRegistrar() {
     navigation.navigate('Register');
   }
+
+
   return (
     <BgPaws opacity={0.78}>
       <HeaderSesion style={styles.img} title="INICIAR SESIÓN" />
@@ -79,12 +85,21 @@ const LoginScreen = () => {
               title="INGRESAR"
               onPressFunction={handleSubmit}
               onRegistrar={onRegistrar}
-              onGoogle={() => loginGoogle(loginG, navigation, authUser)}
+              onGoogle={() => loginGoogle(loginG, navigation, authUser, setIsLoading)}
             />
+            {isLoading && <ViewIndicator size="large" color="#fff"/>}
           </View>
         )}
       </Formik>
     </BgPaws>
+  );
+};
+
+const ViewIndicator = () => {
+  return (
+    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+      <ActivityIndicator size="large" color="#5500dc" />
+    </View>
   );
 };
 
