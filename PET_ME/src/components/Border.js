@@ -2,8 +2,7 @@ import {StyleSheet, View} from 'react-native';
 import React from 'react';
 import colors from '../utils/colors';
 
-const Border = props => {
-  const {borderType} = props;
+const Border = () => {
   return <View style={styles.border_orange} />;
 };
 
@@ -16,7 +15,7 @@ const styles = StyleSheet.create({
     borderTopWidth: 0,
     borderLeftWidth: 0,
     borderRightWidth: 0,
-    padding: 5,
+    marginBottom: 10,
   },
 });
 
