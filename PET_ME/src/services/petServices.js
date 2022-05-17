@@ -3,8 +3,11 @@ import firestore from '@react-native-firebase/firestore';
 import storage from '@react-native-firebase/storage';
 
 export const savePetPost = async pet => {
+  const publishedAt = firestore.Timestamp.fromDate(new Date());
   try {
-    await firestore().collection('petpost').add(pet);
+    await firestore()
+      .collection('petpost')
+      .add({...pet, publishedAt: publishedAt});
     console.log('Pet added');
     return true;
   } catch (error) {
@@ -83,4 +86,46 @@ export const getCatBreeds = async setter => {
   } catch (error) {
     console.log(error);
   }
+};
+
+// Esta funcion recibe los sgtes props
+// limit = cantidad de records a traer
+// orderBy = campo por el cual se ordenará la collection
+// directionStr = 'desc'o 'asc'
+export const getPetPosts = async (limit, orderBy, directionStr = 'desc') => {
+  const petposts = [];
+  try {
+    await firestore()
+      .collection('petpost')
+      .limit(limit)
+      .orderBy(orderBy, directionStr)
+      .get()
+      .then(collectionSnapshot => {
+        collectionSnapshot.forEach(documentSnapshot => {
+          petposts.push(documentSnapshot.data());
+        });
+      });
+    return petposts;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const ageFormated = petage => {
+  let result = '';
+  if (petage.type === 'year') {
+    if (Number(petage.value) === 1) {
+      result = `${petage.value} año`;
+    } else {
+      result = `${petage.value} años`;
+    }
+    return result;
+  } else {
+    if (Number(petage.value) === 1) {
+      result = `${petage.value} mes`;
+    } else {
+      result = `${petage.value} meses`;
+    }
+  }
+  return result;
 };

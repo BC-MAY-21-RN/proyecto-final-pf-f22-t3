@@ -1,14 +1,27 @@
-import {Image, StyleSheet, View} from 'react-native';
-import React from 'react';
+import {Image, StyleSheet, View, FlatList} from 'react-native';
+import React, {useEffect, useState} from 'react';
 import BgPaws from '../components/BgPaws';
 import Border from '../components/Border';
 import ButtonPet from '../components/ButtonPet';
 import Img from '../components/Image';
 import Title from '../components/Title';
 import {useNavigation} from '@react-navigation/native';
+import {getPetPosts} from '../services/petServices';
+import {useFocusEffect} from '@react-navigation/native';
 
 const Start = () => {
   const navigation = useNavigation();
+  const [latestPets, setLatestPets] = useState([]);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      const fetchData = async () => {
+        const data = await getPetPosts(4, 'publishedAt');
+        setLatestPets(data);
+      };
+      fetchData().catch(console.error);
+    }, []),
+  );
 
   const loginScreen = () => {
     navigation.navigate('Login');
@@ -20,59 +33,27 @@ const Start = () => {
         style={{alignSelf: 'center'}}
         source={require('../assets/logos/Brand.png')}
       />
-      <Title text={'¡BIENVENIDO!'} textType={'title'} />
-      <Border style={'border_orange'} />
-      <View style={styles.container}>
-        <Img
-          source={require('../assets/pets/1_pet.png')}
-          petName={'WILSON'}
-          petAge={'3 años'}
-          petGender={'M'}
-          imageType={'img_pet'}
-          textType={'TitleProfile'}
-          textAgeType={'subTitleProfile'}
-        />
-        <Img
-          source={require('../assets/pets/2_pet.png')}
-          petName={'PEDILLOS'}
-          petAge={'31 años'}
-          petGender={'H'}
-          imageType={'img_pet'}
-          textType={'TitleProfile'}
-          textAgeType={'subTitleProfile'}
-        />
-        <Img
-          source={require('../assets/pets/3_pet.png')}
-          petName={'FREDDY'}
-          petAge={'4 años'}
-          petGender={'H'}
-          imageType={'img_pet'}
-          textType={'TitleProfile'}
-          textAgeType={'subTitleProfile'}
-        />
-        <Img
-          source={require('../assets/pets/4_pet.png')}
-          petName={'NELSON'}
-          petAge={'2 años'}
-          petGender={'H'}
-          imageType={'img_pet'}
-          textType={'TitleProfile'}
-          textAgeType={'subTitleProfile'}
+      <Title
+        style={{marginVertical: 10}}
+        text={'¡BIENVENIDO!'}
+        textType={'title'}
+      />
+      <Border />
+      <View>
+        <FlatList
+          data={latestPets}
+          renderItem={({item}) => <Img petPost={item} />}
+          keyExtractor={(item, index) => index}
+          numColumns={2}
         />
       </View>
-      <ButtonPet text={'INGRESAR'} typeButton={'B'} onPressFunction={loginScreen} />
+      <ButtonPet
+        text={'INGRESAR'}
+        typeButton={'B'}
+        onPressFunction={loginScreen}
+      />
     </BgPaws>
   );
 };
-//<Icon name={rightIcon} size={20} color={colors.Gray_200} />
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-  },
-});
-
-const container = StyleSheet.compose(styles.container);
 
 export default Start;
