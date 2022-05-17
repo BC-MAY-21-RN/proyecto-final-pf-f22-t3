@@ -9,29 +9,37 @@ import LoginFooter from '../components/FooterSesion';
 import auth from '@react-native-firebase/auth';
 import useAuth from '../hooks/useAuth';
 import {useNavigation} from '@react-navigation/native';
-import {GoogleSignin, statusCodes} from '@react-native-google-signin/google-signin';
+import {
+  GoogleSignin,
+  statusCodes,
+} from '@react-native-google-signin/google-signin';
 
 GoogleSignin.configure({
-  webClientId: '841914520438-e6s04fp9sr0aeun1fspjfdip6thjhct2.apps.googleusercontent.com',
+  webClientId:
+    '841914520438-e6s04fp9sr0aeun1fspjfdip6thjhct2.apps.googleusercontent.com',
 });
 
 const loginUser = async (values, login) => {
   try {
     await auth()
-    .signInWithEmailAndPassword(values.email, values.password)
-    .then(user => {
-      login(user.user.email);
-    })
+      .signInWithEmailAndPassword(values.email, values.password)
+      .then(user => {
+        login(user.user.email);
+      });
     return true;
   } catch (er) {
+    console.log(er);
     return false;
   }
-}
+};
 
-const loginGoogle = async(loginG, navigation, authUser) => {
+const loginGoogle = async (loginG, navigation) => {
   try {
     await GoogleSignin.hasPlayServices();
     const userInfo = await GoogleSignin.signIn();
+    const {idToken} = userInfo;
+    const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+    await auth().signInWithCredential(googleCredential);
     const res = await loginG(userInfo.user);
     if (res) {
       navigation.navigate('Home');
@@ -39,10 +47,10 @@ const loginGoogle = async(loginG, navigation, authUser) => {
   } catch (error) {
     console.log('error: ', error);
   }
-}
+};
 
 const LoginScreen = () => {
-  const {login, authUser, loginG} = useAuth();
+  const {login, loginG} = useAuth();
   const navigation = useNavigation();
 
   async function loginFunction(values) {
@@ -79,7 +87,7 @@ const LoginScreen = () => {
               title="INGRESAR"
               onPressFunction={handleSubmit}
               onRegistrar={onRegistrar}
-              onGoogle={() => loginGoogle(loginG, navigation, authUser)}
+              onGoogle={() => loginGoogle(loginG, navigation)}
             />
           </View>
         )}

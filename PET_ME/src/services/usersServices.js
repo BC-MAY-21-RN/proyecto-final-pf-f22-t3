@@ -2,7 +2,7 @@ import authFirebase from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 
 export const getUserData = async (userData, setAuthUser) => {
-  let user = undefined;
+  let user;
   try {
     await firestore()
       .collection('users')
@@ -33,7 +33,7 @@ export const addUserFirestore = async user => {
 };
 
 export const verifyExistUser = async email => {
-  let user = undefined;
+  let user;
   try {
     await firestore()
       .collection('users')
@@ -58,18 +58,18 @@ export const verifyExistUser = async email => {
   }
 };
 
-export function registerRaza() {
-  (async () => {
-    try {
-      for (let i = 0; i < catbreed.length; i++) {
-        await firestore().collection('catbreed').add({
-          name: catbreed[i].name,
-          id: catbreed[i].id,
-        });
-        console.log('Raza registrada: ', catbreed[i].name);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  })();
-}
+// export function registerRaza() {
+//   (async () => {
+//     try {
+//       for (let i = 0; i < catbreed.length; i++) {
+//         await firestore().collection('catbreed').add({
+//           name: catbreed[i].name,
+//           id: catbreed[i].id,
+//         });
+//         console.log('Raza registrada: ', catbreed[i].name);
+//       }
+//     } catch (error) {
+//       console.log(error);
+//     }
+//   })();
+// }
