@@ -7,18 +7,22 @@ import Img from '../components/Image';
 import Title from '../components/Title';
 import {useNavigation} from '@react-navigation/native';
 import {getPetPosts} from '../services/petServices';
+import {useFocusEffect} from '@react-navigation/native';
 
 const Start = () => {
   const navigation = useNavigation();
   const [latestPets, setLatestPets] = useState([]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const data = await getPetPosts(4, 'publishedAt');
-      setLatestPets(data);
-    };
-    fetchData().catch(console.error);
-  }, []);
+  useFocusEffect(
+    React.useCallback(() => {
+      const fetchData = async () => {
+        const data = await getPetPosts(4, 'publishedAt');
+        setLatestPets(data);
+      };
+      fetchData().catch(console.error);
+    }, []),
+  );
+
   const loginScreen = () => {
     navigation.navigate('Login');
   };

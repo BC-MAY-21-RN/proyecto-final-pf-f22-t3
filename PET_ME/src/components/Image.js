@@ -16,7 +16,7 @@ const Img = ({petPost}) => {
         style={styles.img_pet}
       />
       <View style={styles.footerDetails}>
-        <View>
+        <View style={{flex: 1}}>
           <Title
             style={{marginButton: 0}}
             text={petname}
@@ -51,7 +51,6 @@ const styles = StyleSheet.create({
   img_pet: {
     borderWidth: 2,
     borderRadius: 20,
-    width: '100%',
     height: 150,
   },
   footerDetails: {
