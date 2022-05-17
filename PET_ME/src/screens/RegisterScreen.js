@@ -14,7 +14,7 @@ import {verifyExistUser} from '../services/usersServices';
 
 const registerUser = async (values, navigation, login) => {
   try {
-    const exist = verifyExistUser(values.email);
+    const exist = await verifyExistUser(values.email);
     if (!exist) {
       await auth().createUserWithEmailAndPassword(
         values.email,

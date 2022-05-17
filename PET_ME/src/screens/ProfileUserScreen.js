@@ -6,8 +6,10 @@ import colors from '../utils/colors';
 import StyleBox from '../utils/StyleBox';
 import InfoUser from '../utils/InfoUser';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import useAuth from '../hooks/useAuth';
 
 const ProfileUser = () => {
+  const {authUser} = useAuth();
   return (
     <BgPaws opacity={0.78}>
       <View style={styles.container}>
@@ -15,17 +17,17 @@ const ProfileUser = () => {
           <View style={StyleBox.width20}>
             <Image
               style={StyleBox.box_profileimg}
-              source={require('../assets/users/1_user.png')}
+              source={{uri: authUser.photo}}
             />
           </View>
           <View style={StyleBox.width60}>
             <Text style={StyleBox.box_title}>
               {' '}
-              {InfoUser.ProfileData.name}{' '}
+              {authUser.name}{' '}
             </Text>
             <Text style={StyleBox.box_subtitle}>
               {' '}
-              {InfoUser.ProfileData.email}{' '}
+              {authUser.email}{' '}
             </Text>
           </View>
           <View style={StyleBox.width20}>
