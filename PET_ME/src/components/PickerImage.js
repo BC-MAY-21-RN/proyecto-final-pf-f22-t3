@@ -7,9 +7,9 @@ import MultipleImagePicker from '@baronha/react-native-multiple-image-picker';
 import Pressable from 'react-native/Libraries/Components/Pressable/Pressable';
 import {useField} from 'formik';
 
-const PickerImage = ({maxSelectedAssets = 3, images, setImages, ...props}) => {
+const PickerImage = ({images, setImages, ...props}) => {
+  const {description, maxSelectedAssets} = props;
   const [field, meta, helpers] = useField(props);
-
   const openPicker = async () => {
     try {
       const response = await MultipleImagePicker.openPicker({
@@ -71,7 +71,7 @@ const PickerImage = ({maxSelectedAssets = 3, images, setImages, ...props}) => {
           source={require('../assets/img/image.svg')}
         />
       )}
-      <Text style={styles.pickImgTitle}>Añade las fotos de tu mascota</Text>
+      <Text style={styles.pickImgTitle}>{description}</Text>
       <Text style={styles.pickImgSubTitle}>(max 6 Mb)</Text>
     </RNBounceable>
   );

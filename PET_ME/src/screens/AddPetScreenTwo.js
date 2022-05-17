@@ -1,4 +1,4 @@
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, View, ActivityIndicator, Alert} from 'react-native';
 import React, {useState} from 'react';
 import BgPaws from '../components/BgPaws';
 import ButtonPet from '../components/ButtonPet';
@@ -28,9 +28,12 @@ const initialValues = {
 const AddPetScreenTwo = ({route, navigation}) => {
   const {params} = route;
   const [modalVisible, setModalVisible] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const {authUser} = useAuth();
   const userEmail = {userEmail: authUser.email};
+
   const addPet = async values => {
+    setIsLoading(true);
     const imageUrl = await Promise.all(
       values.petimages.map(img => {
         return uploadImage(img);
@@ -39,11 +42,20 @@ const AddPetScreenTwo = ({route, navigation}) => {
       return responses;
     });
     values.petimages = imageUrl;
-    (await savePetPost(values)) && setModalVisible(true);
+    const res = await savePetPost(values)
+    setIsLoading(false);
+    if (res) {
+      setModalVisible(true);
+    } else {
+      Alert.alert('Error', 'Error al guardar el post');
+    }
+    
   };
   return (
     <>
       <BgPaws opacity={0.54}>
+        {isLoading ? (<ActivityIndicator size="large" color={colors.Orange} />) : (
+        <>
         <View style={styles.headerContainer}>
           <ButtonPet
             text={'Atras'}
@@ -130,6 +142,7 @@ const AddPetScreenTwo = ({route, navigation}) => {
             )}
           </Formik>
         </View>
+        </> )}
       </BgPaws>
       <ModalPet
         title={'¡Gracias humano!'}

@@ -7,6 +7,7 @@ import Login from '../screens/LoginScreen';
 import RegisterScreen from '../screens/RegisterScreen';
 import AddPetScreenOne from '../screens/AddPetScreenOne';
 import AddPetScreenTwo from '../screens/AddPetScreenTwo';
+import AddPublication from '../screens/AddPublication';
 
 const Stack = createNativeStackNavigator();
 
@@ -41,6 +42,11 @@ export default function Navigation() {
       <Stack.Screen
         name="Register"
         component={RegisterScreen}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="AddPublication"
+        component={AddPublication}
         options={{headerShown: false}}
       />
     </Stack.Navigator>

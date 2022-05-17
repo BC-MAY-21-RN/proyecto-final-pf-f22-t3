@@ -6,7 +6,6 @@ import useAuth from '../hooks/useAuth';
 
 export default function PerfilScreen() {
   const {authUser} = useAuth();
-  console.log(authUser);
   return (
     <BgPaws opacity={0.2}>
         <Text style={styles.title}>Perfil Screen</Text>

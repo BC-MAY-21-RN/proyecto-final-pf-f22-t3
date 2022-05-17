@@ -13,7 +13,6 @@ export const getUserData = async (userData, setAuthUser) => {
           user = documentSnapshot.data();
         });
       });
-    console.log('user data: ', user);
     return user;
   } catch (error) {
     console.log(error);
@@ -44,12 +43,9 @@ export const verifyExistUser = async email => {
           user = documentSnapshot.data();
         });
       });
-    console.log('usuario g: ', user);
     if (user) {
-      console.log('User exist');
       return true;
     } else {
-      console.log('User not exist');
       return false;
     }
   } catch (error) {
@@ -66,7 +62,6 @@ export function registerRaza() {
           name: catbreed[i].name,
           id: catbreed[i].id,
         });
-        console.log('Raza registrada: ', catbreed[i].name);
       }
     } catch (error) {
       console.log(error);

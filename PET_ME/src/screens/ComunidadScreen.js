@@ -5,17 +5,22 @@ import {
   Image,
   ActivityIndicator,
   FlatList,
+  TouchableOpacity,
 } from 'react-native';
 import React, {useCallback, useState, useEffect} from 'react';
 import {useFocusEffect} from '@react-navigation/native';
 import BgPaws from '../components/BgPaws';
 import {getPublications} from '../services/comunityServices';
 import CardComunity from '../components/comunity/CardComunity';
+import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
+import {faPlusCircle, faFeatherPointed} from '@fortawesome/free-solid-svg-icons';
 import colors from '../utils/colors';
+import {useNavigation} from '@react-navigation/native';
 
 export default function ComunidadScreen() {
   const [isLoading, setIsLoading] = useState(false);
   const [publications, setPublications] = useState([]);
+  const navigation = useNavigation();
 
   useEffect(() => {
     (async () => {
@@ -55,6 +60,13 @@ export default function ComunidadScreen() {
             />
           </View>
         )}
+        <TouchableOpacity
+          style={styles.touchableOpacity}
+          onPress={() => {
+            navigation.navigate('AddPublication');
+          }}>
+            <FontAwesomeIcon icon={faFeatherPointed} size={40} color={colors.Orange} />
+          </TouchableOpacity>
       </View>
     </BgPaws>
   );
@@ -75,5 +87,16 @@ const styles = StyleSheet.create({
   list: {
     backgroundColor: colors.Gray_200,
     width: '110%',
+  },
+  touchableOpacity: {
+    position: 'absolute',
+    left: '84%',
+    bottom: 25,
+    flexDirection: 'row',
+    backgroundColor: colors.Gray_500,
+    padding: 12,
+    borderRadius: 50,
+    borderColor: colors.Orange,
+    borderWidth: 2,
   },
 });
