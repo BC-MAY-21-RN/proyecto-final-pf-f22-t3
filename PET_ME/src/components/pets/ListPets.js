@@ -1,4 +1,4 @@
-import {View, FlatList, ScrollView} from 'react-native';
+import {FlatList, ScrollView} from 'react-native';
 import React from 'react';
 import CardPet from '../CardPet';
 

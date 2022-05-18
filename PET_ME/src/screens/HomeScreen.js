@@ -114,36 +114,3 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
 });
-
-const pets = [
-  {
-    id: 1,
-    name: 'Wilson',
-    age: '2 meses',
-    img: 'https://img2.freepng.es/20171201/c31/dog-png-10-5a2217854f42a8.0607243215121836853247.jpg',
-    raza: 'Labrador',
-    genero: 'Macho',
-    location: 'Guadalajara',
-    tam: 'Grande',
-  },
-  {
-    id: 2,
-    name: 'Freddy',
-    age: '4 años',
-    img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxozu0IZilehUsAg268xr20lmNPa9H-SBBv4-_tz_BxVWIe4L6jIJd0DbH8Vz1KzMAgCY&usqp=CAU',
-    raza: 'Shiba Inu',
-    genero: 'Macho',
-    location: 'Tuluá',
-    tam: 'Mediano',
-  },
-  {
-    id: 3,
-    name: 'Pedillos',
-    age: '2 meses',
-    img: 'https://ih1.redbubble.net/image.2515683476.7692/st,small,845x845-pad,1000x1000,f8f8f8.jpg',
-    raza: 'Chihuahua',
-    genero: 'Macho',
-    location: 'Monterrey',
-    tam: 'Pequeño',
-  },
-];
