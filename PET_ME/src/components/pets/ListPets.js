@@ -8,7 +8,7 @@ export default function ListPets(props) {
     <ScrollView horizontal={false}>
       <FlatList
         data={pets}
-        keyExtractor={pets => pets.id}
+        keyExtractor={(item, index) => index}
         renderItem={({item}) => <CardPet pet={item} />}
       />
     </ScrollView>

@@ -9,19 +9,30 @@ import {
 } from 'react-native';
 
 import React, {useState} from 'react';
-
 import BgPaws from '../components/BgPaws';
 import Title from '../components/Title';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import ListPets from '../components/pets/ListPets';
-
 import ListIcons from '../components/pets/ListIcons';
 import colors from '../utils/colors';
-
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faArrowDownAZ, faArrowUpAZ} from '@fortawesome/free-solid-svg-icons';
+import {getPetPosts} from '../services/petServices';
+import {useNavigation, useFocusEffect} from '@react-navigation/native';
 
 export default function HomeScreen() {
+  const navigation = useNavigation();
+  const [latestPets, setLatestPets] = useState([]);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      const fetchData = async () => {
+        const data = await getPetPosts(4, 'publishedAt');
+        setLatestPets(data);
+      };
+      fetchData().catch(console.error);
+    }, []),
+  );
   return (
     <BgPaws opacity={0.7}>
       <ScrollView horizontal={false}>
@@ -36,14 +47,14 @@ export default function HomeScreen() {
           <TextInput placeholder="Buscar" />
         </View>
         <ListFilters />
-        <Title text="Ultimos Agregados" />
+        <Title text="Ultimos Agregados" textType={'TitleProfile'} />
+        <View style={styles.containerList}>
+          <ListPets pets={latestPets} />
+        </View>
+        {/* <Title text="Favoritos" />
         <View style={styles.containerList}>
           <ListPets />
-        </View>
-        <Title text="Favoritos" />
-        <View style={styles.containerList}>
-          <ListPets />
-        </View>
+        </View> */}
       </ScrollView>
     </BgPaws>
   );
