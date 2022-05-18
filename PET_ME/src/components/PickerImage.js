@@ -10,6 +10,7 @@ import {useField} from 'formik';
 const PickerImage = ({images, setImages, ...props}) => {
   const {description, maxSelectedAssets} = props;
   const [field, meta, helpers] = useField(props);
+  
   const openPicker = async () => {
     try {
       const response = await MultipleImagePicker.openPicker({

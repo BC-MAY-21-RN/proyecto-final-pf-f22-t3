@@ -22,6 +22,18 @@ export default function ComunidadScreen() {
   const [publications, setPublications] = useState([]);
   const navigation = useNavigation();
 
+  useFocusEffect(
+    React.useCallback(() => {
+      const getData = async () => {
+        setIsLoading(true);
+        const res = await getPublications();
+        setIsLoading(false);
+        setPublications(res);
+      };
+      getData().catch(console.error);
+    }, []),
+  );
+
   useEffect(() => {
     (async () => {
       try {
@@ -75,6 +87,7 @@ export default function ComunidadScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    marginTop: 100,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -87,6 +100,8 @@ const styles = StyleSheet.create({
   list: {
     backgroundColor: colors.Gray_200,
     width: '110%',
+    marginTop: 20,
+    marginBottom: 76,
   },
   touchableOpacity: {
     position: 'absolute',

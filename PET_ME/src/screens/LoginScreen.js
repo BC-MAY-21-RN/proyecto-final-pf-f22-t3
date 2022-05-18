@@ -33,7 +33,7 @@ const loginUser = async (values, login) => {
   }
 };
 
-const loginGoogle = async(loginG, navigation, authUser, setIsLoading) => {
+const loginGoogle = async(loginG, navigation, setIsLoading) => {
   try {
     setIsLoading(true);
     await GoogleSignin.hasPlayServices();
@@ -93,7 +93,7 @@ const LoginScreen = () => {
               title="INGRESAR"
               onPressFunction={handleSubmit}
               onRegistrar={onRegistrar}
-              onGoogle={() => loginGoogle(loginG, navigation, authUser, setIsLoading)}
+              onGoogle={() => loginGoogle(loginG, navigation, setIsLoading)}
             />
             {isLoading && <ViewIndicator size="large" color="#fff"/>}
           </View>

@@ -1,4 +1,4 @@
-import {View, Text, StyleSheet, Image, ActivityIndicator} from 'react-native';
+import {View, Text, StyleSheet, Image, ActivityIndicator, Alert} from 'react-native';
 import React, {useEffect, useState, useRef} from 'react';
 import BgPaws from '../components/BgPaws';
 import PickerImage from '../components/PickerImage';
@@ -8,42 +8,66 @@ import ButtonPet from '../components/ButtonPet';
 import AddPublicationSchema from '../utils/AddPublicationSchema';
 import colors from '../utils/colors';
 import {uploadImage} from '../services/petServices';
+import useAuth from '../hooks/useAuth';
+import {addPublication} from '../services/comunityServices';
+import {useNavigation} from '@react-navigation/native';
+
+import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
+import {faArrowLeft} from '@fortawesome/free-solid-svg-icons';
 
 const initialValues = {
   description: '',
   image: [],
 };
 
-export default function AddPublication() {
+const AddPublication = () => {
   const [images, setImages] = useState([]);
   const formikRef = useRef(null);
   const [isLoading, setIsLoading] = useState(false);
-
-  const addPublication = async values => {
-    setIsLoading(true);
-    try {
-      const imageUrl = await Promise.all(
-        values.image.map(img => {
-          return uploadImage(img);
-        }),
-      ).then(responses => {
-        return responses;
-      });
-      values.image = imageUrl
-      console.log(values.image);
-    } catch (error) {
-      console.log("Error: ", error);
-    }
-    
+  const {authUser} = useAuth();
+  const navigation = useNavigation();
+  const user = {
+    emailUser: authUser.email,
+    name: authUser.name,
+    photo: authUser.photo,
   };
+
+  async function addPub(values, authUser) {
+    setIsLoading(true);
+    const imageUrl = await Promise.all(
+      values.image.map(img => {
+        return uploadImage(img);
+      }),
+    ).then(responses => {
+      return responses;
+    });
+    values.image = imageUrl;
+    const res = await addPublication(values, authUser);
+    setIsLoading(false);
+    if (res) {
+      navigation.navigate('Comunidad');
+    }
+    else {
+      alert('Error al publicar');
+    }
+  }
 
   return (
     <BgPaws opacity={0.2}>
       <View style={styles.container}>
+        <View style={styles.header}>
+          <FontAwesomeIcon
+            icon={faArrowLeft}
+            color="#fff"
+            size={40}
+            style={{marginLeft: -150, marginTop: 400}}
+            onPress={navigation.goBack}
+          />
+        </View>
         <Image
-          source={require('../assets/logos/Brand.png')}
-          style={styles.logo}
-        />
+            source={require('../assets/logos/Brand.png')}
+            style={styles.logo}
+          />
         <Text style={styles.title}>Agregar publicación</Text>
 
         <View>
@@ -52,7 +76,7 @@ export default function AddPublication() {
             innerRef={formikRef}
             validateOnMount={true}
             validationSchema={AddPublicationSchema}
-            onSubmit={values => addPublication(values)}>
+            onSubmit={values => addPub({...values, ...user})}>
             {({handleSubmit, values, isValid}) => (
               <View>
                 <PickerImage
@@ -89,13 +113,22 @@ export default function AddPublication() {
       </View>
     </BgPaws>
   );
-}
+};
+
+export default AddPublication;
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 300,
+    marginTop: 100,
     alignItems: 'center',
-    justifyContent: 'center',
+  },
+  header: {
+    justifyContent: 'flex-end',
+    marginTop: -100,
+  },
+  logo: {
+    marginTop: 20,
+    marginBottom: 20,
   },
   title: {
     color: '#fff',
