@@ -3,6 +3,7 @@ import React, {useState} from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faDog, faCat, faMars, faVenus} from '@fortawesome/free-solid-svg-icons';
 import colors from '../../utils/colors';
+import {addFilter} from '../../services/petServices';
 
 export default function ListIcons() {
   return (
@@ -16,17 +17,6 @@ export default function ListIcons() {
 
 const IconsType = () => {
   const [typePet, setTypePet] = useState([]);
-
-  const addTypePet = typeStr => {
-    if (typePet.includes(typeStr)) {
-      const typePetActuales = typePet.filter(type => type !== typeStr);
-      setTypePet(typePetActuales);
-    } else {
-      // Agregar al state
-      const newType = [...typePet, typeStr];
-      setTypePet(newType);
-    }
-  };
   return (
     <View style={styles.alingCenter}>
       <Text style={styles.title}>Tipo</Text>
@@ -36,7 +26,7 @@ const IconsType = () => {
             styles.containerIcon,
             typePet.includes('dog') ? styles.active : styles.inactive,
           ]}
-          onPress={() => addTypePet('dog')}>
+          onPress={() => addFilter('dog', typePet, setTypePet)}>
           <FontAwesomeIcon
             icon={faDog}
             size={30}
@@ -48,7 +38,7 @@ const IconsType = () => {
             styles.containerIcon,
             typePet.includes('cat') ? styles.active : styles.inactive,
           ]}
-          onPress={() => addTypePet('cat')}>
+          onPress={() => addFilter('cat', typePet, setTypePet)}>
           <FontAwesomeIcon
             icon={faCat}
             size={30}
@@ -61,35 +51,85 @@ const IconsType = () => {
 };
 
 const IconsTam = () => {
+  const [petsize, setPetsize] = useState([]);
+
   return (
     <View style={styles.alingCenter}>
       <Text style={styles.title}>Tamaño</Text>
       <View style={styles.containerTam}>
-        <View style={styles.containerIcon}>
-          <FontAwesomeIcon icon={faDog} size={18} color={colors.Gray_400} />
-        </View>
-        <View style={styles.containerIcon}>
-          <FontAwesomeIcon icon={faDog} size={24} color={colors.Gray_400} />
-        </View>
-        <View style={styles.containerIcon}>
-          <FontAwesomeIcon icon={faDog} size={30} color={colors.Gray_400} />
-        </View>
+        <Pressable
+          style={[
+            styles.containerIcon,
+            petsize.includes('small') ? styles.active : styles.inactive,
+          ]}
+          onPress={() => addFilter('small', petsize, setPetsize)}>
+          <FontAwesomeIcon
+            icon={faDog}
+            size={18}
+            color={petsize.includes('small') ? colors.Orange : colors.Gray_400}
+          />
+        </Pressable>
+        <Pressable
+          style={[
+            styles.containerIcon,
+            petsize.includes('medium') ? styles.active : styles.inactive,
+          ]}
+          onPress={() => addFilter('medium', petsize, setPetsize)}>
+          <FontAwesomeIcon
+            icon={faDog}
+            size={24}
+            color={petsize.includes('medium') ? colors.Orange : colors.Gray_400}
+          />
+        </Pressable>
+        <Pressable
+          style={[
+            styles.containerIcon,
+            petsize.includes('big') ? styles.active : styles.inactive,
+          ]}
+          onPress={() => addFilter('big', petsize, setPetsize)}>
+          <FontAwesomeIcon
+            icon={faDog}
+            size={30}
+            color={petsize.includes('big') ? colors.Orange : colors.Gray_400}
+          />
+        </Pressable>
       </View>
     </View>
   );
 };
 
 const IconsGender = () => {
+  const [petgender, setPetgender] = useState([]);
   return (
     <View style={styles.alingCenter}>
       <Text style={styles.title}>Sexo</Text>
       <View style={styles.containerGen}>
-        <View style={styles.containerIcon}>
-          <FontAwesomeIcon icon={faMars} size={30} color={colors.Gray_400} />
-        </View>
-        <View style={styles.containerIcon}>
-          <FontAwesomeIcon icon={faVenus} size={30} color={colors.Gray_400} />
-        </View>
+        <Pressable
+          style={[
+            styles.containerIcon,
+            petgender.includes('male') ? styles.active : styles.inactive,
+          ]}
+          onPress={() => addFilter('male', petgender, setPetgender)}>
+          <FontAwesomeIcon
+            icon={faMars}
+            size={30}
+            color={petgender.includes('male') ? colors.Orange : colors.Gray_400}
+          />
+        </Pressable>
+        <Pressable
+          style={[
+            styles.containerIcon,
+            petgender.includes('female') ? styles.active : styles.inactive,
+          ]}
+          onPress={() => addFilter('female', petgender, setPetgender)}>
+          <FontAwesomeIcon
+            icon={faVenus}
+            size={30}
+            color={
+              petgender.includes('female') ? colors.Orange : colors.Gray_400
+            }
+          />
+        </Pressable>
       </View>
     </View>
   );

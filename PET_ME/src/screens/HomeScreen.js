@@ -38,7 +38,7 @@ export default function HomeScreen() {
       <ScrollView horizontal={false}>
         <View style={styles.container}>
           <Image
-            source={require('../assets/logos/Brand.png')}
+            source={require('../assets/logos/brand-small.png')}
             style={styles.logo}
           />
           <Icon name="bell" size={30} color="#fff" />
@@ -63,18 +63,18 @@ export default function HomeScreen() {
 function ListFilters() {
   const [isFilter, setIsFilter] = useState(false);
   return (
-    <View>
+    <View style={{alignItems: 'flex-end'}}>
       <Pressable
         style={styles.containerFilters}
         onPress={() => setIsFilter(!isFilter)}>
         <Text style={styles.textFilter}>Filtros</Text>
         <FontAwesomeIcon
           icon={isFilter ? faArrowUpAZ : faArrowDownAZ}
-          size={30}
-          color={colors.Gray_200}
+          size={20}
+          color={colors.Gray_100}
         />
       </Pressable>
-      {isFilter ? <ListIcons /> : <View style={{marginBottom: 10}} />}
+      {isFilter ? <ListIcons /> : <View style={{marginBottom: 5}} />}
     </View>
   );
 }
@@ -82,9 +82,9 @@ function ListFilters() {
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     flexDirection: 'row',
-    marginBottom: 20,
+    marginVertical: 20,
   },
   containerList: {
     width: '100%',
@@ -94,23 +94,29 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 30,
   },
-  logo: {
-    width: 150,
-    height: 80,
-  },
+  logo: {marginRight: 10},
   searchInput: {
     backgroundColor: colors.Gray_100,
-    borderRadius: 8,
-    height: 40,
+    borderWidth: 1,
+    borderColor: colors.Gray_300,
+    borderRadius: 25,
     marginBottom: 10,
+    paddingHorizontal: 20,
   },
   containerFilters: {
     flexDirection: 'row',
+    alignItems: 'center',
     marginTop: 5,
+    backgroundColor: colors.Orange,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    borderRadius: 10,
+    marginBottom: 10,
   },
   textFilter: {
-    color: colors.Gray_200,
+    color: colors.Gray_100,
     fontSize: 20,
     marginRight: 10,
+    fontFamily: 'ArchivoNarrow-Regular',
   },
 });

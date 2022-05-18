@@ -129,3 +129,14 @@ export const ageFormated = petage => {
   }
   return result;
 };
+
+export const addFilter = (filterStr, getter, setter) => {
+  if (getter.includes(filterStr)) {
+    const filterActual = getter.filter(type => type !== filterStr);
+    setter(filterActual);
+  } else {
+    // Agregar al state
+    const newType = [...getter, filterStr];
+    setter(newType);
+  }
+};

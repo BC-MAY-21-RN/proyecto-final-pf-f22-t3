@@ -94,6 +94,7 @@ const styles = StyleSheet.create({
     color: colors.Gray_500,
     marginLeft: 12,
     fontFamily: 'ArchivoNarrow-Regular',
+    textTransform: 'capitalize',
   },
   containerGenero: {
     justifyContent: 'space-between',
