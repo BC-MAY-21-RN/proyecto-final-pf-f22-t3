@@ -23,8 +23,9 @@ const styles = StyleSheet.create({
   cont: {
     flexDirection: 'row',
     marginVertical: 5,
+    alignItems: 'center',
   },
   marginText: {
-    marginLeft: 3,
+    marginLeft: 5,
   },
 });
