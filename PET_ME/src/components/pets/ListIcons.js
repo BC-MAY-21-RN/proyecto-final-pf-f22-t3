@@ -1,22 +1,28 @@
 import {View, Text, StyleSheet, Pressable} from 'react-native';
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faDog, faCat, faMars, faVenus} from '@fortawesome/free-solid-svg-icons';
 import colors from '../../utils/colors';
 import {addFilter} from '../../services/petServices';
 
-export default function ListIcons() {
+export default function ListIcons({setSearchFilters}) {
+  const [pettype, setPettype] = useState([]);
+  const [petsize, setPetsize] = useState([]);
+  const [petgender, setPetgender] = useState([]);
+  useEffect(() => {
+    const joinFilters = {pettype, petsize, petgender};
+    setSearchFilters(joinFilters);
+  }, [pettype, petsize, petgender]);
   return (
     <View style={styles.container}>
-      <IconsType />
-      <IconsTam />
-      <IconsGender />
+      <IconsType pettype={pettype} setPettype={setPettype} />
+      <IconsTam petsize={petsize} setPetsize={setPetsize} />
+      <IconsGender petgender={petgender} setPetgender={setPetgender} />
     </View>
   );
 }
 
-const IconsType = () => {
-  const [typePet, setTypePet] = useState([]);
+const IconsType = ({pettype, setPettype}) => {
   return (
     <View style={styles.alingCenter}>
       <Text style={styles.title}>Tipo</Text>
@@ -24,25 +30,25 @@ const IconsType = () => {
         <Pressable
           style={[
             styles.containerIcon,
-            typePet.includes('dog') ? styles.active : styles.inactive,
+            pettype.includes('dog') ? styles.active : styles.inactive,
           ]}
-          onPress={() => addFilter('dog', typePet, setTypePet)}>
+          onPress={() => addFilter('dog', pettype, setPettype)}>
           <FontAwesomeIcon
             icon={faDog}
             size={30}
-            color={typePet.includes('dog') ? colors.Orange : colors.Gray_400}
+            color={pettype.includes('dog') ? colors.Orange : colors.Gray_400}
           />
         </Pressable>
         <Pressable
           style={[
             styles.containerIcon,
-            typePet.includes('cat') ? styles.active : styles.inactive,
+            pettype.includes('cat') ? styles.active : styles.inactive,
           ]}
-          onPress={() => addFilter('cat', typePet, setTypePet)}>
+          onPress={() => addFilter('cat', pettype, setPettype)}>
           <FontAwesomeIcon
             icon={faCat}
             size={30}
-            color={typePet.includes('cat') ? colors.Orange : colors.Gray_400}
+            color={pettype.includes('cat') ? colors.Orange : colors.Gray_400}
           />
         </Pressable>
       </View>
@@ -50,9 +56,7 @@ const IconsType = () => {
   );
 };
 
-const IconsTam = () => {
-  const [petsize, setPetsize] = useState([]);
-
+const IconsTam = ({petsize, setPetsize}) => {
   return (
     <View style={styles.alingCenter}>
       <Text style={styles.title}>Tamaño</Text>
@@ -98,8 +102,7 @@ const IconsTam = () => {
   );
 };
 
-const IconsGender = () => {
-  const [petgender, setPetgender] = useState([]);
+const IconsGender = ({petgender, setPetgender}) => {
   return (
     <View style={styles.alingCenter}>
       <Text style={styles.title}>Sexo</Text>

@@ -1,24 +1,14 @@
-import {
-  View,
-  StyleSheet,
-  Image,
-  ScrollView,
-  TextInput,
-  Text,
-  Pressable,
-} from 'react-native';
+import {View, StyleSheet, Image, ScrollView} from 'react-native';
 
 import React, {useState} from 'react';
 import BgPaws from '../components/BgPaws';
 import Title from '../components/Title';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import ListPets from '../components/pets/ListPets';
-import ListIcons from '../components/pets/ListIcons';
 import colors from '../utils/colors';
-import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {faArrowDownAZ, faArrowUpAZ} from '@fortawesome/free-solid-svg-icons';
 import {getPetPosts} from '../services/petServices';
 import {useNavigation, useFocusEffect} from '@react-navigation/native';
+import SearchPets from '../components/pets/SearchPets';
 
 export default function HomeScreen() {
   const navigation = useNavigation();
@@ -43,39 +33,14 @@ export default function HomeScreen() {
           />
           <Icon name="bell" size={30} color="#fff" />
         </View>
-        <View style={styles.searchInput}>
-          <TextInput placeholder="Buscar" />
-        </View>
-        <ListFilters />
+        <SearchPets />
         <Title text="Ultimos Agregados" textType={'TitleProfile'} />
+
         <View style={styles.containerList}>
           <ListPets pets={latestPets} />
         </View>
-        {/* <Title text="Favoritos" />
-        <View style={styles.containerList}>
-          <ListPets />
-        </View> */}
       </ScrollView>
     </BgPaws>
-  );
-}
-
-function ListFilters() {
-  const [isFilter, setIsFilter] = useState(false);
-  return (
-    <View style={{alignItems: 'flex-end'}}>
-      <Pressable
-        style={styles.containerFilters}
-        onPress={() => setIsFilter(!isFilter)}>
-        <Text style={styles.textFilter}>Filtros</Text>
-        <FontAwesomeIcon
-          icon={isFilter ? faArrowUpAZ : faArrowDownAZ}
-          size={20}
-          color={colors.Gray_100}
-        />
-      </Pressable>
-      {isFilter ? <ListIcons /> : <View style={{marginBottom: 5}} />}
-    </View>
   );
 }
 
@@ -95,14 +60,6 @@ const styles = StyleSheet.create({
     fontSize: 30,
   },
   logo: {marginRight: 10},
-  searchInput: {
-    backgroundColor: colors.Gray_100,
-    borderWidth: 1,
-    borderColor: colors.Gray_300,
-    borderRadius: 25,
-    marginBottom: 10,
-    paddingHorizontal: 20,
-  },
   containerFilters: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -112,11 +69,5 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     borderRadius: 10,
     marginBottom: 10,
-  },
-  textFilter: {
-    color: colors.Gray_100,
-    fontSize: 20,
-    marginRight: 10,
-    fontFamily: 'ArchivoNarrow-Regular',
   },
 });

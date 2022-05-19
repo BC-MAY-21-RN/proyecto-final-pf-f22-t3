@@ -13,7 +13,6 @@ export const getUserData = async (userData, setAuthUser) => {
           user = documentSnapshot.data();
         });
       });
-    console.log('user data: ', user);
     return user;
   } catch (error) {
     console.log(error);
