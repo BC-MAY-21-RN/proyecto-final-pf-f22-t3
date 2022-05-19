@@ -7,6 +7,7 @@ import ListIcons from './ListIcons';
 import RNBounceable from '@freakycoder/react-native-bounceable';
 import {getPetWithFilters} from '../../services/petServices';
 import ListPets from './ListPets';
+import Title from '../Title';
 
 const SearchPets = () => {
   const [searchText, setSearchText] = useState('');
@@ -36,9 +37,16 @@ const SearchPets = () => {
         />
       </View>
       <ListFilters setSearchFilters={setSearchFilters} />
-      <View style={styles.containerList}>
-        <ListPets pets={searchResult} />
-      </View>
+      {searchResult.length > 0 ? (
+        <>
+          <Title text="Resultados de la busqueda" textType={'TitleProfile'} />
+          <View style={styles.containerList}>
+            <ListPets pets={searchResult} />
+          </View>
+        </>
+      ) : (
+        <View style={{marginBottom: 5}} />
+      )}
     </View>
   );
 };
