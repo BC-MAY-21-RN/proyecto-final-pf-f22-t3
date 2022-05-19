@@ -1,11 +1,45 @@
 import {View, Text, Image, StyleSheet} from 'react-native';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import colors from '../../utils/colors';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faHeart} from '@fortawesome/free-regular-svg-icons';
+import { faHeart as heart } from '@fortawesome/free-solid-svg-icons';
+import {updateLikes} from '../../services/comunityServices';
+import useAuth from '../../hooks/useAuth';
 
 export default function CardComunity(props) {
   const {publication} = props;
+  const {id, favs} = publication;
+  const [isLike, setIsLike] = useState(false);
+  const [newFavs, setNewFavs] = useState(favs.length);
+  const {authUser} = useAuth();
+
+  const i = favs.indexOf(authUser.email);
+
+  useEffect(() => {
+    if (i !== -1) {
+      setIsLike(true);
+    }
+  }, []);
+
+  const icon = isLike ? heart : faHeart;
+
+  async function addLike() {
+    const favsNum = newFavs + 1;
+    setNewFavs(favsNum);
+    favs.push(authUser.email);
+    await updateLikes(id, favs);
+    setIsLike(!isLike);
+  };
+
+  async function removeLike() {
+    const favsNum = newFavs - 1;
+    setNewFavs(favsNum);
+    favs.splice(i, 1);
+    await updateLikes(id, favs);
+    setIsLike(!isLike);
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.titlePubli}>
@@ -16,8 +50,8 @@ export default function CardComunity(props) {
         <Image source={{uri: publication.img}} style={styles.imgPubli} />
       </View>
       <View style={styles.containerLikes}>
-        <FontAwesomeIcon icon={faHeart} size={30} color={colors.Orange} />
-        <Text style={styles.textLike}>{publication.favs} Me gusta</Text>
+        <FontAwesomeIcon icon={icon} size={30} color={colors.Orange} onPress={isLike ? removeLike : addLike}/>
+        <Text style={styles.textLike}>{newFavs} Me gusta</Text>
       </View>
       <View>
         <Text style={styles.textPubli}>{publication.title}</Text>

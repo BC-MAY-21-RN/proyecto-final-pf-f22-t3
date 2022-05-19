@@ -1,5 +1,5 @@
 import firestore from '@react-native-firebase/firestore';
-import useAuth from '../hooks/useAuth';
+import Uuid from 'react-native-uuid';
 
 export const getPublications = async () => {
   const publications = [];
@@ -21,23 +21,37 @@ export const getPublications = async () => {
 
 export const addPublication = async (values) => {
   const publishedAt = firestore.Timestamp.fromDate(new Date());
+  id = Uuid.v1();
   const publication = {
-      favs: 0,
+      favs: [],
       img: values.image[0],
       imgUser: values.photo,
       userName: values.name,
+      userEmail: values.emailUser,
       title: values.description,
-      id: 2,
+      id: id,
       date: publishedAt
   };
+  console.log('publication: ', publication);
   try {
-    await firestore()
-      .collection('comunidad')
-      .add(publication);
-      console.log("Add post");
+    await firestore().collection('comunidad').doc(id).set(publication);
+    console.log("Add post");
     return true;
   } catch (error) {
     console.log(error);
     return false;
-  } 
+  }
+};
+
+export const updateLikes = async (id, favs) => {
+  try {
+    await firestore()
+      .collection('comunidad')
+      .doc(id)
+      .update({favs: favs});
+    return true;
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
 };

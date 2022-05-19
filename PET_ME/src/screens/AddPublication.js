@@ -32,7 +32,7 @@ const AddPublication = () => {
     photo: authUser.photo,
   };
 
-  async function addPub(values, authUser) {
+  async function addPub(values) {
     setIsLoading(true);
     const imageUrl = await Promise.all(
       values.image.map(img => {
@@ -42,7 +42,7 @@ const AddPublication = () => {
       return responses;
     });
     values.image = imageUrl;
-    const res = await addPublication(values, authUser);
+    const res = await addPublication(values);
     setIsLoading(false);
     if (res) {
       navigation.navigate('Comunidad');
