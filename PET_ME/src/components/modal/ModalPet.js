@@ -58,6 +58,6 @@ const styles = StyleSheet.create({
     fontFamily: 'BebasNeueBold',
     color: colors.Gray_400,
     width: '100%',
-    paddingTop: 90,
+    paddingTop: 100,
   },
 });

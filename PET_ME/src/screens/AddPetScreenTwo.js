@@ -43,7 +43,7 @@ const AddPetScreenTwo = ({route, navigation}) => {
   };
   return (
     <>
-      <BgPaws opacity={0.54}>
+      <BgPaws opacity={0.54} scroll={true}>
         <View style={styles.headerContainer}>
           <ButtonPet
             text={'Atras'}
@@ -153,10 +153,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     marginBottom: 15,
+    marginTop: 20,
   },
   marginTop10: {marginTop: 10},
   nextButtom: {
     marginTop: 27,
+    marginBottom: 20,
   },
   pickImgContainer: {
     paddingVertical: 15,
