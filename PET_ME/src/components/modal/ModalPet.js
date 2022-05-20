@@ -38,6 +38,7 @@ const styles = StyleSheet.create({
   },
   logo: {position: 'absolute', top: '-30%'},
   modalView: {
+    width: '90%',
     margin: 20,
     backgroundColor: colors.Gray_100,
     borderRadius: 10,
