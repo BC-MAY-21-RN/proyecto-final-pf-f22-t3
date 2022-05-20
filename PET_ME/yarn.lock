@@ -1690,7 +1690,7 @@
   "resolved" "https://registry.npmjs.org/@react-native-firebase/firestore/-/firestore-14.9.3.tgz"
   "version" "14.9.3"
 
-"@react-native-firebase/storage@^14.8.0":
+"@react-native-firebase/storage@^14.9.4":
   "integrity" "sha512-Qvlnftov2pdlu6+FwXeI+3Y3iDwUJNdR5wu5QTZFWJM1gKvUG532jTuu9ZHzD6JdnsnPvnnrWEPhLHTzaTZ7pQ=="
   "resolved" "https://registry.npmjs.org/@react-native-firebase/storage/-/storage-14.9.4.tgz"
   "version" "14.9.4"

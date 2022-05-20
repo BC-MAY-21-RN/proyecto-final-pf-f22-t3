@@ -4,8 +4,8 @@ import {createMaterialBottomTabNavigator} from '@react-navigation/material-botto
 import HomeScreen from '../screens/HomeScreen';
 import BusquedaScreen from '../screens/BusquedaScreen';
 import ComunidadScreen from '../screens/ComunidadScreen';
-import PerfilScreen from '../screens/PerfilScreen';
 import AddPetScreenOne from '../screens/AddPetScreenOne';
+import ProfileUserScreen from '../screens/ProfileUserScreen';
 import VolunteerScreen from '../screens/VolunteerScreen';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -77,7 +77,7 @@ export default function NavigationTab() {
       />
       <Tab.Screen
         name="Perfil"
-        component={PerfilScreen}
+        component={ProfileUserScreen}
         options={{
           headerShown: false,
           tabBarIcon: ({color}) => (
