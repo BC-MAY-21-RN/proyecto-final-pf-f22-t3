@@ -13,6 +13,7 @@ import SearchPets from '../components/pets/SearchPets';
 export default function HomeScreen() {
   const navigation = useNavigation();
   const [latestPets, setLatestPets] = useState([]);
+  const [showSearchResult, setShowSearchResult] = useState(false);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -25,7 +26,7 @@ export default function HomeScreen() {
   );
   return (
     <BgPaws opacity={0.7}>
-      <ScrollView horizontal={false}>
+      <ScrollView>
         <View style={styles.container}>
           <Image
             source={require('../assets/logos/brand-small.png')}
@@ -33,12 +34,18 @@ export default function HomeScreen() {
           />
           <Icon name="bell" size={30} color="#fff" />
         </View>
-        <SearchPets />
-        <Title text="Ultimos Agregados" textType={'TitleProfile'} />
-
-        <View style={styles.containerList}>
-          <ListPets pets={latestPets} />
-        </View>
+        <SearchPets
+          showSearchResult={showSearchResult}
+          setShowSearchResult={setShowSearchResult}
+        />
+        {!showSearchResult ? (
+          <>
+            <Title text="Ultimos Agregados" textType={'TitleProfile'} />
+            <View style={styles.containerList}>
+              <ListPets pets={latestPets} />
+            </View>
+          </>
+        ) : null}
       </ScrollView>
     </BgPaws>
   );

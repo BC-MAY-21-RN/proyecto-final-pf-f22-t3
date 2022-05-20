@@ -1,48 +1,52 @@
 import {View, Text, StyleSheet, Image} from 'react-native';
 import React from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import Icon from 'react-native-vector-icons/FontAwesome';
 import {
   faDog,
   faLocationDot,
   faRulerHorizontal,
-  faMars,
 } from '@fortawesome/free-solid-svg-icons';
 import colors from '../utils/colors';
 import {ageFormated} from '../services/petServices';
 import PetGenderIcon from './pets/PetGenderIcon';
+import RNBounceable from '@freakycoder/react-native-bounceable';
 
 export default function CardPet({pet}) {
   const {petimages, petname, location, petbreed, petsize, petage, petgender} =
     pet;
   return (
-    <View style={styles.container}>
-      <View style={styles.imgCardContainer}>
-        <Image
-          source={{
-            uri: petimages[0],
-          }}
-          style={styles.imgCard}
-        />
-      </View>
-      <View
-        style={{
-          flexDirection: 'row',
-          flex: 1,
-          justifyContent: 'space-between',
-        }}>
-        <View style={styles.containerDetails}>
-          <Text style={styles.titleDes}>{petname}</Text>
-          <Caracteristica icon={faDog} text={petbreed} />
-          <Caracteristica icon={faLocationDot} text={location} />
-          <Caracteristica icon={faRulerHorizontal} text={petsize} />
+    <RNBounceable
+      onPress={() => {
+        console.log('Mi nombre es: ', petname);
+      }}>
+      <View style={styles.container}>
+        <View style={styles.imgCardContainer}>
+          <Image
+            source={{
+              uri: petimages[0],
+            }}
+            style={styles.imgCard}
+          />
         </View>
-        <View style={styles.containerGenero}>
-          <Text style={styles.textEdad}>{ageFormated(petage[0])}</Text>
-          <PetGenderIcon petgender={petgender} />
+        <View
+          style={{
+            flexDirection: 'row',
+            flex: 1,
+            justifyContent: 'space-between',
+          }}>
+          <View style={styles.containerDetails}>
+            <Text style={styles.titleDes}>{petname}</Text>
+            <Caracteristica icon={faDog} text={petbreed} />
+            <Caracteristica icon={faLocationDot} text={location} />
+            <Caracteristica icon={faRulerHorizontal} text={petsize} />
+          </View>
+          <View style={styles.containerGenero}>
+            <Text style={styles.textEdad}>{ageFormated(petage[0])}</Text>
+            <PetGenderIcon petgender={petgender} />
+          </View>
         </View>
       </View>
-    </View>
+    </RNBounceable>
   );
 }
 

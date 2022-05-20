@@ -1,4 +1,4 @@
-import {StyleSheet, Text, View, TextInput} from 'react-native';
+import {StyleSheet, Text, View, TextInput, Image} from 'react-native';
 import React, {useState, useEffect} from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import colors from '../../utils/colors';
@@ -9,7 +9,7 @@ import {getPetWithFilters} from '../../services/petServices';
 import ListPets from './ListPets';
 import Title from '../Title';
 
-const SearchPets = () => {
+const SearchPets = ({showSearchResult, setShowSearchResult}) => {
   const [searchText, setSearchText] = useState('');
   const [searchResult, setSearchResult] = useState([]);
   const [searchFilters, setSearchFilters] = useState({
@@ -20,11 +20,14 @@ const SearchPets = () => {
 
   useEffect(() => {
     if (searchText.length > 2) {
+      setShowSearchResult(true);
       const fetchData = async () => {
         const data = await getPetWithFilters(searchText, searchFilters);
         setSearchResult(data);
       };
       fetchData().catch(console.error);
+    } else {
+      setShowSearchResult(false);
     }
   }, [searchText, searchFilters]);
   return (
@@ -37,16 +40,27 @@ const SearchPets = () => {
         />
       </View>
       <ListFilters setSearchFilters={setSearchFilters} />
-      {searchResult.length > 0 ? (
-        <>
-          <Title text="Resultados de la busqueda" textType={'TitleProfile'} />
-          <View style={styles.containerList}>
-            <ListPets pets={searchResult} />
+      {showSearchResult ? (
+        searchResult.length > 0 ? (
+          <>
+            <Title text="Resultados de la busqueda" textType={'TitleProfile'} />
+            <View style={styles.containerList}>
+              <ListPets pets={searchResult} />
+            </View>
+          </>
+        ) : (
+          <View style={styles.notFoundContainer}>
+            <Image
+              source={require('../../assets/img/notFound.png')}
+              style={styles.imgNoFound}
+            />
+            <Title
+              text="No se encontraron resultados"
+              textType={'TitleProfile'}
+            />
           </View>
-        </>
-      ) : (
-        <View style={{marginBottom: 5}} />
-      )}
+        )
+      ) : null}
     </View>
   );
 };
@@ -104,4 +118,6 @@ const styles = StyleSheet.create({
     marginRight: 10,
     fontFamily: 'ArchivoNarrow-Regular',
   },
+  notFoundContainer: {alignItems: 'center'},
+  imgNoFound: {width: 270, height: 156},
 });
