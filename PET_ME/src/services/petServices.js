@@ -128,3 +128,58 @@ export const ageFormated = petage => {
   }
   return result;
 };
+
+export const addFilter = (filterStr, getter, setter) => {
+  if (getter.includes(filterStr)) {
+    const filterActual = getter.filter(type => type !== filterStr);
+    setter(filterActual);
+  } else {
+    // Agregar al state
+    const newType = [...getter, filterStr];
+    setter(newType);
+  }
+};
+
+export const getPetWithFilters = async (searchStr, filters) => {
+  const petPost = [];
+  try {
+    await firestore()
+      .collection('petpost')
+      .orderBy('location')
+      .startAt(searchStr)
+      .endAt(searchStr + '\uf8ff')
+      .get()
+      .then(collectionSnapshot => {
+        collectionSnapshot.forEach(documentSnapshot => {
+          petPost.push(documentSnapshot.data());
+        });
+      });
+    const dataFiltered = haddleFilters(filters, petPost);
+    return dataFiltered;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const haddleFilters = (filters, data) => {
+  let result = data;
+  if (filters.pettype.length > 0) {
+    const pettypeFilter = data.filter(pet =>
+      filters.pettype.includes(pet.pettype),
+    );
+    result = pettypeFilter;
+  }
+  if (filters.petsize.length > 0) {
+    const petsizeFilter = result.filter(pet =>
+      filters.petsize.includes(pet.petsize),
+    );
+    result = petsizeFilter;
+  }
+  if (filters.petgender.length > 0) {
+    const petgenderFilter = result.filter(pet =>
+      filters.petgender.includes(pet.petgender),
+    );
+    result = petgenderFilter;
+  }
+  return result;
+};

@@ -40,7 +40,7 @@ const AddPetScreenOne = () => {
     navigation.navigate('AddPetPartTwo', values);
   };
   return (
-    <BgPaws opacity={0.54}>
+    <BgPaws opacity={0.54} scroll={true}>
       <View style={styles.headerContainer}>
         <ButtonPet
           text={'Cancelar'}
@@ -52,7 +52,7 @@ const AddPetScreenOne = () => {
         />
         <Title style={styles.pagination} text={'1/2'} textType={'title'} />
       </View>
-      <View>
+      <View style={styles.marginBottom20}>
         <Formik
           initialValues={initialValues}
           innerRef={formikRef}
@@ -118,10 +118,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     marginBottom: 15,
+    marginTop: 20,
   },
   nextButtom: {
     marginTop: 27,
   },
+  marginBottom20: {marginBottom: 20},
   pagination: {marginBottom: 0},
   imgItem: {height: 70, width: 70, borderRadius: 10},
 });

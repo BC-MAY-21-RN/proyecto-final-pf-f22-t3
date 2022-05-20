@@ -38,6 +38,7 @@ const styles = StyleSheet.create({
   },
   logo: {position: 'absolute', top: '-30%'},
   modalView: {
+    width: '90%',
     margin: 20,
     backgroundColor: colors.Gray_100,
     borderRadius: 10,
@@ -57,6 +58,6 @@ const styles = StyleSheet.create({
     fontFamily: 'BebasNeueBold',
     color: colors.Gray_400,
     width: '100%',
-    paddingTop: 90,
+    paddingTop: 100,
   },
 });

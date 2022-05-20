@@ -5,9 +5,8 @@ import Border from '../components/Border';
 import ButtonPet from '../components/ButtonPet';
 import Img from '../components/Image';
 import Title from '../components/Title';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useFocusEffect} from '@react-navigation/native';
 import {getPetPosts} from '../services/petServices';
-import {useFocusEffect} from '@react-navigation/native';
 
 const Start = () => {
   const navigation = useNavigation();

@@ -1,9 +1,8 @@
 import {StyleSheet, Image, Text, View} from 'react-native';
 import React from 'react';
 import Title from './Title';
-import colors from '../utils/colors';
-import Icon from 'react-native-vector-icons/FontAwesome';
 import {ageFormated} from '../services/petServices';
+import PetGenderIcon from './pets/PetGenderIcon';
 
 const Img = ({petPost}) => {
   const {petimages, petname, petage, petgender} = petPost;
@@ -28,11 +27,7 @@ const Img = ({petPost}) => {
             textType={'subTitleProfile'}
           />
         </View>
-        <Icon
-          name={petgender === 'female' ? 'venus' : 'mars'}
-          size={30}
-          color={petgender === 'female' ? colors.Pink : colors.Blue}
-        />
+        <PetGenderIcon petgender={petgender} />
       </View>
     </View>
   );
