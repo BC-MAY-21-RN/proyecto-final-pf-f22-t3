@@ -1,22 +1,35 @@
-import {View, Text, Image, StyleSheet} from 'react-native';
+import {View, Text, Image, StyleSheet, Pressable} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import colors from '../../utils/colors';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {faHeart} from '@fortawesome/free-regular-svg-icons';
+import {faHeart, faMessage} from '@fortawesome/free-regular-svg-icons';
 import { faHeart as heart } from '@fortawesome/free-solid-svg-icons';
-import {updateLikes} from '../../services/comunityServices';
+import {updateLikes, getPublicationComments} from '../../services/comunityServices';
 import useAuth from '../../hooks/useAuth';
+import {useNavigation} from '@react-navigation/native';
 
 export default function CardComunity(props) {
-  const {publication} = props;
+  const {publication, isComment} = props;
   const {id, favs} = publication;
   const [isLike, setIsLike] = useState(false);
   const [newFavs, setNewFavs] = useState(favs.length);
   const {authUser} = useAuth();
+  const navigation = useNavigation();
+  const [numComments, setNumComments] = useState(0);
 
   const i = favs.indexOf(authUser.email);
 
   useEffect(() => {
+    (async () => {
+      try {
+        const res = await getPublicationComments(publication.id);
+        if (res) {
+          setNumComments(res.comments.length);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    })();
     if (i !== -1) {
       setIsLike(true);
     }
@@ -40,11 +53,17 @@ export default function CardComunity(props) {
     setIsLike(!isLike);
   };
 
+  const addComment = () => {
+    navigation.navigate('DetailPublication', {publication});
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.titlePubli}>
         <Image source={{uri: publication.imgUser}} style={styles.imgUser} />
-        <Text style={styles.titleText}>{publication.userName}</Text>
+        <View style={styles.info}>
+          <Text style={styles.titleText}>{publication.userName}</Text>
+        </View>
       </View>
       <View style={styles.contentImgPubli}>
         <Image source={{uri: publication.img}} style={styles.imgPubli} />
@@ -55,7 +74,17 @@ export default function CardComunity(props) {
       </View>
       <View>
         <Text style={styles.textPubli}>{publication.title}</Text>
-        <Text style={styles.textComment}>Ver los 5 comentarios</Text>
+        {!isComment ? (
+        <View style={styles.containerComents}>
+          <Pressable onPress={() => addComment()}>
+            <Text style={styles.textComment}>Ver los {numComments} comentarios</Text>
+          </Pressable>
+          <Pressable style={styles.pressComment} onPress={() => addComment()}>
+            <FontAwesomeIcon icon={faMessage} size={20} color={colors.Orange} />
+            <Text style={styles.textCommentIcon}>Comentar</Text>
+          </Pressable>
+        </View> ) : null}
+        
       </View>
     </View>
   );
@@ -113,9 +142,24 @@ const styles = StyleSheet.create({
     color: colors.Gray_500,
     marginLeft: 15,
   },
+  containerComents: {
+    marginLeft: 15,
+    width: '90%',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
   textComment: {
     fontSize: 16,
     color: colors.Gray_400,
+  },
+  textCommentIcon: {
+    fontSize: 16,
+    color: colors.Gray_400,
+    marginLeft: 10,
+  },
+  pressComment: {
+    alignItems: 'center',
+    flexDirection: 'row',
     marginLeft: 15,
   },
 });

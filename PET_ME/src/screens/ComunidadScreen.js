@@ -13,7 +13,7 @@ import BgPaws from '../components/BgPaws';
 import {getPublications} from '../services/comunityServices';
 import CardComunity from '../components/comunity/CardComunity';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {faPlusCircle, faFeatherPointed} from '@fortawesome/free-solid-svg-icons';
+import {faFeatherPointed} from '@fortawesome/free-solid-svg-icons';
 import colors from '../utils/colors';
 import {useNavigation} from '@react-navigation/native';
 
@@ -51,13 +51,17 @@ export default function ComunidadScreen() {
   return (
     <BgPaws opacity={0.2}>
       <View style={styles.container}>
-        <Image
-          source={require('../assets/logos/Brand.png')}
-          style={styles.logo}
-        />
-        <Text style={styles.title}>Ultimas publicaciones</Text>
+        <View style={styles.header}>
+          <Image
+            source={require('../assets/logos/Brand.png')}
+            style={styles.logo}
+          />
+          <Text style={styles.title}>Ultimas publicaciones</Text>
+        </View>
         {isLoading ? (
-          <ActivityIndicator size="large" color="#fff" />
+          <View style={styles.loading}>
+            <ActivityIndicator size="large" color={colors.Orange} />
+          </View>
         ) : (
           <View style={styles.list}>
             <FlatList
@@ -77,8 +81,12 @@ export default function ComunidadScreen() {
           onPress={() => {
             navigation.navigate('AddPublication');
           }}>
-            <FontAwesomeIcon icon={faFeatherPointed} size={40} color={colors.Orange} />
-          </TouchableOpacity>
+          <FontAwesomeIcon
+            icon={faFeatherPointed}
+            size={40}
+            color={colors.Orange}
+          />
+        </TouchableOpacity>
       </View>
     </BgPaws>
   );
@@ -86,22 +94,42 @@ export default function ComunidadScreen() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    marginTop: 100,
+    marginTop: 40,
     alignItems: 'center',
     justifyContent: 'center',
   },
+  loading: {
+    backgroundColor: colors.Gray_200,
+    width: '110%',
+    marginBottom: 10,
+    height: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    backgroundColor: colors.Gray_300,
+    width: '110%',
+    height: '10%',
+    paddingLeft: 20,
+    paddingRight: 20,
+  },
+  logo: {
+    width: 80,
+    height: 50,
+  },
   title: {
-    color: '#fff',
-    fontSize: 24,
+    color: colors.Gray_500,
+    fontSize: 20,
     fontWeight: 'bold',
     textTransform: 'uppercase',
   },
   list: {
     backgroundColor: colors.Gray_200,
     width: '110%',
-    marginTop: 20,
-    marginBottom: 76,
+    marginBottom: 10,
   },
   touchableOpacity: {
     position: 'absolute',

@@ -1,4 +1,4 @@
-import {View, Text, StyleSheet, Image, ActivityIndicator, Alert} from 'react-native';
+import {View, Text, StyleSheet, Image, ActivityIndicator, ScrollView, SafeAreaView} from 'react-native';
 import React, {useEffect, useState, useRef} from 'react';
 import BgPaws from '../components/BgPaws';
 import PickerImage from '../components/PickerImage';
@@ -10,7 +10,6 @@ import colors from '../utils/colors';
 import {uploadImage} from '../services/petServices';
 import useAuth from '../hooks/useAuth';
 import {addPublication} from '../services/comunityServices';
-import {useNavigation} from '@react-navigation/native';
 
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faArrowLeft} from '@fortawesome/free-solid-svg-icons';
@@ -20,12 +19,12 @@ const initialValues = {
   image: [],
 };
 
-const AddPublication = () => {
+const AddPublication = (props) => {
+  const {navigation} = props;
   const [images, setImages] = useState([]);
   const formikRef = useRef(null);
   const [isLoading, setIsLoading] = useState(false);
   const {authUser} = useAuth();
-  const navigation = useNavigation();
   const user = {
     emailUser: authUser.email,
     name: authUser.name,
@@ -54,13 +53,13 @@ const AddPublication = () => {
 
   return (
     <BgPaws opacity={0.2}>
-      <View style={styles.container}>
+      <SafeAreaView style={styles.container}>
         <View style={styles.header}>
           <FontAwesomeIcon
             icon={faArrowLeft}
             color="#fff"
             size={40}
-            style={{marginLeft: -150, marginTop: 400}}
+            style={{marginLeft: 2, marginTop: 2}}
             onPress={navigation.goBack}
           />
         </View>
@@ -69,7 +68,6 @@ const AddPublication = () => {
             style={styles.logo}
           />
         <Text style={styles.title}>Agregar publicación</Text>
-
         <View>
           <Formik
             initialValues={initialValues}
@@ -110,7 +108,7 @@ const AddPublication = () => {
             )}
           </Formik>
         </View>
-      </View>
+      </SafeAreaView>
     </BgPaws>
   );
 };
@@ -119,12 +117,11 @@ export default AddPublication;
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 100,
-    alignItems: 'center',
+    margin: 10,
+    marginTop: -30,
   },
   header: {
     justifyContent: 'flex-end',
-    marginTop: -100,
   },
   logo: {
     marginTop: 20,
@@ -138,7 +135,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   btnSave: {
-    marginTop: 50,
+    marginTop: 40,
   },
   indicator: {
     marginTop: 10,
