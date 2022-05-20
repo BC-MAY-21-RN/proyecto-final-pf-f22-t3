@@ -31,7 +31,7 @@ const SearchPets = ({showSearchResult, setShowSearchResult}) => {
     }
   }, [searchText, searchFilters]);
   return (
-    <View>
+    <>
       <View style={styles.searchInput}>
         <TextInput
           placeholder="Busca por ubicacion"
@@ -61,7 +61,7 @@ const SearchPets = ({showSearchResult, setShowSearchResult}) => {
           </View>
         )
       ) : null}
-    </View>
+    </>
   );
 };
 

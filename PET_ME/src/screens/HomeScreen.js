@@ -1,4 +1,4 @@
-import {View, StyleSheet, Image, ScrollView} from 'react-native';
+import {View, StyleSheet, Image} from 'react-native';
 
 import React, {useState} from 'react';
 import BgPaws from '../components/BgPaws';
@@ -26,27 +26,25 @@ export default function HomeScreen() {
   );
   return (
     <BgPaws opacity={0.7}>
-      <ScrollView>
-        <View style={styles.container}>
-          <Image
-            source={require('../assets/logos/brand-small.png')}
-            style={styles.logo}
-          />
-          <Icon name="bell" size={30} color="#fff" />
-        </View>
-        <SearchPets
-          showSearchResult={showSearchResult}
-          setShowSearchResult={setShowSearchResult}
+      <View style={styles.container}>
+        <Image
+          source={require('../assets/logos/brand-small.png')}
+          style={styles.logo}
         />
-        {!showSearchResult ? (
-          <>
-            <Title text="Ultimos Agregados" textType={'TitleProfile'} />
-            <View style={styles.containerList}>
-              <ListPets pets={latestPets} />
-            </View>
-          </>
-        ) : null}
-      </ScrollView>
+        <Icon name="bell" size={30} color="#fff" />
+      </View>
+      <SearchPets
+        showSearchResult={showSearchResult}
+        setShowSearchResult={setShowSearchResult}
+      />
+      {!showSearchResult ? (
+        <>
+          <Title text="Ultimos Agregados" textType={'TitleProfile'} />
+          <View style={styles.containerList}>
+            <ListPets pets={latestPets} />
+          </View>
+        </>
+      ) : null}
     </BgPaws>
   );
 }
