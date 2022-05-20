@@ -6,8 +6,10 @@ import BusquedaScreen from '../screens/BusquedaScreen';
 import ComunidadScreen from '../screens/ComunidadScreen';
 import AddPetScreenOne from '../screens/AddPetScreenOne';
 import ProfileUserScreen from '../screens/ProfileUserScreen';
+import VolunteerScreen from '../screens/VolunteerScreen';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import VectorImage from 'react-native-vector-image';
 import {StyleSheet} from 'react-native';
 import colors from '../utils/colors';
@@ -64,12 +66,12 @@ export default function NavigationTab() {
         }}
       />
       <Tab.Screen
-        name="Busqueda"
-        component={BusquedaScreen}
+        name="Voluntarios"
+        component={VolunteerScreen}
         options={{
           headerShown: false,
           tabBarIcon: ({color}) => (
-            <Icon name="search" size={25} color={color} />
+            <MaterialIcons name="volunteer-activism" size={25} color={color} />
           ),
         }}
       />
