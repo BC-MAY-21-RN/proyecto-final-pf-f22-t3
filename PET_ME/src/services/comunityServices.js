@@ -33,14 +33,35 @@ export const addPublication = async (values) => {
       id: id,
       date: publishedAt
   };
-  console.log('publication: ', publication);
   try {
     await firestore().collection('comunidad').doc(id).set(publication);
-    console.log("Add post");
     return true;
   } catch (error) {
     console.log(error);
     return false;
+  }
+};
+
+export const getImageComments = async (email) => {
+  let user = '';
+  try {
+    await firestore()
+      .collection('users')
+      .where('email', '==', email)
+      .get()
+      .then(collectionSnapshot => {
+        collectionSnapshot.forEach(documentSnapshot => {
+          user = documentSnapshot.data();
+        });
+      });
+    if (user) {
+      return user.photo;
+    } else {
+      return undefined;
+    }
+  } catch (error) {
+    console.log(error);
+    return undefined;
   }
 };
 

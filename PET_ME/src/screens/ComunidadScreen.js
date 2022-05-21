@@ -97,6 +97,7 @@ const styles = StyleSheet.create({
     marginTop: 40,
     alignItems: 'center',
     justifyContent: 'center',
+    marginBottom: 40,
   },
   loading: {
     backgroundColor: colors.Gray_200,

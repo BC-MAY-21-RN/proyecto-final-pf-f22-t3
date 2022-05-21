@@ -9,7 +9,7 @@ module.exports = StyleSheet.create({
     width: '100%',
     borderBottomLeftRadius: 30,
     borderBottomRightRadius: 30,
-    padding: 30,
+    padding: 10,
     flexDirection: 'row',
     flexWrap: 'wrap',
     alignItems: 'center',
@@ -23,7 +23,7 @@ module.exports = StyleSheet.create({
     padding: 30,
   },
   box_title: {
-    fontSize: 25,
+    fontSize: 22,
     fontFamily: 'ArchivoNarrow-Regular',
     color: colors.Black,
     textAlign: 'left',
@@ -32,7 +32,7 @@ module.exports = StyleSheet.create({
     width: '100%',
   },
   box_subtitle: {
-    fontSize: 15,
+    fontSize: 16,
     fontFamily: 'ArchivoNarrow-Regular',
     color: colors.Black,
     textAlign: 'left',
@@ -41,7 +41,7 @@ module.exports = StyleSheet.create({
     width: '100%',
   },
   box_little: {
-    fontSize: 12,
+    fontSize: 14,
     fontFamily: 'BebasNeueBold',
     color: colors.Gray_300,
     textAlign: 'center',
@@ -55,24 +55,27 @@ module.exports = StyleSheet.create({
     borderRadius: 30,
   },
   box_button: {
-    width: '25%',
-    height: 20,
-    color: colors.Gray_300,
-    fontSize: 12,
-    alignItems: 'center',
+    color: colors.Gray_500,
+    fontSize: 16,
     textAlign:'center',
-    marginTop: 25,
+  },
+  button_tab: {
+    width: '33%',
+    height: 30,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 20,
+    marginTop: 20,
+    textAlign:'center',
   },
   box_buttonOrange: {
-    width: '25%',
-    height: 20,
+    width: '100%',
     color: colors.Gray_100,
     backgroundColor: colors.Orange,
-    fontSize: 12,
-    alignItems: 'center',
+    fontSize: 16,
     textAlign:'center',
-    marginTop: 25,
-    borderRadius: 5,
+    borderRadius: 15,
+    height: 30,
   },
   width20: {
     width: '20%',
@@ -89,9 +92,13 @@ module.exports = StyleSheet.create({
   width100: {
     width: '100%',
     padding: 0,
-    margin: 0,
+    marginTop: -10,
     flexDirection: 'row',
+    justifyContent: 'space-between',
     flexWrap: 'wrap',
   },
+  iconEdit: {
+    position: 'absolute',
+  }
 });
 

@@ -19,21 +19,24 @@ GoogleSignin.configure({
     '841914520438-e6s04fp9sr0aeun1fspjfdip6thjhct2.apps.googleusercontent.com',
 });
 
-const loginUser = async (values, login) => {
+const loginUser = async (values, login, setIsLoading) => {
   try {
+    setIsLoading(true);
     await auth()
       .signInWithEmailAndPassword(values.email, values.password)
       .then(user => {
         login(user.user.email);
       });
+    setIsLoading(false);
     return true;
   } catch (er) {
     console.log(er);
+    setIsLoading(false);
     return false;
   }
 };
 
-const loginGoogle = async(loginG, navigation, setIsLoading) => {
+const loginGoogle = async (loginG, navigation, setIsLoading) => {
   try {
     setIsLoading(true);
     await GoogleSignin.hasPlayServices();
@@ -59,7 +62,7 @@ const LoginScreen = () => {
 
   async function loginFunction(values) {
     try {
-      const res = await loginUser(values, login);
+      const res = await loginUser(values, login, setIsLoading);
       if (res) {
         navigation.navigate('Home');
       }
@@ -71,7 +74,6 @@ const LoginScreen = () => {
   function onRegistrar() {
     navigation.navigate('Register');
   }
-
 
   return (
     <BgPaws opacity={0.78}>
@@ -95,7 +97,7 @@ const LoginScreen = () => {
               onRegistrar={onRegistrar}
               onGoogle={() => loginGoogle(loginG, navigation, setIsLoading)}
             />
-            {isLoading && <ViewIndicator size="large" color="#fff"/>}
+            {isLoading && <ViewIndicator size="large" color="#fff" />}
           </View>
         )}
       </Formik>
@@ -105,8 +107,14 @@ const LoginScreen = () => {
 
 const ViewIndicator = () => {
   return (
-    <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-      <ActivityIndicator size="large" color="#5500dc" />
+    <View
+      style={{
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: 10,
+      }}>
+      <ActivityIndicator size="large" color="#fff" />
     </View>
   );
 };

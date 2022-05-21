@@ -10,11 +10,11 @@ import {
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
 import CardComunity from './CardComunity';
-import {useNavigation} from '@react-navigation/native';
 import {
   getPublicationComments,
   addComments,
   editComments,
+  getImageComments,
 } from '../../services/comunityServices';
 import BgPaws from '../BgPaws';
 import colors from '../../utils/colors';
@@ -31,14 +31,15 @@ export default function PublicationDetails(props) {
     route: {params},
   } = props;
   const {publication} = params;
-  const [isLoading, setIsLoading] = useState(false);
   const [isAdd, setIsAdd] = useState(false);
   const [isComment, setIsComment] = useState(false);
   const [comments, setComments] = useState([]);
+  const [commentsLocal, setCommentsLocal] = useState([]);
   const [comment, setComment] = useState('');
   const {authUser} = useAuth();
   const [colorText, setColorText] = useState(colors.Gray_500);
   const [haveComments, setHaveComments] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const colorPlane = isComment ? colors.Orange : colors.Gray_300;
 
@@ -63,21 +64,24 @@ export default function PublicationDetails(props) {
     (async () => {
       const res = await getPublicationComments(publication.id);
       if (res) {
+        setComments(res.comments);
         const commentsData = [];
-        res.comments.forEach(comment => {
+        for (const comment of res.comments) {
+          const imageUser = await getImageComments(comment.userid);
           commentsData.push({
             id: comment.id,
             comment: comment.comment,
             user: comment.user,
             createdAt: comment.createdAt,
-            photoUser: comment.photoUser,
+            photoUser: imageUser,
           });
-        });
-        setComments(commentsData);
+        }
+        setCommentsLocal(commentsData);
         setHaveComments(true);
       }
+      setIsLoading(false);
     })();
-  }, []);
+  }, [comments]);
 
   useEffect(() => {
     if (comment.length > 40) {
@@ -104,7 +108,6 @@ export default function PublicationDetails(props) {
         comment: comment,
         user: authUser.name,
         createdAt: firestore.Timestamp.fromDate(new Date()),
-        photoUser: authUser.photo,
         userid: authUser.email,
       });
       const res = await editComments(publication.id, comments);
@@ -127,7 +130,6 @@ export default function PublicationDetails(props) {
       comment: comment,
       user: authUser.name,
       createdAt: firestore.Timestamp.fromDate(new Date()),
-      photoUser: authUser.photo,
       userid: authUser.email,
     });
     try {
@@ -135,6 +137,7 @@ export default function PublicationDetails(props) {
       if (res) {
         setIsAdd(false);
         setComment('');
+        setComments([...comments]);
         setHaveComments(true);
       } else {
         setIsAdd(false);
@@ -164,9 +167,12 @@ export default function PublicationDetails(props) {
             style={styles.cardComunity}
           />
         </View>
-        <View>
-          {haveComments ? <ListComments comments={comments} /> : null}
-        </View>
+        {isLoading ? (<View style={styles.loading}>
+            <ActivityIndicator size="large" color={colors.Orange} />
+          </View>) :
+        (<View>
+          {haveComments ? <ListComments comments={commentsLocal} /> : null}
+        </View>)}
         <TouchableOpacity style={styles.touchableOpacity}>
           <View style={styles.inputContainer}>
             <TextInput
@@ -214,6 +220,12 @@ const styles = StyleSheet.create({
   buttonBack: {
     flexDirection: 'row',
     alignItems: 'center',
+  },
+  loading: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 20,
+    marginLeft: '45%',
   },
   textIcon: {
     fontSize: 20,
