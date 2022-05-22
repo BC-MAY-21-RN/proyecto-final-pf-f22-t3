@@ -110,6 +110,23 @@ export const getPetPosts = async (limit, orderBy, directionStr = 'desc') => {
     console.log(error);
   }
 };
+export const getPetPostsReviewRequired = async () => {
+  const petposts = [];
+  try {
+    await firestore()
+      .collection('petpost')
+      .where('status', '==', 'reviewRequired')
+      .get()
+      .then(collectionSnapshot => {
+        collectionSnapshot.forEach(documentSnapshot => {
+          petposts.push(documentSnapshot.data());
+        });
+      });
+    return petposts;
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 export const ageFormated = petage => {
   let result = '';
