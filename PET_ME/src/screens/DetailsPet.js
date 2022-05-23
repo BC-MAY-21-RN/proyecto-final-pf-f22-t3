@@ -1,4 +1,4 @@
-import {View, StyleSheet, ScrollView, Text} from 'react-native';
+import {View, StyleSheet, ScrollView} from 'react-native';
 import React, {useState} from 'react';
 import Carousel_Image from '../components/detailsPet/Carousel_Image';
 import InfoDetails from '../components/detailsPet/InfoDetails';
@@ -9,9 +9,20 @@ import ModalPet from '../components/modal/ModalPet';
 import ModalContentDetailsPet from '../components/modal/ModalContentDetailsPet';
 
 const DetailsPet = ({route}) => {
-  const {petimages, petname, location, petbreed, petsize, petage, petgender} =
-    route.params.pet;
-  console.log(petgender);
+  const {
+    petimages,
+    petname,
+    location,
+    petbreed,
+    petsize,
+    petage,
+    petgender,
+    pettype,
+    moreinfo,
+    sterilized,
+    vaccinated,
+    dewormed,
+  } = route.params.pet;
 
   const PetInfo = {
     images: petimages,
@@ -24,23 +35,23 @@ const DetailsPet = ({route}) => {
       raze: petbreed,
       ubication: location,
       size: petsize,
-      type: 'Dog',
+      type: pettype,
     },
     infoExtra: {
-      text: 'Este perrtio se tira muchos peditos, es cariñoso, tranquilo y le gustan las personas',
+      text: moreinfo,
     },
     healState: [
       {
         title: 'Esterilizado',
-        state: true,
+        state: sterilized,
       },
       {
         title: 'Vacunado',
-        state: false,
+        state: vaccinated,
       },
       {
         title: 'Desparacitado',
-        state: true,
+        state: dewormed,
       },
     ],
   };

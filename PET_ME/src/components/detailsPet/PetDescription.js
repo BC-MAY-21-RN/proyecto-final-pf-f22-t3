@@ -13,7 +13,7 @@ const petDescription = props => {
   return (
     <View style={styles.petDescription}>
       <IconTitle
-        icon={type === 'Dog' ? faDog : faCat}
+        icon={type === 'dog' ? faDog : faCat}
         size={20}
         color={colors.Gray_400}
         title={raze}

@@ -43,8 +43,11 @@ export default function HomeScreen() {
         <>
           <Title text="Ultimos Agregados" textType={'TitleProfile'} />
           <View style={styles.containerList}>
-            {isLoading ? (<ActivityIndicator size="large" color="#fff" />): (
-            <ListPets pets={latestPets} />)}
+            {isLoading ? (
+              <ActivityIndicator size="large" color="#fff" />
+            ) : (
+              <ListPets pets={latestPets} />
+            )}
           </View>
         </>
       ) : null}
