@@ -8,7 +8,6 @@ export const savePetPost = async pet => {
     await firestore()
       .collection('petpost')
       .add({...pet, publishedAt: publishedAt});
-    console.log('Pet added');
     return true;
   } catch (error) {
     console.log(error);

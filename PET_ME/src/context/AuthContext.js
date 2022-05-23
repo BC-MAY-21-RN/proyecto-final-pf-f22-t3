@@ -8,6 +8,7 @@ export const AuthContext = createContext({
   login: () => {},
   loginG: () => {},
   logout: () => {},
+  setUser: () => {},
 });
 
 export function AuthProvider(props) {
@@ -16,8 +17,7 @@ export function AuthProvider(props) {
 
   async function login(userData) {
     try {
-      const dataUser = await getUserData(userData, setAuthUser);
-      console.log('dataUser: ', dataUser);
+      const dataUser = await getUserData(userData);
       if (dataUser) {
         setAuthUser(dataUser);
       }
@@ -26,6 +26,10 @@ export function AuthProvider(props) {
       console.log(error);
       return false;
     }
+  }
+
+  async function setUser(urlImage) {
+    authUser.photo = urlImage;
   }
 
   async function loginG(userGoogle) {
@@ -37,12 +41,14 @@ export function AuthProvider(props) {
         phone: '4561023591'
       }
       const existUser = await verifyExistUser(user.email);
-      if (existUser) {
-        setAuthUser(user);
+      if (!existUser) {
+        const res = await addUserFirestore(user);
+        const dataUser = await getUserData(userGoogle.email);
+        setAuthUser(dataUser);
       } else {
         // Se activa el modal para pedir el numero de telefono
-        const res = await addUserFirestore(user);
-        setAuthUser(user);
+        const dataUser = await getUserData(userGoogle.email);
+        setAuthUser(dataUser);
       }
       return true;
     } catch (error) {
@@ -58,6 +64,7 @@ export function AuthProvider(props) {
   
   const valueContext = {
     authUser,
+    setUser,
     login,
     logout,
     loginG
