@@ -8,25 +8,65 @@ import FooterDetails from '../components/detailsPet/FooterDetails';
 import ModalPet from '../components/modal/ModalPet';
 import ModalContentDetailsPet from '../components/modal/ModalContentDetailsPet';
 
-const DetailsPet = props => {
-  const {Description, DetailsInfo, healState, infoExtra, images} =
-    props.details;
+const DetailsPet = ({route}) => {
+  const {petimages, petname, location, petbreed, petsize, petage, petgender} =
+    route.params.pet;
+  console.log(petgender);
+
+  const PetInfo = {
+    images: petimages,
+    DetailsInfo: {
+      name: petname,
+      age: `${petage[0].value} ${petage[0].type}`,
+      gender: petgender,
+    },
+    Description: {
+      raze: petbreed,
+      ubication: location,
+      size: petsize,
+      type: 'Dog',
+    },
+    infoExtra: {
+      text: 'Este perrtio se tira muchos peditos, es cariñoso, tranquilo y le gustan las personas',
+    },
+    healState: [
+      {
+        title: 'Esterilizado',
+        state: true,
+      },
+      {
+        title: 'Vacunado',
+        state: false,
+      },
+      {
+        title: 'Desparacitado',
+        state: true,
+      },
+    ],
+  };
+
   const [modalVisible, setModalVisible] = useState(false);
   return (
     <>
       <View style={styles.screen}>
-        <Carousel_Image images={images} />
+        <Carousel_Image images={PetInfo.images} />
         <View style={styles.details}>
-          <InfoDetails info={DetailsInfo} />
-          <PetDescription info={Description} />
+          <InfoDetails info={PetInfo.DetailsInfo} />
+          <PetDescription info={PetInfo.Description} />
           <View style={styles.textInfo}>
             <View style={styles.textDesc}>
               <ScrollView showsVerticalScrollIndicator={false}>
-                <Title text={infoExtra.text} textType="textDescription" />
+                <Title
+                  text={PetInfo.infoExtra.text}
+                  textType="textDescription"
+                />
               </ScrollView>
             </View>
           </View>
-          <FooterDetails info={healState} setModalVisible={setModalVisible} />
+          <FooterDetails
+            info={PetInfo.healState}
+            setModalVisible={setModalVisible}
+          />
         </View>
       </View>
       <ModalPet

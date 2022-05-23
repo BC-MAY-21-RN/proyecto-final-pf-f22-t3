@@ -15,8 +15,8 @@ const infoDetails = props => {
       <View style={Styles.iconsPet}>
         <FavButton stateInit={fav} />
         <Icon
-          name={gender === 'M' ? 'mars' : 'venus'}
-          color={gender === 'M' ? colors.Blue : colors.Pink}
+          name={gender === 'male' ? 'mars' : 'venus'}
+          color={gender === 'male' ? colors.Blue : colors.Pink}
           size={27}
         />
       </View>

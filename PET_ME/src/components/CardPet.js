@@ -10,15 +10,14 @@ import colors from '../utils/colors';
 import {ageFormated} from '../services/petServices';
 import PetGenderIcon from './pets/PetGenderIcon';
 import RNBounceable from '@freakycoder/react-native-bounceable';
+import {useNavigation} from '@react-navigation/native';
 
 export default function CardPet({pet}) {
   const {petimages, petname, location, petbreed, petsize, petage, petgender} =
     pet;
+  const navigation = useNavigation();
   return (
-    <RNBounceable
-      onPress={() => {
-        console.log('Mi nombre es: ', petname);
-      }}>
+    <RNBounceable onPress={() => navigation.navigate('DetailsPet', {pet})}>
       <View style={styles.container}>
         <View style={styles.imgCardContainer}>
           <Image
