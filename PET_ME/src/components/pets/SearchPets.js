@@ -1,4 +1,4 @@
-import {StyleSheet, Text, View, TextInput, Image} from 'react-native';
+import {StyleSheet, Text, View, TextInput} from 'react-native';
 import React, {useState, useEffect} from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import colors from '../../utils/colors';
@@ -8,6 +8,7 @@ import RNBounceable from '@freakycoder/react-native-bounceable';
 import {getPetWithFilters} from '../../services/petServices';
 import ListPets from './ListPets';
 import Title from '../Title';
+import NotFoundResults from '../NotFoundResults';
 
 const SearchPets = ({showSearchResult, setShowSearchResult}) => {
   const [searchText, setSearchText] = useState('');
@@ -49,16 +50,7 @@ const SearchPets = ({showSearchResult, setShowSearchResult}) => {
             </View>
           </>
         ) : (
-          <View style={styles.notFoundContainer}>
-            <Image
-              source={require('../../assets/img/notFound.png')}
-              style={styles.imgNoFound}
-            />
-            <Title
-              text="No se encontraron resultados"
-              textType={'TitleProfile'}
-            />
-          </View>
+          <NotFoundResults />
         )
       ) : null}
     </>
@@ -118,6 +110,4 @@ const styles = StyleSheet.create({
     marginRight: 10,
     fontFamily: 'ArchivoNarrow-Regular',
   },
-  notFoundContainer: {alignItems: 'center'},
-  imgNoFound: {width: 270, height: 156},
 });

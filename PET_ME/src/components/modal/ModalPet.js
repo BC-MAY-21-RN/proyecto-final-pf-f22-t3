@@ -11,7 +11,7 @@ const ModalPet = props => {
       transparent={true}
       visible={modalVisible}
       onRequestClose={() => {
-        setModalVisible(!modalVisible);
+        setModalVisible(false);
       }}>
       <View style={styles.centeredView}>
         <View style={styles.modalView}>

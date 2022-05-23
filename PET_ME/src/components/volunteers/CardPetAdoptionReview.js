@@ -1,5 +1,5 @@
 import {View, Text, StyleSheet, Image} from 'react-native';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {
   faDog,
@@ -11,11 +11,13 @@ import colors from '../../utils/colors';
 import {ageFormated} from '../../services/petServices';
 import PetGenderIcon from '../pets/PetGenderIcon';
 import RNBounceable from '@freakycoder/react-native-bounceable';
+import {dateForhumans} from '../../services/petServices';
 
-const CardPetAdoptionReview = ({pet, onPress}) => {
-  const {petname, location, petbreed, petsize, petage, petgender} = pet;
+const CardPetAdoptionReview = ({adoption, handleModal}) => {
+  const {createdAt, id, post, status, user} = adoption;
+
   return (
-    <RNBounceable onPress={onPress}>
+    <RNBounceable onPress={() => handleModal(adoption)}>
       <View style={styles.container}>
         <View
           style={{
@@ -24,22 +26,25 @@ const CardPetAdoptionReview = ({pet, onPress}) => {
             justifyContent: 'space-between',
           }}>
           <View style={styles.containerDetails}>
-            <Text style={styles.titleDes}>{petname}</Text>
+            <Text style={styles.titleDes}>{post.petname}</Text>
             <View
               style={{flexDirection: 'row', justifyContent: 'space-between'}}>
               <View>
-                <Caracteristica icon={faDog} text={petbreed} />
-                <Caracteristica icon={faLocationDot} text={location} />
-                <Caracteristica icon={faRulerHorizontal} text={petsize} />
+                <Caracteristica icon={faDog} text={post.petbreed} />
+                <Caracteristica icon={faLocationDot} text={post.location} />
+                <Caracteristica icon={faRulerHorizontal} text={post.petsize} />
               </View>
               <View>
-                <Caracteristica icon={faCalendar} text={'22/05/2022'} />
+                <Caracteristica
+                  icon={faCalendar}
+                  text={dateForhumans(createdAt)}
+                />
               </View>
             </View>
           </View>
           <View style={styles.containerGenero}>
-            <Text style={styles.textEdad}>{ageFormated(petage[0])}</Text>
-            <PetGenderIcon petgender={petgender} />
+            <Text style={styles.textEdad}>{ageFormated(post.petage[0])}</Text>
+            <PetGenderIcon petgender={post.petgender} />
           </View>
         </View>
       </View>

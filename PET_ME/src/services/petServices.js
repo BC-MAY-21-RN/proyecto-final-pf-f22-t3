@@ -1,13 +1,17 @@
 import authFirebase from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import storage from '@react-native-firebase/storage';
+import Uuid from 'react-native-uuid';
+import useAuth from '../hooks/useAuth';
+import {getUserData} from './usersServices';
 
 export const savePetPost = async pet => {
   const publishedAt = firestore.Timestamp.fromDate(new Date());
+  const id = Uuid.v1();
   try {
     await firestore()
       .collection('petpost')
-      .add({...pet, publishedAt: publishedAt});
+      .add({...pet, id: id, publishedAt: publishedAt, status: 'published'});
     console.log('Pet added');
     return true;
   } catch (error) {
@@ -110,19 +114,20 @@ export const getPetPosts = async (limit, orderBy, directionStr = 'desc') => {
     console.log(error);
   }
 };
-export const getPetPostsReviewRequired = async () => {
-  const petposts = [];
+export const getAdoptionProcesses = async () => {
+  const adoptionProcesses = [];
+
   try {
     await firestore()
-      .collection('petpost')
+      .collection('adoptionProcesses')
       .where('status', '==', 'reviewRequired')
       .get()
       .then(collectionSnapshot => {
         collectionSnapshot.forEach(documentSnapshot => {
-          petposts.push(documentSnapshot.data());
+          adoptionProcesses.push(documentSnapshot.data());
         });
       });
-    return petposts;
+    return adoptionProcesses;
   } catch (error) {
     console.log(error);
   }
@@ -200,4 +205,117 @@ const haddleFilters = (filters, data) => {
     result = petgenderFilter;
   }
   return result;
+};
+export const startAdoptionProcess = async (post, user) => {
+  const createdAt = firestore.Timestamp.fromDate(new Date());
+  const id = Uuid.v1();
+  try {
+    await firestore().collection('adoptionProcesses').add({
+      post: post,
+      user: user,
+      id: id,
+      createdAt: createdAt,
+      status: 'reviewRequired',
+    });
+    console.log('adoption Processes created');
+    return true;
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+};
+
+export const getPetPostById = async id => {
+  var petpostById;
+  try {
+    await firestore()
+      .collection('petpost')
+      .where('id', '==', id)
+      .get()
+      .then(collectionSnapshot => {
+        collectionSnapshot.forEach(documentSnapshot => {
+          petpostById = documentSnapshot.data();
+        });
+      });
+    return petpostById;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const dateForhumans = mydate => {
+  const date = mydate.toDate();
+  const options = {
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  };
+  const newDate = date.toLocaleDateString('es-ES', options);
+  return newDate;
+};
+
+export const setAdoptionReview = async (postId, adoptionId, action) => {
+  let adoptionUuid = '';
+  let postUuid = '';
+  try {
+    await firestore()
+      .collection('adoptionProcesses')
+      .where('id', '==', adoptionId)
+      .get()
+      .then(collectionSnapshot => {
+        collectionSnapshot.forEach(documentSnapshot => {
+          adoptionUuid = documentSnapshot.id;
+        });
+      });
+    await firestore()
+      .collection('petpost')
+      .where('id', '==', postId)
+      .get()
+      .then(collectionSnapshot => {
+        collectionSnapshot.forEach(documentSnapshot => {
+          postUuid = documentSnapshot.id;
+        });
+      });
+
+    if (action === 'toaccept') {
+      // aceptado
+      await firestore()
+        .collection('adoptionProcesses')
+        .doc(adoptionUuid)
+        .update({status: 'completed'})
+        .then(() => {
+          console.log('adoptionProcesses completed');
+        });
+      await firestore()
+        .collection('petpost')
+        .doc(postUuid)
+        .update({status: 'completed'})
+        .then(() => {
+          console.log('petpost completed');
+        });
+    }
+    if (action === 'toreject') {
+      // rechazado
+      await firestore()
+        .collection('adoptionProcesses')
+        .doc(adoptionUuid)
+        .update({status: 'rejected'})
+        .then(() => {
+          console.log('adoptionProcesses rejected');
+        });
+      await firestore()
+        .collection('petpost')
+        .doc(postUuid)
+        .update({status: 'published'})
+        .then(() => {
+          console.log('petpost is published again');
+        });
+    }
+
+    return true;
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
 };
