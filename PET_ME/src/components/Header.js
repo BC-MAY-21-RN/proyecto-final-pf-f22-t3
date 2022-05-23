@@ -1,20 +1,20 @@
-import {Image} from 'react-native';
+import {Image, View} from 'react-native';
 import React from 'react';
 import Title from './Title';
 
 const Header = props => {
   return (
-    <>
+    <View style={props.style}>
       <Image
         source={require('../assets/logos/Brand.png')}
-        style={props.style}
+        style={{alignSelf: 'center'}}
       />
-      <Title text={props.title} textType={'title'} />
       <Title
-        text={'Ingresa para encontrar tu a mejor amigo'}
-        textType={'subTitle'}
+        style={{marginVertical: 10}}
+        text={props.title}
+        textType={'title'}
       />
-    </>
+    </View>
   );
 };
 

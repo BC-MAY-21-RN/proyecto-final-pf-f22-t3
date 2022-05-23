@@ -1,7 +1,7 @@
 import authFirebase from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 
-export const getUserData = async (userData) => {
+export const getUserData = async userData => {
   let user;
   try {
     await firestore()
@@ -34,23 +34,20 @@ export const editUserFirestore = async (user, imgUrl) => {
   let idUser = '';
   try {
     await firestore()
-    .collection('users')
-    .where('email', '==', user)
-    .get()
-    .then(collectionSnapshot => {
-      collectionSnapshot.forEach(documentSnapshot => {
-        idUser = documentSnapshot.id;
-      });
-    });
-    await firestore()
       .collection('users')
-      .doc(idUser)
-      .update({
-        photo: imgUrl,
+      .where('email', '==', user)
+      .get()
+      .then(collectionSnapshot => {
+        collectionSnapshot.forEach(documentSnapshot => {
+          idUser = documentSnapshot.id;
+        });
       });
+    await firestore().collection('users').doc(idUser).update({
+      photo: imgUrl,
+    });
     console.log('User edited');
-      let publicaciones = [];
-      await firestore()
+    let publicaciones = [];
+    await firestore()
       .collection('comunidad')
       .where('userEmail', '==', user)
       .get()
@@ -59,14 +56,11 @@ export const editUserFirestore = async (user, imgUrl) => {
           publicaciones.push(documentSnapshot.id);
         });
       });
-      for (let i = 0; i < publicaciones.length; i++) {
-        await firestore()
-        .collection('comunidad')
-        .doc(publicaciones[i])
-        .update({
-          imgUser: imgUrl,
-        });
-      }
+    for (let i = 0; i < publicaciones.length; i++) {
+      await firestore().collection('comunidad').doc(publicaciones[i]).update({
+        imgUser: imgUrl,
+      });
+    }
     return true;
   } catch (error) {
     console.log(error);
@@ -97,6 +91,31 @@ export const verifyExistUser = async email => {
   }
 };
 
+export const beVolunteer = async email => {
+  let idUser = '';
+  try {
+    await firestore()
+      .collection('users')
+      .where('email', '==', email)
+      .get()
+      .then(collectionSnapshot => {
+        collectionSnapshot.forEach(documentSnapshot => {
+          idUser = documentSnapshot.id;
+        });
+      });
+    await firestore()
+      .collection('users')
+      .doc(idUser)
+      .update({volunteer: true})
+      .then(() => {
+        console.log('User is volunteer now');
+      });
+    return true;
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+};
 // export function registerRaza() {
 //   (async () => {
 //     try {

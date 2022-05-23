@@ -1,7 +1,11 @@
 import React, {useState, createContext} from 'react';
 import authFirebase from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
-import {getUserData, addUserFirestore, verifyExistUser} from '../services/usersServices';
+import {
+  getUserData,
+  addUserFirestore,
+  verifyExistUser,
+} from '../services/usersServices';
 
 export const AuthContext = createContext({
   authUser: undefined,
@@ -21,7 +25,7 @@ export function AuthProvider(props) {
       if (dataUser) {
         setAuthUser(dataUser);
       }
-      return true
+      return true;
     } catch (error) {
       console.log(error);
       return false;
@@ -38,8 +42,8 @@ export function AuthProvider(props) {
         email: userGoogle.email,
         name: userGoogle.name,
         photo: userGoogle.photo,
-        phone: '4561023591'
-      }
+        phone: '4561023591',
+      };
       const existUser = await verifyExistUser(user.email);
       if (!existUser) {
         const res = await addUserFirestore(user);
@@ -54,20 +58,19 @@ export function AuthProvider(props) {
     } catch (error) {
       return false;
     }
-    
   }
 
   const logout = () => {
     setAuthUser(undefined);
     authFirebase().signOut();
   };
-  
+
   const valueContext = {
     authUser,
     setUser,
     login,
     logout,
-    loginG
+    loginG,
   };
   return (
     <AuthContext.Provider value={valueContext}>{children}</AuthContext.Provider>

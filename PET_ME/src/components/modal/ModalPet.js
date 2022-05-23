@@ -11,7 +11,7 @@ const ModalPet = props => {
       transparent={true}
       visible={modalVisible}
       onRequestClose={() => {
-        setModalVisible(!modalVisible);
+        setModalVisible(false);
       }}>
       <View style={styles.centeredView}>
         <View style={styles.modalView}>
@@ -58,6 +58,7 @@ const styles = StyleSheet.create({
     fontFamily: 'BebasNeueBold',
     color: colors.Gray_400,
     width: '100%',
+    textAlign: 'center',
     paddingTop: 100,
   },
 });
