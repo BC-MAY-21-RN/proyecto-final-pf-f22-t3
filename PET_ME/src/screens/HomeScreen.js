@@ -1,4 +1,4 @@
-import {View, StyleSheet, Image} from 'react-native';
+import {View, StyleSheet, Image, ActivityIndicator} from 'react-native';
 
 import React, {useState} from 'react';
 import BgPaws from '../components/BgPaws';
@@ -14,12 +14,14 @@ export default function HomeScreen() {
   const navigation = useNavigation();
   const [latestPets, setLatestPets] = useState([]);
   const [showSearchResult, setShowSearchResult] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useFocusEffect(
     React.useCallback(() => {
       const fetchData = async () => {
         const data = await getPetPosts(4, 'publishedAt');
         setLatestPets(data);
+        setIsLoading(false);
       };
       fetchData().catch(console.error);
     }, []),
@@ -41,7 +43,8 @@ export default function HomeScreen() {
         <>
           <Title text="Ultimos Agregados" textType={'TitleProfile'} />
           <View style={styles.containerList}>
-            <ListPets pets={latestPets} />
+            {isLoading ? (<ActivityIndicator size="large" color="#fff" />): (
+            <ListPets pets={latestPets} />)}
           </View>
         </>
       ) : null}

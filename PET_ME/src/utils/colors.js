@@ -9,5 +9,6 @@ export default {
   Orange: '#FF5842',
   Pink: '#FF27DC',
   Blue: '#277EFF',
+  Red: '#FF3B30',
   Black: '#000000',
 };
