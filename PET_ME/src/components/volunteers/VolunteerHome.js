@@ -9,8 +9,10 @@ import ModalPet from '../modal/ModalPet';
 import ModalContentAdoptionReview from '../modal/ModalContentAdoptionReview';
 import ButtonPet from '../ButtonPet';
 import NotFoundResults from '../NotFoundResults';
+import useAuth from '../../hooks/useAuth';
 
 const VolunteerHome = () => {
+  const {authUser} = useAuth();
   const [adoptionProcesses, setAdoptionProcesses] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
   const [modalInfo, setModalInfo] = useState({});
@@ -19,7 +21,7 @@ const VolunteerHome = () => {
   useFocusEffect(
     React.useCallback(() => {
       const fetchData = async () => {
-        const data = await getAdoptionProcesses();
+        const data = await getAdoptionProcesses(authUser.email);
         setAdoptionProcesses(data);
         setIsLoading(false);
       };

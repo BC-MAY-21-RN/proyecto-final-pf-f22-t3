@@ -121,27 +121,21 @@ const ProfileUser = props => {
             <Text style={StyleBox.box_little}> {'Cerrar Sesión'} </Text>
           </Pressable>
           <View style={StyleBox.width100}>
-            <Pressable
-              onPress={() => clickFav()}
-              style={StyleBox.button_tab}>
+            <Pressable onPress={() => clickFav()} style={StyleBox.button_tab}>
               <Text style={styleFav}> {'Favoritos'} </Text>
             </Pressable>
-            <Pressable
-              onPress={() => clickPub()}
-              style={StyleBox.button_tab}>
+            <Pressable onPress={() => clickPub()} style={StyleBox.button_tab}>
               <Text style={stylePub}> {'Publicaciones'} </Text>
             </Pressable>
-            <Pressable
-              onPress={() => clickAdo()}
-              style={StyleBox.button_tab}>
+            <Pressable onPress={() => clickAdo()} style={StyleBox.button_tab}>
               <Text style={styleAdo}> {'Adopciones'} </Text>
             </Pressable>
           </View>
         </View>
-        <View style={StyleBox.box_body}>
-          {isFavoritos ? (<FavoritesBody />) : null}
-          {isPublications ? (<PublicationsBody />) : null}
-          {isAdoptions ? (<AdoptionsBody />) : null}
+        <View style={styles.containerList}>
+          {isFavoritos ? <FavoritesBody /> : null}
+          {isPublications ? <PublicationsBody /> : null}
+          {isAdoptions ? <AdoptionsBody /> : null}
         </View>
       </View>
     </BgPaws>
@@ -158,19 +152,24 @@ const styles = StyleSheet.create({
     width: '110%',
     marginLeft: -20,
   },
+  containerList: {
+    width: '100%',
+    height: 400,
+    paddingHorizontal: 20,
+  },
   active: {
     width: '100%',
     color: colors.Gray_100,
     backgroundColor: colors.Orange,
     fontSize: 16,
-    textAlign:'center',
+    textAlign: 'center',
     borderRadius: 15,
     height: 30,
   },
   inactive: {
     color: colors.Gray_500,
     fontSize: 16,
-    textAlign:'center',
+    textAlign: 'center',
   },
 });
 

@@ -114,13 +114,55 @@ export const getPetPosts = async (limit, orderBy, directionStr = 'desc') => {
     console.log(error);
   }
 };
-export const getAdoptionProcesses = async () => {
+export const getMyPetPosts = async userEmail => {
+  const myPetposts = [];
+  try {
+    await firestore()
+      .collection('petpost')
+      .where('userEmail', '==', userEmail)
+      .get()
+      .then(collectionSnapshot => {
+        collectionSnapshot.forEach(documentSnapshot => {
+          myPetposts.push(documentSnapshot.data());
+        });
+      });
+    return myPetposts;
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const getAdoptionProcesses = async userEmail => {
   const adoptionProcesses = [];
 
   try {
     await firestore()
       .collection('adoptionProcesses')
-      .where('status', '==', 'reviewRequired')
+      .where('user.email', '!=', userEmail)
+      .get()
+      .then(collectionSnapshot => {
+        collectionSnapshot.forEach(documentSnapshot => {
+          adoptionProcesses.push(documentSnapshot.data());
+        });
+      });
+    const filteredData = adoptionFilter(adoptionProcesses);
+    return filteredData;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const adoptionFilter = data => {
+  const filtered = data.filter(
+    adoption => adoption.status === 'reviewRequired',
+  );
+  return filtered;
+};
+export const getMyAdoptionProcesses = async userEmail => {
+  const adoptionProcesses = [];
+  try {
+    await firestore()
+      .collection('adoptionProcesses')
+      .where('user.email', '==', userEmail)
       .get()
       .then(collectionSnapshot => {
         collectionSnapshot.forEach(documentSnapshot => {
@@ -312,6 +354,33 @@ export const setAdoptionReview = async (postId, adoptionId, action) => {
           console.log('petpost is published again');
         });
     }
+
+    return true;
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+};
+export const removeDoc = async (collectionName, id) => {
+  let doc = '';
+  try {
+    await firestore()
+      .collection(collectionName)
+      .where('id', '==', id)
+      .get()
+      .then(collectionSnapshot => {
+        collectionSnapshot.forEach(documentSnapshot => {
+          doc = documentSnapshot.id;
+        });
+      });
+
+    await firestore()
+      .collection(collectionName)
+      .doc(doc)
+      .delete()
+      .then(() => {
+        console.log('doc removed');
+      });
 
     return true;
   } catch (error) {
