@@ -109,10 +109,15 @@ export const getPetPosts = async (limit, orderBy, directionStr = 'desc') => {
           petposts.push(documentSnapshot.data());
         });
       });
-    return petposts;
+    const postFilter = getPostFilter(petposts);
+    return postFilter;
   } catch (error) {
     console.log(error);
   }
+};
+const getPostFilter = data => {
+  const filtered = data.filter(post => post.status === 'published');
+  return filtered;
 };
 export const getMyPetPosts = async userEmail => {
   const myPetposts = [];
@@ -219,7 +224,8 @@ export const getPetWithFilters = async (searchStr, filters) => {
           petPost.push(documentSnapshot.data());
         });
       });
-    const dataFiltered = haddleFilters(filters, petPost);
+    const postFilter = getPostFilter(petPost);
+    const dataFiltered = haddleFilters(filters, postFilter);
     return dataFiltered;
   } catch (error) {
     console.log(error);
