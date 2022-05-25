@@ -22,8 +22,10 @@ const DetailsPet = ({route}) => {
     sterilized,
     vaccinated,
     dewormed,
+    id,
+    favorites,
   } = route.params.pet;
-
+  const post = route.params.pet;
   const PetInfo = {
     images: petimages,
     DetailsInfo: {
@@ -62,7 +64,11 @@ const DetailsPet = ({route}) => {
       <View style={styles.screen}>
         <Carousel_Image images={PetInfo.images} />
         <View style={styles.details}>
-          <InfoDetails info={PetInfo.DetailsInfo} />
+          <InfoDetails
+            info={PetInfo.DetailsInfo}
+            idPet={id}
+            favorites={favorites}
+          />
           <PetDescription info={PetInfo.Description} />
           <View style={styles.textInfo}>
             <View style={styles.textDesc}>
@@ -76,6 +82,7 @@ const DetailsPet = ({route}) => {
           </View>
           <FooterDetails
             info={PetInfo.healState}
+            post={post}
             setModalVisible={setModalVisible}
           />
         </View>
