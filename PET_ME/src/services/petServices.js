@@ -11,7 +11,13 @@ export const savePetPost = async pet => {
   try {
     await firestore()
       .collection('petpost')
-      .add({...pet, id: id, publishedAt: publishedAt, status: 'published'});
+      .add({
+        ...pet,
+        id: id,
+        publishedAt: publishedAt,
+        status: 'published',
+        favorites: [],
+      });
     console.log('Pet added');
     return true;
   } catch (error) {
@@ -209,6 +215,7 @@ const haddleFilters = (filters, data) => {
 export const startAdoptionProcess = async (post, user) => {
   const createdAt = firestore.Timestamp.fromDate(new Date());
   const id = Uuid.v1();
+  let idPet = '';
   try {
     await firestore().collection('adoptionProcesses').add({
       post: post,
@@ -217,6 +224,19 @@ export const startAdoptionProcess = async (post, user) => {
       createdAt: createdAt,
       status: 'reviewRequired',
     });
+    await firestore()
+      .collection('petpost')
+      .where('id', '==', post.id)
+      .get()
+      .then(collectionSnapshot => {
+        collectionSnapshot.forEach(documentSnapshot => {
+          idPet = documentSnapshot.id;
+        });
+      });
+    await firestore()
+      .collection('petpost')
+      .doc(idPet)
+      .update({status: 'reviewRequired'});
     console.log('adoption Processes created');
     return true;
   } catch (error) {
@@ -314,6 +334,29 @@ export const setAdoptionReview = async (postId, adoptionId, action) => {
     }
 
     return true;
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+};
+
+export const addPetFavorites = async (id, favorites) => {
+  let idPet = '';
+  console.log('desde services: ', id, favorites);
+  try {
+    await firestore()
+      .collection('petpost')
+      .where('id', '==', id)
+      .get()
+      .then(collectionSnapshot => {
+        collectionSnapshot.forEach(documentSnapshot => {
+          idPet = documentSnapshot.id;
+        });
+      });
+    await firestore().collection('petpost').doc(idPet).update({
+      favorites: favorites,
+    });
+    console.log('Favorite added');
   } catch (error) {
     console.log(error);
     return false;

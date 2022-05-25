@@ -3,8 +3,11 @@ import React, {useEffect, useState} from 'react';
 import colors from '../../utils/colors';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faHeart, faMessage} from '@fortawesome/free-regular-svg-icons';
-import { faHeart as heart } from '@fortawesome/free-solid-svg-icons';
-import {updateLikes, getPublicationComments} from '../../services/comunityServices';
+import {faHeart as heart} from '@fortawesome/free-solid-svg-icons';
+import {
+  updateLikes,
+  getPublicationComments,
+} from '../../services/comunityServices';
 import useAuth from '../../hooks/useAuth';
 import {useNavigation} from '@react-navigation/native';
 
@@ -18,6 +21,19 @@ export default function CardComunity(props) {
   const [numComments, setNumComments] = useState(0);
 
   const i = favs.indexOf(authUser.email);
+
+  let date = '';
+  let newDate = '';
+  if (publication.date) {
+    date = publication.date.toDate();
+    const options = {
+      weekday: 'long',
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    };
+    newDate = date.toLocaleDateString('es-ES', options);
+  }
 
   useEffect(() => {
     (async () => {
@@ -43,7 +59,7 @@ export default function CardComunity(props) {
     favs.push(authUser.email);
     await updateLikes(id, favs);
     setIsLike(!isLike);
-  };
+  }
 
   async function removeLike() {
     const favsNum = newFavs - 1;
@@ -51,7 +67,7 @@ export default function CardComunity(props) {
     favs.splice(i, 1);
     await updateLikes(id, favs);
     setIsLike(!isLike);
-  };
+  }
 
   const addComment = () => {
     navigation.navigate('DetailPublication', {publication});
@@ -69,22 +85,34 @@ export default function CardComunity(props) {
         <Image source={{uri: publication.img}} style={styles.imgPubli} />
       </View>
       <View style={styles.containerLikes}>
-        <FontAwesomeIcon icon={icon} size={30} color={colors.Orange} onPress={isLike ? removeLike : addLike}/>
+        <FontAwesomeIcon
+          icon={icon}
+          size={30}
+          color={colors.Orange}
+          onPress={isLike ? removeLike : addLike}
+        />
         <Text style={styles.textLike}>{newFavs} Me gusta</Text>
       </View>
       <View>
         <Text style={styles.textPubli}>{publication.title}</Text>
+        <Text style={styles.textDate}>{newDate}</Text>
         {!isComment ? (
-        <View style={styles.containerComents}>
-          <Pressable onPress={() => addComment()}>
-            <Text style={styles.textComment}>Ver los {numComments} comentarios</Text>
-          </Pressable>
-          <Pressable style={styles.pressComment} onPress={() => addComment()}>
-            <FontAwesomeIcon icon={faMessage} size={20} color={colors.Orange} />
-            <Text style={styles.textCommentIcon}>Comentar</Text>
-          </Pressable>
-        </View> ) : null}
-        
+          <View style={styles.containerComents}>
+            <Pressable onPress={() => addComment()}>
+              <Text style={styles.textComment}>
+                Ver los {numComments} comentarios
+              </Text>
+            </Pressable>
+            <Pressable style={styles.pressComment} onPress={() => addComment()}>
+              <FontAwesomeIcon
+                icon={faMessage}
+                size={20}
+                color={colors.Orange}
+              />
+              <Text style={styles.textCommentIcon}>Comentar</Text>
+            </Pressable>
+          </View>
+        ) : null}
       </View>
     </View>
   );
@@ -156,6 +184,11 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: colors.Gray_400,
     marginLeft: 10,
+  },
+  textDate: {
+    color: colors.Gray_200,
+    fontSize: 14,
+    marginLeft: 15,
   },
   pressComment: {
     alignItems: 'center',

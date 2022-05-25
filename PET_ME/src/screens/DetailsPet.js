@@ -1,4 +1,4 @@
-import {View, StyleSheet, ScrollView, Text} from 'react-native';
+import {View, StyleSheet, ScrollView} from 'react-native';
 import React, {useState} from 'react';
 import Carousel_Image from '../components/detailsPet/Carousel_Image';
 import InfoDetails from '../components/detailsPet/InfoDetails';
@@ -8,25 +8,83 @@ import FooterDetails from '../components/detailsPet/FooterDetails';
 import ModalPet from '../components/modal/ModalPet';
 import ModalContentDetailsPet from '../components/modal/ModalContentDetailsPet';
 
-const DetailsPet = props => {
-  const {Description, DetailsInfo, healState, infoExtra, images} =
-    props.details;
+const DetailsPet = ({route}) => {
+  const {
+    petimages,
+    petname,
+    location,
+    petbreed,
+    petsize,
+    petage,
+    petgender,
+    pettype,
+    moreinfo,
+    sterilized,
+    vaccinated,
+    dewormed,
+    id,
+    favorites,
+  } = route.params.pet;
+  const post = route.params.pet;
+  const PetInfo = {
+    images: petimages,
+    DetailsInfo: {
+      name: petname,
+      age: `${petage[0].value} ${petage[0].type}`,
+      gender: petgender,
+    },
+    Description: {
+      raze: petbreed,
+      ubication: location,
+      size: petsize,
+      type: pettype,
+    },
+    infoExtra: {
+      text: moreinfo,
+    },
+    healState: [
+      {
+        title: 'Esterilizado',
+        state: sterilized,
+      },
+      {
+        title: 'Vacunado',
+        state: vaccinated,
+      },
+      {
+        title: 'Desparacitado',
+        state: dewormed,
+      },
+    ],
+  };
+
   const [modalVisible, setModalVisible] = useState(false);
   return (
     <>
       <View style={styles.screen}>
-        <Carousel_Image images={images} />
+        <Carousel_Image images={PetInfo.images} />
         <View style={styles.details}>
-          <InfoDetails info={DetailsInfo} />
-          <PetDescription info={Description} />
+          <InfoDetails
+            info={PetInfo.DetailsInfo}
+            idPet={id}
+            favorites={favorites}
+          />
+          <PetDescription info={PetInfo.Description} />
           <View style={styles.textInfo}>
             <View style={styles.textDesc}>
               <ScrollView showsVerticalScrollIndicator={false}>
-                <Title text={infoExtra.text} textType="textDescription" />
+                <Title
+                  text={PetInfo.infoExtra.text}
+                  textType="textDescription"
+                />
               </ScrollView>
             </View>
           </View>
-          <FooterDetails info={healState} setModalVisible={setModalVisible} />
+          <FooterDetails
+            info={PetInfo.healState}
+            post={post}
+            setModalVisible={setModalVisible}
+          />
         </View>
       </View>
       <ModalPet
