@@ -1,6 +1,6 @@
 import {View, Text, StyleSheet, ActivityIndicator} from 'react-native';
 import React, {useEffect, useState} from 'react';
-import {getMyPetPosts, startAdoptionProcess} from '../../services/petServices';
+import {getMyPetPosts} from '../../services/petServices';
 import useAuth from '../../hooks/useAuth';
 import ListPets from '../../components/pets/ListPets';
 import NotFoundResults from '../NotFoundResults';
@@ -14,7 +14,6 @@ export default function Publications() {
     const fetchData = async () => {
       const data = await getMyPetPosts(authUser.email);
       setMyPostPets(data);
-      // await startAdoptionProcess(data[9], authUser);
       setIsLoading(false);
     };
     fetchData().catch(console.error);

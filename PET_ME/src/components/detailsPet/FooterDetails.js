@@ -3,12 +3,17 @@ import React from 'react';
 import colors from '../../utils/colors';
 import ButtonPet from '../ButtonPet';
 import IconTitle from '../IconTitle';
+import {startAdoptionProcess} from '../../services/petServices';
+import useAuth from '../../hooks/useAuth';
+
 const FooterDetails = props => {
   const DataText = props.info;
-  const {setModalVisible} = props;
+  const {setModalVisible, post} = props;
+  const {authUser} = useAuth();
 
-  const handleAdoption = () => {
+  const handleAdoption = async () => {
     setModalVisible(true);
+    await startAdoptionProcess(post, authUser);
   };
   return (
     <View style={styles.cont}>
@@ -27,11 +32,13 @@ const FooterDetails = props => {
         })}
       </View>
       <View style={styles.contButton}>
-        <ButtonPet
-          typeButton={'D'}
-          text="Adoptar"
-          onPressFunction={handleAdoption}
-        />
+        {post.userEmail !== authUser.email ? (
+          <ButtonPet
+            typeButton={'D'}
+            text="Adoptar"
+            onPressFunction={handleAdoption}
+          />
+        ) : null}
       </View>
     </View>
   );

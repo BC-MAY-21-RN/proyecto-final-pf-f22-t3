@@ -9,6 +9,7 @@ import AddPetScreenOne from '../screens/AddPetScreenOne';
 import AddPetScreenTwo from '../screens/AddPetScreenTwo';
 import AddPublication from '../screens/AddPublication';
 import PublicationDetails from '../components/comunity/PublicationDetails';
+import DetailsPet from '../screens/DetailsPet';
 
 const Stack = createNativeStackNavigator();
 
@@ -53,6 +54,11 @@ export default function Navigation() {
       <Stack.Screen
         name="DetailPublication"
         component={PublicationDetails}
+        options={{title: '', headerTransparent: true}}
+      />
+      <Stack.Screen
+        name="DetailsPet"
+        component={DetailsPet}
         options={{title: '', headerTransparent: true}}
       />
     </Stack.Navigator>
