@@ -13,7 +13,7 @@ module.exports = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     alignItems: 'center',
-    textAlign:'center',
+    textAlign: 'center',
   },
   box_footer: {
     height: '80%',
@@ -57,7 +57,7 @@ module.exports = StyleSheet.create({
   box_button: {
     color: colors.Gray_500,
     fontSize: 16,
-    textAlign:'center',
+    textAlign: 'center',
   },
   button_tab: {
     width: '33%',
@@ -66,14 +66,14 @@ module.exports = StyleSheet.create({
     justifyContent: 'center',
     borderRadius: 20,
     marginTop: 20,
-    textAlign:'center',
+    textAlign: 'center',
   },
   box_buttonOrange: {
     width: '100%',
     color: colors.Gray_100,
     backgroundColor: colors.Orange,
     fontSize: 16,
-    textAlign:'center',
+    textAlign: 'center',
     borderRadius: 15,
     height: 30,
   },
@@ -82,7 +82,7 @@ module.exports = StyleSheet.create({
     padding: 0,
     margin: 0,
     alignItems: 'center',
-    textAlign:'center',
+    textAlign: 'center',
   },
   width60: {
     width: '60%',
@@ -99,6 +99,7 @@ module.exports = StyleSheet.create({
   },
   iconEdit: {
     position: 'absolute',
-  }
+    top: 0,
+    right: 0,
+  },
 });
-

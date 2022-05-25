@@ -59,7 +59,7 @@ export default function Navigation() {
       <Stack.Screen
         name="DetailsPet"
         component={DetailsPet}
-        options={{title: '', headerTransparent: true}}
+        options={{title: '', headerShown: false}}
       />
     </Stack.Navigator>
   );

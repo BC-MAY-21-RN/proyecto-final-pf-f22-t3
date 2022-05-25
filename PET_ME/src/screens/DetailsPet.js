@@ -7,8 +7,11 @@ import Title from '../components/Title';
 import FooterDetails from '../components/detailsPet/FooterDetails';
 import ModalPet from '../components/modal/ModalPet';
 import ModalContentDetailsPet from '../components/modal/ModalContentDetailsPet';
+import ButtonPet from '../components/ButtonPet';
+import {useNavigation} from '@react-navigation/native';
 
 const DetailsPet = ({route}) => {
+  const navigation = useNavigation();
   const {
     petimages,
     petname,
@@ -63,6 +66,12 @@ const DetailsPet = ({route}) => {
     <>
       <View style={styles.screen}>
         <Carousel_Image images={PetInfo.images} />
+        <ButtonPet
+          text="Atrás"
+          typeButton="E"
+          style={{position: 'absolute', margin: 5}}
+          onPressFunction={() => navigation.goBack()}
+        />
         <View style={styles.details}>
           <InfoDetails
             info={PetInfo.DetailsInfo}

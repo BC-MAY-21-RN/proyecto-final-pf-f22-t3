@@ -66,7 +66,7 @@ const AddPetScreenOne = () => {
                 name={'petimages'}
                 images={images}
                 setImages={setImages}
-                description={'Agrega imagenes de tu mascota'}
+                description={'Agrega imágenes de tu mascota'}
               />
               <FieldForm
                 title={'Nombre'}

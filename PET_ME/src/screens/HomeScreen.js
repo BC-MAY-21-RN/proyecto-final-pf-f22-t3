@@ -41,7 +41,7 @@ export default function HomeScreen() {
       />
       {!showSearchResult ? (
         <>
-          <Title text="Ultimos Agregados" textType={'TitleProfile'} />
+          <Title text="Últimos Agregados" textType={'TitleProfile'} />
           <View style={styles.containerList}>
             {isLoading ? (
               <ActivityIndicator size="large" color="#fff" />

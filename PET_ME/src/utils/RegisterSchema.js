@@ -6,14 +6,10 @@ const RegisterSchema = Yup.object().shape({
     .max(50, '*Demasiado largo!')
     .required('*Requerido'),
   email: Yup.string().email('*Correo inválido').required('*Requerido'),
-  phone: Yup.number()
-    .required('*Requerido'),
+  phone: Yup.number().required('*Requerido'),
   password: Yup.string()
-    .required('*Por favor ingrese una contraseña')
-    .matches(
-      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&_])[A-Za-z\d@$!%*#?&_]{8,}$/,
-      '*La contraseña debe ser una mezcla entre letras. números y carácteres ',
-    ),
+    .min(8, '*Demasiada corta!')
+    .required('*Por favor ingrese una contraseña'),
 });
 
 export default RegisterSchema;

@@ -2,6 +2,7 @@ import {View, StyleSheet} from 'react-native';
 import React from 'react';
 import {SliderBox} from 'react-native-image-slider-box';
 import colors from '../../utils/colors';
+
 export default class App extends React.Component {
   constructor(props) {
     const {images} = props;

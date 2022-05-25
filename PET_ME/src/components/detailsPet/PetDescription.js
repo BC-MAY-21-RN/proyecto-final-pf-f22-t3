@@ -28,7 +28,13 @@ const petDescription = props => {
         icon={faPenRuler}
         size={20}
         color={colors.Gray_400}
-        title={size}
+        title={
+          size === 'small'
+            ? 'Pequeño'
+            : size === 'medium'
+            ? 'Mediano'
+            : 'Grande'
+        }
       />
     </View>
   );

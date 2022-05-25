@@ -56,7 +56,7 @@ export default function ComunidadScreen() {
             source={require('../assets/logos/Brand.png')}
             style={styles.logo}
           />
-          <Text style={styles.title}>Ultimas publicaciones</Text>
+          <Text style={styles.title}>Últimas publicaciones</Text>
         </View>
         {isLoading ? (
           <View style={styles.loading}>
