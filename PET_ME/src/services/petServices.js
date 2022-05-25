@@ -115,18 +115,65 @@ export const getPetPosts = async (limit, orderBy, directionStr = 'desc') => {
           petposts.push(documentSnapshot.data());
         });
       });
-    return petposts;
+    const postFilter = getPostFilter(petposts);
+    return postFilter;
   } catch (error) {
     console.log(error);
   }
 };
-export const getAdoptionProcesses = async () => {
+const getPostFilter = data => {
+  const filtered = data.filter(post => post.status === 'published');
+  return filtered;
+};
+export const getMyPetPosts = async userEmail => {
+  const myPetposts = [];
+  try {
+    await firestore()
+      .collection('petpost')
+      .where('userEmail', '==', userEmail)
+      .get()
+      .then(collectionSnapshot => {
+        collectionSnapshot.forEach(documentSnapshot => {
+          myPetposts.push(documentSnapshot.data());
+        });
+      });
+    return myPetposts;
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const getAdoptionProcesses = async userEmail => {
   const adoptionProcesses = [];
 
   try {
     await firestore()
       .collection('adoptionProcesses')
-      .where('status', '==', 'reviewRequired')
+      .where('user.email', '!=', userEmail)
+      .get()
+      .then(collectionSnapshot => {
+        collectionSnapshot.forEach(documentSnapshot => {
+          adoptionProcesses.push(documentSnapshot.data());
+        });
+      });
+    const filteredData = adoptionFilter(adoptionProcesses);
+    return filteredData;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const adoptionFilter = data => {
+  const filtered = data.filter(
+    adoption => adoption.status === 'reviewRequired',
+  );
+  return filtered;
+};
+export const getMyAdoptionProcesses = async userEmail => {
+  const adoptionProcesses = [];
+  try {
+    await firestore()
+      .collection('adoptionProcesses')
+      .where('user.email', '==', userEmail)
       .get()
       .then(collectionSnapshot => {
         collectionSnapshot.forEach(documentSnapshot => {
@@ -183,7 +230,8 @@ export const getPetWithFilters = async (searchStr, filters) => {
           petPost.push(documentSnapshot.data());
         });
       });
-    const dataFiltered = haddleFilters(filters, petPost);
+    const postFilter = getPostFilter(petPost);
+    const dataFiltered = haddleFilters(filters, postFilter);
     return dataFiltered;
   } catch (error) {
     console.log(error);
@@ -339,7 +387,51 @@ export const setAdoptionReview = async (postId, adoptionId, action) => {
     return false;
   }
 };
+export const removeDoc = async (collectionName, id) => {
+  let doc = '';
+  try {
+    await firestore()
+      .collection(collectionName)
+      .where('id', '==', id)
+      .get()
+      .then(collectionSnapshot => {
+        collectionSnapshot.forEach(documentSnapshot => {
+          doc = documentSnapshot.id;
+        });
+      });
 
+    await firestore()
+      .collection(collectionName)
+      .doc(doc)
+      .delete()
+      .then(() => {
+        console.log('doc removed');
+      });
+
+    return true;
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+};
+
+export const getMyPetPostFavorites = async userEmail => {
+  const myFavorites = [];
+  try {
+    await firestore()
+      .collection('petpost')
+      .where('favorites', 'array-contains-any', [userEmail])
+      .get()
+      .then(collectionSnapshot => {
+        collectionSnapshot.forEach(documentSnapshot => {
+          myFavorites.push(documentSnapshot.data());
+        });
+      });
+    return myFavorites;
+  } catch (error) {
+    console.log(error);
+  }
+};
 export const addPetFavorites = async (id, favorites) => {
   let idPet = '';
   console.log('desde services: ', id, favorites);

@@ -32,11 +32,13 @@ const FooterDetails = props => {
         })}
       </View>
       <View style={styles.contButton}>
-        <ButtonPet
-          typeButton={'D'}
-          text="Adoptar"
-          onPressFunction={handleAdoption}
-        />
+        {post.userEmail !== authUser.email ? (
+          <ButtonPet
+            typeButton={'D'}
+            text="Adoptar"
+            onPressFunction={handleAdoption}
+          />
+        ) : null}
       </View>
     </View>
   );

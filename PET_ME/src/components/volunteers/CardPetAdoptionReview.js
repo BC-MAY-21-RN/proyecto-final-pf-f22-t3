@@ -6,6 +6,9 @@ import {
   faLocationDot,
   faRulerHorizontal,
   faCalendar,
+  faCircleCheck,
+  faCircleXmark,
+  faBookOpenReader,
 } from '@fortawesome/free-solid-svg-icons';
 import colors from '../../utils/colors';
 import {ageFormated} from '../../services/petServices';
@@ -26,7 +29,14 @@ const CardPetAdoptionReview = ({adoption, handleModal}) => {
             justifyContent: 'space-between',
           }}>
           <View style={styles.containerDetails}>
-            <Text style={styles.titleDes}>{post.petname}</Text>
+            <View
+              style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+              <Text style={styles.titleDes}>{post.petname}</Text>
+              <Caracteristica
+                icon={faCalendar}
+                text={dateForhumans(createdAt)}
+              />
+            </View>
             <View
               style={{flexDirection: 'row', justifyContent: 'space-between'}}>
               <View>
@@ -34,11 +44,17 @@ const CardPetAdoptionReview = ({adoption, handleModal}) => {
                 <Caracteristica icon={faLocationDot} text={post.location} />
                 <Caracteristica icon={faRulerHorizontal} text={post.petsize} />
               </View>
-              <View>
-                <Caracteristica
-                  icon={faCalendar}
-                  text={dateForhumans(createdAt)}
-                />
+              <View style={{justifyContent: 'flex-end'}}>
+                {status === 'completed' ? (
+                  <Caracteristica icon={faCircleCheck} text={'Completada'} />
+                ) : status === 'rejected' ? (
+                  <Caracteristica icon={faCircleXmark} text={'Rechazada'} />
+                ) : (
+                  <Caracteristica
+                    icon={faBookOpenReader}
+                    text={'En revision'}
+                  />
+                )}
               </View>
             </View>
           </View>

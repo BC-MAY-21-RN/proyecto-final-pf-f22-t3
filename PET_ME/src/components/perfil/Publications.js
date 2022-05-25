@@ -1,24 +1,41 @@
-import { View, Text, StyleSheet } from 'react-native'
-import React from 'react'
+import {View, Text, StyleSheet, ActivityIndicator} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {getMyPetPosts} from '../../services/petServices';
+import useAuth from '../../hooks/useAuth';
+import ListPets from '../../components/pets/ListPets';
+import NotFoundResults from '../NotFoundResults';
 
 export default function Publications() {
+  const [myPostPets, setMyPostPets] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const {authUser} = useAuth();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await getMyPetPosts(authUser.email);
+      setMyPostPets(data);
+      setIsLoading(false);
+    };
+    fetchData().catch(console.error);
+  }, []);
   return (
-    <View style={styles.container}>
-      <Text style={styles.textContent}>Publicaciones</Text>
+    <View>
+      <Text style={styles.textContent}>Mis Publicaciones</Text>
+      {myPostPets.length > 0 ? (
+        <ListPets pets={myPostPets} />
+      ) : isLoading ? (
+        <ActivityIndicator size="large" color="#fff" />
+      ) : (
+        <NotFoundResults style={{marginTop: 20}} />
+      )}
     </View>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'row',
-    width: '110%',
-    alignItems: 'center',
-    alignContent: 'center',
-  },
   textContent: {
-    margin: 50,
+    marginVertical: 40,
     fontSize: 20,
     color: '#fff',
-  }
-})
+  },
+});
