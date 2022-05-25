@@ -394,3 +394,21 @@ export const removeDoc = async (collectionName, id) => {
     return false;
   }
 };
+
+export const getMyPetPostFavorites = async userEmail => {
+  const myFavorites = [];
+  try {
+    await firestore()
+      .collection('petpost')
+      .where('favorites', 'array-contains-any', [userEmail])
+      .get()
+      .then(collectionSnapshot => {
+        collectionSnapshot.forEach(documentSnapshot => {
+          myFavorites.push(documentSnapshot.data());
+        });
+      });
+    return myFavorites;
+  } catch (error) {
+    console.log(error);
+  }
+};

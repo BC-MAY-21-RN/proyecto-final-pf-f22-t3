@@ -3,6 +3,7 @@ import React, {useEffect, useState} from 'react';
 import {getMyPetPosts, startAdoptionProcess} from '../../services/petServices';
 import useAuth from '../../hooks/useAuth';
 import ListPets from '../../components/pets/ListPets';
+import NotFoundResults from '../NotFoundResults';
 
 export default function Publications() {
   const [myPostPets, setMyPostPets] = useState([]);
@@ -21,10 +22,12 @@ export default function Publications() {
   return (
     <View>
       <Text style={styles.textContent}>Mis Publicaciones</Text>
-      {isLoading ? (
+      {myPostPets.length > 0 ? (
+        <ListPets pets={myPostPets} />
+      ) : isLoading ? (
         <ActivityIndicator size="large" color="#fff" />
       ) : (
-        <ListPets pets={myPostPets} />
+        <NotFoundResults style={{marginTop: 20}} />
       )}
     </View>
   );

@@ -3,6 +3,7 @@ import React, {useEffect, useState} from 'react';
 import ListPetAdoptionReview from '../volunteers/ListPetAdoptionReview';
 import {getMyAdoptionProcesses, removeDoc} from '../../services/petServices';
 import useAuth from '../../hooks/useAuth';
+import NotFoundResults from '../NotFoundResults';
 
 export default function Adoptions() {
   const [myAdoptionProcesses, setMyAdoptionProcesses] = useState([]);
@@ -25,7 +26,6 @@ export default function Adoptions() {
   };
 
   const handleModal = adoption => {
-    console.log('desde perfil adopciones', adoption);
     Alert.alert(
       'Eliminar',
       'Esta seguro que desea eliminar este proceso de adopcion',
@@ -48,13 +48,15 @@ export default function Adoptions() {
   return (
     <View>
       <Text style={styles.textContent}>Mis Adopciones</Text>
-      {isLoading ? (
-        <ActivityIndicator size="large" color="#fff" />
-      ) : (
+      {myAdoptionProcesses.length > 0 ? (
         <ListPetAdoptionReview
           adoptions={myAdoptionProcesses}
           handleModal={handleModal}
         />
+      ) : isLoading ? (
+        <ActivityIndicator size="large" color="#fff" />
+      ) : (
+        <NotFoundResults style={{marginTop: 20}} />
       )}
     </View>
   );
