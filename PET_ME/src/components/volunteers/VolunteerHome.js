@@ -53,7 +53,10 @@ const VolunteerHome = () => {
         title={'Información del adoptante'}
         setModalVisible={setModalVisible}
         modalVisible={modalVisible}>
-        <ModalContentAdoptionReview info={modalInfo} />
+        <ModalContentAdoptionReview
+          info={modalInfo}
+          setModalVisible={setModalVisible}
+        />
         <ButtonPet
           typeButton={'E'}
           text={'X'}

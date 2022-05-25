@@ -9,10 +9,12 @@ import {
   faFileLines,
 } from '@fortawesome/free-solid-svg-icons';
 import {setAdoptionReview} from '../../services/petServices';
+import {useNavigation} from '@react-navigation/native';
 
 const ModalContentAdoptionReview = props => {
+  const navigation = useNavigation();
   const [isReviewed, setIsReviewed] = useState(false);
-  const {info} = props;
+  const {info, setModalVisible} = props;
   const handleReview = async action => {
     const res = await setAdoptionReview(info.post.id, info.id, action);
     setIsReviewed(res);
@@ -34,7 +36,11 @@ const ModalContentAdoptionReview = props => {
               size={22}
               color={colors.Gray_400}
             />
-            <Pressable onPress={() => console.log('id post: ', info.post.id)}>
+            <Pressable
+              onPress={() => {
+                setModalVisible(false);
+                navigation.navigate('DetailsPet', {pet: info.post});
+              }}>
               <IconTitle
                 icon={faFileLines}
                 title={'Ir a publicación'}
