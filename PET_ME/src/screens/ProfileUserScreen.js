@@ -91,7 +91,7 @@ const ProfileUser = props => {
   };
 
   return (
-    <BgPaws opacity={0.78}>
+    <BgPaws opacity={0.78} noPadding={true}>
       <View style={styles.container}>
         <View style={StyleBox.box_header}>
           <View style={StyleBox.width20}>
@@ -152,8 +152,7 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     padding: 0,
     margin: 0,
-    width: '110%',
-    marginLeft: -20,
+    width: '100%',
   },
   containerList: {
     width: '100%',
