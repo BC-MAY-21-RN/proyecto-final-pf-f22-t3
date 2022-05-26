@@ -1,23 +1,26 @@
 import {View, Text, StyleSheet, ActivityIndicator} from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {getMyPetPosts} from '../../services/petServices';
 import useAuth from '../../hooks/useAuth';
 import ListPets from '../../components/pets/ListPets';
 import NotFoundResults from '../NotFoundResults';
+import {useNavigation, useFocusEffect} from '@react-navigation/native';
 
 export default function Publications() {
   const [myPostPets, setMyPostPets] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const {authUser} = useAuth();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const data = await getMyPetPosts(authUser.email);
-      setMyPostPets(data);
-      setIsLoading(false);
-    };
-    fetchData().catch(console.error);
-  }, []);
+  useFocusEffect(
+    React.useCallback(() => {
+      const fetchData = async () => {
+        const data = await getMyPetPosts(authUser.email);
+        setMyPostPets(data);
+        setIsLoading(false);
+      };
+      fetchData().catch(console.error);
+    }, []),
+  );
   return (
     <View>
       <Text style={styles.textContent}>Mis Publicaciones</Text>
