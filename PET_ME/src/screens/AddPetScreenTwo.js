@@ -45,6 +45,7 @@ const AddPetScreenTwo = ({route, navigation}) => {
     const res = await savePetPost(values);
     setIsLoading(false);
     if (res) {
+      params.reset();
       setModalVisible(true);
     } else {
       Alert.alert('Error', 'Error al guardar el post');
@@ -77,7 +78,7 @@ const AddPetScreenTwo = ({route, navigation}) => {
                 validateOnMount={true}
                 validationSchema={AddPetSchemaTwo}
                 onSubmit={values =>
-                  addPet({...params, ...values, ...userEmail})
+                  addPet({...params.values, ...values, ...userEmail})
                 }>
                 {({handleSubmit, isValid}) => (
                   <View style={styles.form}>

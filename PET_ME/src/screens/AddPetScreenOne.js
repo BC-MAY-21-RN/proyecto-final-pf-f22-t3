@@ -37,7 +37,7 @@ const AddPetScreenOne = () => {
     setImages([]);
   };
   const nextForm = values => {
-    navigation.navigate('AddPetPartTwo', values);
+    navigation.navigate('AddPetPartTwo', {values, reset: resetForm});
   };
   return (
     <BgPaws opacity={0.54} scroll={true}>
