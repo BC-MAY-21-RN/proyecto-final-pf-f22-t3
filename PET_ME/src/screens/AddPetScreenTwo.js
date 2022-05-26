@@ -99,9 +99,9 @@ const AddPetScreenTwo = ({route, navigation}) => {
                         style={{width: '45%'}}
                         prompt={'Elige uno'}
                         items={[
-                          {label: 'Pequeño', value: 'small'},
-                          {label: 'Mediano', value: 'medium'},
-                          {label: 'Grande', value: 'big'},
+                          {label: 'Pequeño', value: 'Pequeño'},
+                          {label: 'Mediano', value: 'Mediano'},
+                          {label: 'Grande', value: 'Grande'},
                         ]}
                       />
                       <InputPickerPet

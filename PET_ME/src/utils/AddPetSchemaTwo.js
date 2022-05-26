@@ -9,7 +9,7 @@ const AddPetSchemaTwo = Yup.object().shape({
   dewormed: Yup.boolean().oneOf([true, false]),
   moreinfo: Yup.string()
     .min(3, '*Muy corto')
-    .max(50, '*Excediste el numero de caracteres')
+    .max(500, '*Excediste el numero de caracteres')
     .required('*Requerido'),
 });
 

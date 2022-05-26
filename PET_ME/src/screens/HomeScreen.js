@@ -33,7 +33,6 @@ export default function HomeScreen() {
           source={require('../assets/logos/brand-small.png')}
           style={styles.logo}
         />
-        <Icon name="bell" size={30} color="#fff" />
       </View>
       <SearchPets
         showSearchResult={showSearchResult}

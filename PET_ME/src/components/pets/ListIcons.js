@@ -64,37 +64,41 @@ const IconsTam = ({petsize, setPetsize}) => {
         <Pressable
           style={[
             styles.containerIcon,
-            petsize.includes('small') ? styles.active : styles.inactive,
+            petsize.includes('Pequeño') ? styles.active : styles.inactive,
           ]}
-          onPress={() => addFilter('small', petsize, setPetsize)}>
+          onPress={() => addFilter('Pequeño', petsize, setPetsize)}>
           <FontAwesomeIcon
             icon={faDog}
             size={18}
-            color={petsize.includes('small') ? colors.Orange : colors.Gray_400}
+            color={
+              petsize.includes('Pequeño') ? colors.Orange : colors.Gray_400
+            }
           />
         </Pressable>
         <Pressable
           style={[
             styles.containerIcon,
-            petsize.includes('medium') ? styles.active : styles.inactive,
+            petsize.includes('Mediano') ? styles.active : styles.inactive,
           ]}
-          onPress={() => addFilter('medium', petsize, setPetsize)}>
+          onPress={() => addFilter('Mediano', petsize, setPetsize)}>
           <FontAwesomeIcon
             icon={faDog}
             size={24}
-            color={petsize.includes('medium') ? colors.Orange : colors.Gray_400}
+            color={
+              petsize.includes('Mediano') ? colors.Orange : colors.Gray_400
+            }
           />
         </Pressable>
         <Pressable
           style={[
             styles.containerIcon,
-            petsize.includes('big') ? styles.active : styles.inactive,
+            petsize.includes('Grande') ? styles.active : styles.inactive,
           ]}
-          onPress={() => addFilter('big', petsize, setPetsize)}>
+          onPress={() => addFilter('Grande', petsize, setPetsize)}>
           <FontAwesomeIcon
             icon={faDog}
             size={30}
-            color={petsize.includes('big') ? colors.Orange : colors.Gray_400}
+            color={petsize.includes('Grande') ? colors.Orange : colors.Gray_400}
           />
         </Pressable>
       </View>

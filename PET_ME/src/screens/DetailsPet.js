@@ -33,7 +33,7 @@ const DetailsPet = ({route}) => {
     images: petimages,
     DetailsInfo: {
       name: petname,
-      age: `${petage[0].value} ${petage[0].type}`,
+      age: petage[0],
       gender: petgender,
     },
     Description: {
