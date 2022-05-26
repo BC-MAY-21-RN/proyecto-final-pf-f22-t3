@@ -30,6 +30,15 @@ export const addUserFirestore = async user => {
   }
 };
 
+export const loginGoogle = async (user) =>{
+  try {
+    const res = await addUserFirestore(user);
+    return true;
+  } catch (error) {
+    return false;
+  }
+}
+
 export const editUserFirestore = async (user, imgUrl) => {
   let idUser = '';
   try {

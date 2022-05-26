@@ -8,15 +8,12 @@ import {
 } from 'react-native';
 import React, {useState} from 'react';
 import BgPaws from '../components/BgPaws';
-import ButtonPet from '../components/ButtonPet';
 import colors from '../utils/colors';
 import StyleBox from '../utils/StyleBox';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import useAuth from '../hooks/useAuth';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {
-  faPaperPlane,
-  faPenToSquare,
   faCirclePlus,
 } from '@fortawesome/free-solid-svg-icons';
 import MultipleImagePicker from '@baronha/react-native-multiple-image-picker';

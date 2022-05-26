@@ -13,6 +13,7 @@ import {
   GoogleSignin,
   statusCodes,
 } from '@react-native-google-signin/google-signin';
+import {verifyExistUser} from '../services/usersServices';
 
 GoogleSignin.configure({
   webClientId:
@@ -36,7 +37,7 @@ const loginUser = async (values, login, setIsLoading) => {
   }
 };
 
-const loginGoogle = async (loginG, navigation, setIsLoading) => {
+const loginGoogle = async (login, navigation, setIsLoading) => {
   try {
     setIsLoading(true);
     await GoogleSignin.hasPlayServices();
@@ -44,10 +45,13 @@ const loginGoogle = async (loginG, navigation, setIsLoading) => {
     const {idToken} = userInfo;
     const googleCredential = auth.GoogleAuthProvider.credential(idToken);
     await auth().signInWithCredential(googleCredential);
-    const res = await loginG(userInfo.user);
+    const res = await verifyExistUser(userInfo.user.email);
     setIsLoading(false);
     if (res) {
+      await login(userInfo.user.email);
       navigation.navigate('Home');
+    } else {
+      navigation.navigate('Phone', {user: userInfo.user});
     }
   } catch (error) {
     setIsLoading(false);
@@ -56,9 +60,10 @@ const loginGoogle = async (loginG, navigation, setIsLoading) => {
 };
 
 const LoginScreen = () => {
-  const {login, loginG} = useAuth();
+  const {login} = useAuth();
   const navigation = useNavigation();
   const [isLoading, setIsLoading] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
 
   async function loginFunction(values) {
     try {
@@ -69,6 +74,10 @@ const LoginScreen = () => {
     } catch (er) {
       Alert.alert('Login Fail', `Usuario o contraseña incorrectos ${er}`);
     }
+  }
+
+  function testPush() {
+    navigation.navigate('Phone');
   }
 
   function onRegistrar() {
@@ -95,7 +104,9 @@ const LoginScreen = () => {
               title="INGRESAR"
               onPressFunction={handleSubmit}
               onRegistrar={onRegistrar}
-              onGoogle={() => loginGoogle(loginG, navigation, setIsLoading)}
+              onGoogle={() =>
+                loginGoogle(login, navigation, setIsLoading)
+              }
             />
             {isLoading && <ViewIndicator size="large" color="#fff" />}
           </View>

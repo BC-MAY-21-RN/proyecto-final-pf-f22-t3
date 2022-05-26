@@ -10,6 +10,7 @@ import AddPetScreenTwo from '../screens/AddPetScreenTwo';
 import AddPublication from '../screens/AddPublication';
 import PublicationDetails from '../components/comunity/PublicationDetails';
 import DetailsPet from '../screens/DetailsPet';
+import PhoneNumber from '../components/login/ScreenPhone';
 
 const Stack = createNativeStackNavigator();
 
@@ -60,6 +61,11 @@ export default function Navigation() {
         name="DetailsPet"
         component={DetailsPet}
         options={{title: '', headerShown: false}}
+      />
+      <Stack.Screen
+        name="Phone"
+        component={PhoneNumber}
+        options={{headerShown: false}}
       />
     </Stack.Navigator>
   );

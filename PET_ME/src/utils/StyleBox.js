@@ -23,7 +23,7 @@ module.exports = StyleSheet.create({
     padding: 30,
   },
   box_title: {
-    fontSize: 22,
+    fontSize: 18,
     fontFamily: 'ArchivoNarrow-Regular',
     color: colors.Black,
     textAlign: 'left',
