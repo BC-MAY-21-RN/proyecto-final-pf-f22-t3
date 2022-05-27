@@ -107,16 +107,17 @@ export const getPetPosts = async (limit, orderBy, directionStr = 'desc') => {
   try {
     await firestore()
       .collection('petpost')
-      .limit(limit)
+      .where('status', '==', 'published')
       .orderBy(orderBy, directionStr)
+      .limit(limit)
       .get()
       .then(collectionSnapshot => {
         collectionSnapshot.forEach(documentSnapshot => {
           petposts.push(documentSnapshot.data());
         });
       });
-    const postFilter = getPostFilter(petposts);
-    return postFilter;
+    // const postFilter = getPostFilter(petposts);
+    return petposts;
   } catch (error) {
     console.log(error);
   }
