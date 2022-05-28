@@ -455,3 +455,32 @@ export const addPetFavorites = async (id, favorites) => {
     return false;
   }
 };
+
+export const setPostToPusblished = async postId => {
+  let postUuid = '';
+  let post = '';
+  try {
+    await firestore()
+      .collection('petpost')
+      .where('id', '==', postId)
+      .get()
+      .then(collectionSnapshot => {
+        collectionSnapshot.forEach(documentSnapshot => {
+          postUuid = documentSnapshot.id;
+          post = documentSnapshot.data();
+        });
+      });
+    if (post.status === 'reviewRequired') {
+      await firestore()
+        .collection('petpost')
+        .doc(postUuid)
+        .update({status: 'published'})
+        .then(() => {
+          console.log('petpost is published again');
+        });
+    }
+    return true;
+  } catch (error) {
+    console.log(error);
+  }
+};
