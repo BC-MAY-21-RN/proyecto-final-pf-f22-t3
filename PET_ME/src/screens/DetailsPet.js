@@ -1,14 +1,17 @@
 import {View, StyleSheet, ScrollView} from 'react-native';
 import React, {useState} from 'react';
-import Carousel_Image from '../components/detailsPet/Carousel_Image';
+import SwiperImages from '../components/detailsPet/SwiperImages';
 import InfoDetails from '../components/detailsPet/InfoDetails';
 import PetDescription from '../components/detailsPet/PetDescription';
 import Title from '../components/Title';
 import FooterDetails from '../components/detailsPet/FooterDetails';
 import ModalPet from '../components/modal/ModalPet';
 import ModalContentDetailsPet from '../components/modal/ModalContentDetailsPet';
+import ButtonPet from '../components/ButtonPet';
+import {useNavigation} from '@react-navigation/native';
 
 const DetailsPet = ({route}) => {
+  const navigation = useNavigation();
   const {
     petimages,
     petname,
@@ -30,7 +33,7 @@ const DetailsPet = ({route}) => {
     images: petimages,
     DetailsInfo: {
       name: petname,
-      age: `${petage[0].value} ${petage[0].type}`,
+      age: petage[0],
       gender: petgender,
     },
     Description: {
@@ -62,7 +65,13 @@ const DetailsPet = ({route}) => {
   return (
     <>
       <View style={styles.screen}>
-        <Carousel_Image images={PetInfo.images} />
+        <SwiperImages data={PetInfo.images} />
+        <ButtonPet
+          text="Atrás"
+          typeButton="E"
+          style={{position: 'absolute', margin: 5}}
+          onPressFunction={() => navigation.goBack()}
+        />
         <View style={styles.details}>
           <InfoDetails
             info={PetInfo.DetailsInfo}

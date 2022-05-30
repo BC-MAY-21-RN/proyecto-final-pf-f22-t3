@@ -107,16 +107,17 @@ export const getPetPosts = async (limit, orderBy, directionStr = 'desc') => {
   try {
     await firestore()
       .collection('petpost')
-      .limit(limit)
+      .where('status', '==', 'published')
       .orderBy(orderBy, directionStr)
+      .limit(limit)
       .get()
       .then(collectionSnapshot => {
         collectionSnapshot.forEach(documentSnapshot => {
           petposts.push(documentSnapshot.data());
         });
       });
-    const postFilter = getPostFilter(petposts);
-    return postFilter;
+    // const postFilter = getPostFilter(petposts);
+    return petposts;
   } catch (error) {
     console.log(error);
   }
@@ -452,5 +453,34 @@ export const addPetFavorites = async (id, favorites) => {
   } catch (error) {
     console.log(error);
     return false;
+  }
+};
+
+export const setPostToPusblished = async postId => {
+  let postUuid = '';
+  let post = '';
+  try {
+    await firestore()
+      .collection('petpost')
+      .where('id', '==', postId)
+      .get()
+      .then(collectionSnapshot => {
+        collectionSnapshot.forEach(documentSnapshot => {
+          postUuid = documentSnapshot.id;
+          post = documentSnapshot.data();
+        });
+      });
+    if (post.status === 'reviewRequired') {
+      await firestore()
+        .collection('petpost')
+        .doc(postUuid)
+        .update({status: 'published'})
+        .then(() => {
+          console.log('petpost is published again');
+        });
+    }
+    return true;
+  } catch (error) {
+    console.log(error);
   }
 };

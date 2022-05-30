@@ -42,107 +42,116 @@ const AddPetScreenTwo = ({route, navigation}) => {
       return responses;
     });
     values.petimages = imageUrl;
-    const res = await savePetPost(values)
+    const res = await savePetPost(values);
     setIsLoading(false);
     if (res) {
+      params.reset();
       setModalVisible(true);
     } else {
       Alert.alert('Error', 'Error al guardar el post');
     }
-    
   };
   return (
     <>
       <BgPaws opacity={0.54} scroll={true}>
-        {isLoading ? (<ActivityIndicator size="large" color={colors.Orange} />) : (
-        <>
-        <View style={styles.headerContainer}>
-          <ButtonPet
-            text={'Atras'}
-            typeButton={'E'}
-            onPressFunction={() => {
-              navigation.goBack();
-            }}
-          />
-          <Title style={{marginBottom: 0}} text={'2/2'} textType={'title'} />
-        </View>
-        <View>
-          <Formik
-            initialValues={initialValues}
-            validateOnMount={true}
-            validationSchema={AddPetSchemaTwo}
-            onSubmit={values => addPet({...params, ...values, ...userEmail})}>
-            {({handleSubmit, isValid}) => (
-              <View style={styles.form}>
-                <InputTextAndPicker
-                  label={'Edad'}
-                  name={'petage'}
-                  style={styles.marginTop10}
-                  prompt={'Elige uno'}
-                  items={[
-                    {label: 'Meses', value: 'month'},
-                    {label: 'Años', value: 'year'},
-                  ]}
-                />
+        {isLoading ? (
+          <ActivityIndicator size="large" color={colors.Orange} />
+        ) : (
+          <>
+            <View style={styles.headerContainer}>
+              <ButtonPet
+                text={'Atras'}
+                typeButton={'E'}
+                onPressFunction={() => {
+                  navigation.goBack();
+                }}
+              />
+              <Title
+                style={{marginBottom: 0}}
+                text={'2/2'}
+                textType={'title'}
+              />
+            </View>
+            <View>
+              <Formik
+                initialValues={initialValues}
+                validateOnMount={true}
+                validationSchema={AddPetSchemaTwo}
+                onSubmit={values =>
+                  addPet({...params.values, ...values, ...userEmail})
+                }>
+                {({handleSubmit, isValid}) => (
+                  <View style={styles.form}>
+                    <InputTextAndPicker
+                      label={'Edad'}
+                      name={'petage'}
+                      style={styles.marginTop10}
+                      prompt={'Elige uno'}
+                      items={[
+                        {label: 'Meses', value: 'month'},
+                        {label: 'Años', value: 'year'},
+                      ]}
+                    />
 
-                <View style={styles.fieldDouble}>
-                  <InputPickerPet
-                    label={'Tamaño'}
-                    name={'petsize'}
-                    style={{width: '45%'}}
-                    prompt={'Elige uno'}
-                    items={[
-                      {label: 'Pequeño', value: 'small'},
-                      {label: 'Mediano', value: 'medium'},
-                      {label: 'Grande', value: 'big'},
-                    ]}
-                  />
-                  <InputPickerPet
-                    label={'Sexo'}
-                    name={'petgender'}
-                    style={{width: '45%'}}
-                    prompt={'Elige uno'}
-                    items={[
-                      {label: 'Hembra', value: 'female'},
-                      {label: 'Macho', value: 'male'},
-                    ]}
-                  />
-                </View>
-                <View style={styles.marginTop10}>
-                  <Checkbox
-                    label={'Esterilizado'}
-                    name={'sterilized'}
-                    style={styles.marginTop10}
-                  />
-                  <Checkbox
-                    label={'Vacunado'}
-                    name={'vaccinated'}
-                    style={styles.marginTop10}
-                  />
-                  <Checkbox
-                    label={'Desparasitado'}
-                    name={'dewormed'}
-                    style={styles.marginTop10}
-                  />
-                </View>
-                <TextAreaInput
-                  style={styles.marginTop10}
-                  label={'Información adicional'}
-                  name={'moreinfo'}
-                  placeholder={'Cuentanos mas sobre la mascota'}
-                />
-                <ButtonPet
-                  text={'Enviar'}
-                  typeButton={'B'}
-                  style={styles.nextButtom}
-                  onPressFunction={handleSubmit}
-                  disabled={!isValid}
-                />
-              </View>
-            )}
-          </Formik>
-        </View>
-        </> )}
+                    <View style={styles.fieldDouble}>
+                      <InputPickerPet
+                        label={'Tamaño'}
+                        name={'petsize'}
+                        style={{width: '45%'}}
+                        prompt={'Elige uno'}
+                        items={[
+                          {label: 'Pequeño', value: 'Pequeño'},
+                          {label: 'Mediano', value: 'Mediano'},
+                          {label: 'Grande', value: 'Grande'},
+                        ]}
+                      />
+                      <InputPickerPet
+                        label={'Sexo'}
+                        name={'petgender'}
+                        style={{width: '45%'}}
+                        prompt={'Elige uno'}
+                        items={[
+                          {label: 'Hembra', value: 'female'},
+                          {label: 'Macho', value: 'male'},
+                        ]}
+                      />
+                    </View>
+                    <View style={styles.marginTop10}>
+                      <Checkbox
+                        label={'Esterilizado'}
+                        name={'sterilized'}
+                        style={styles.marginTop10}
+                      />
+                      <Checkbox
+                        label={'Vacunado'}
+                        name={'vaccinated'}
+                        style={styles.marginTop10}
+                      />
+                      <Checkbox
+                        label={'Desparasitado'}
+                        name={'dewormed'}
+                        style={styles.marginTop10}
+                      />
+                    </View>
+                    <TextAreaInput
+                      style={styles.marginTop10}
+                      label={'Información adicional'}
+                      name={'moreinfo'}
+                      placeholder={'Cuentanos mas sobre la mascota'}
+                    />
+                    <ButtonPet
+                      text={'Enviar'}
+                      typeButton={'B'}
+                      style={styles.nextButtom}
+                      onPressFunction={handleSubmit}
+                      disabled={!isValid}
+                    />
+                  </View>
+                )}
+              </Formik>
+            </View>
+          </>
+        )}
       </BgPaws>
       <ModalPet
         title={'¡Gracias humano!'}

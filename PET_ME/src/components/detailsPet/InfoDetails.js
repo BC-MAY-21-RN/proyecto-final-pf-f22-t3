@@ -4,6 +4,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import colors from '../../utils/colors';
 import Title from '../Title';
 import FavButton from '../FavButton';
+import {ageFormated} from '../../services/petServices';
 
 const infoDetails = props => {
   const {age, fav, gender, name} = props.info;
@@ -13,7 +14,11 @@ const infoDetails = props => {
     <View style={Styles.firstInfo}>
       <View style={Styles.namePet}>
         <Title style={Styles.marginZero} text={name} textType="name" />
-        <Title style={Styles.marginZero} text={age} textType="subName" />
+        <Title
+          style={Styles.marginZero}
+          text={ageFormated(age)}
+          textType="subName"
+        />
       </View>
       <View style={Styles.iconsPet}>
         <FavButton stateInit={fav} idPet={idPet} favorites={favorites} />

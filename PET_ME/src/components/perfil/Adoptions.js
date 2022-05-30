@@ -1,7 +1,11 @@
 import {View, Text, StyleSheet, ActivityIndicator, Alert} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import ListPetAdoptionReview from '../volunteers/ListPetAdoptionReview';
-import {getMyAdoptionProcesses, removeDoc} from '../../services/petServices';
+import {
+  getMyAdoptionProcesses,
+  removeDoc,
+  setPostToPusblished,
+} from '../../services/petServices';
 import useAuth from '../../hooks/useAuth';
 import NotFoundResults from '../NotFoundResults';
 
@@ -19,9 +23,10 @@ export default function Adoptions() {
     fetchData().catch(console.error);
   }, [isLoading]);
 
-  const removeAdoption = async (collection, id) => {
+  const removeAdoption = async (collection, id, post) => {
     setIsLoading(true);
     await removeDoc(collection, id);
+    await setPostToPusblished(post.id);
     setIsLoading(false);
   };
 
@@ -38,9 +43,11 @@ export default function Adoptions() {
         {
           text: 'Eliminar',
           onPress: () =>
-            removeAdoption('adoptionProcesses', adoption.id).catch(
-              console.error,
-            ),
+            removeAdoption(
+              'adoptionProcesses',
+              adoption.id,
+              adoption.post,
+            ).catch(console.error),
         },
       ],
     );

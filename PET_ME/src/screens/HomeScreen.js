@@ -33,7 +33,6 @@ export default function HomeScreen() {
           source={require('../assets/logos/brand-small.png')}
           style={styles.logo}
         />
-        <Icon name="bell" size={30} color="#fff" />
       </View>
       <SearchPets
         showSearchResult={showSearchResult}
@@ -41,7 +40,7 @@ export default function HomeScreen() {
       />
       {!showSearchResult ? (
         <>
-          <Title text="Ultimos Agregados" textType={'TitleProfile'} />
+          <Title text="Últimos Agregados" textType={'TitleProfile'} />
           <View style={styles.containerList}>
             {isLoading ? (
               <ActivityIndicator size="large" color="#fff" />

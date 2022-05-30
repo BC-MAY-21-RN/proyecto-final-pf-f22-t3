@@ -30,6 +30,15 @@ export const addUserFirestore = async user => {
   }
 };
 
+export const loginGoogle = async (user) =>{
+  try {
+    const res = await addUserFirestore(user);
+    return true;
+  } catch (error) {
+    return false;
+  }
+}
+
 export const editUserFirestore = async (user, imgUrl) => {
   let idUser = '';
   try {
@@ -116,18 +125,17 @@ export const beVolunteer = async email => {
     return false;
   }
 };
-// export function registerRaza() {
-//   (async () => {
-//     try {
-//       for (let i = 0; i < catbreed.length; i++) {
-//         await firestore().collection('catbreed').add({
-//           name: catbreed[i].name,
-//           id: catbreed[i].id,
-//         });
-//         console.log('Raza registrada: ', catbreed[i].name);
-//       }
-//     } catch (error) {
-//       console.log(error);
+// export const registerRaza = async () => {
+//   try {
+//     for (let i = 0; i < catbreed.length; i++) {
+//       await firestore().collection('dogbreed').add({
+//         id: catbreed[i].id,
+//         label: catbreed[i].label,
+//         value: catbreed[i].value,
+//       });
+//       console.log('Raza registrada: ', catbreed[i].label);
 //     }
-//   })();
-// }
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };

@@ -19,9 +19,9 @@ export function AuthProvider(props) {
   const {children} = props;
   const [authUser, setAuthUser] = useState(undefined);
 
-  async function login(userData) {
+  async function login(email) {
     try {
-      const dataUser = await getUserData(userData);
+      const dataUser = await getUserData(email);
       if (dataUser) {
         setAuthUser(dataUser);
       }
@@ -36,28 +36,8 @@ export function AuthProvider(props) {
     authUser.photo = urlImage;
   }
 
-  async function loginG(userGoogle) {
-    try {
-      const user = {
-        email: userGoogle.email,
-        name: userGoogle.name,
-        photo: userGoogle.photo,
-        phone: '4561023591',
-      };
-      const existUser = await verifyExistUser(user.email);
-      if (!existUser) {
-        const res = await addUserFirestore(user);
-        const dataUser = await getUserData(userGoogle.email);
-        setAuthUser(dataUser);
-      } else {
-        // Se activa el modal para pedir el numero de telefono
-        const dataUser = await getUserData(userGoogle.email);
-        setAuthUser(dataUser);
-      }
-      return true;
-    } catch (error) {
-      return false;
-    }
+  async function loginG(user) {
+    setAuthUser(user);
   }
 
   const logout = () => {

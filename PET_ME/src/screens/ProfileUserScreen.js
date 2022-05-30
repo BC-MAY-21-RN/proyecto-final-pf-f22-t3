@@ -8,13 +8,14 @@ import {
 } from 'react-native';
 import React, {useState} from 'react';
 import BgPaws from '../components/BgPaws';
-import ButtonPet from '../components/ButtonPet';
 import colors from '../utils/colors';
 import StyleBox from '../utils/StyleBox';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import useAuth from '../hooks/useAuth';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {faPaperPlane, faPenToSquare} from '@fortawesome/free-solid-svg-icons';
+import {
+  faCirclePlus,
+} from '@fortawesome/free-solid-svg-icons';
 import MultipleImagePicker from '@baronha/react-native-multiple-image-picker';
 import {uploadImage} from '../services/petServices';
 import {editUserFirestore} from '../services/usersServices';
@@ -80,7 +81,6 @@ const ProfileUser = props => {
         }
         setIsLoading(false);
       }
-      //console.log("Image url: ",imageUrl);
     } catch (e) {
       setIsLoading(false);
       console.log(e.code, e.message);
@@ -88,7 +88,7 @@ const ProfileUser = props => {
   };
 
   return (
-    <BgPaws opacity={0.78}>
+    <BgPaws opacity={0.78} noPadding={true}>
       <View style={styles.container}>
         <View style={StyleBox.box_header}>
           <View style={StyleBox.width20}>
@@ -105,7 +105,7 @@ const ProfileUser = props => {
               />
             )}
             <FontAwesomeIcon
-              icon={faPenToSquare}
+              icon={faCirclePlus}
               size={20}
               color={colors.Orange}
               style={StyleBox.iconEdit}
@@ -149,8 +149,7 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     padding: 0,
     margin: 0,
-    width: '110%',
-    marginLeft: -20,
+    width: '100%',
   },
   containerList: {
     width: '100%',

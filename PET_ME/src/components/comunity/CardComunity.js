@@ -79,6 +79,7 @@ export default function CardComunity(props) {
         <Image source={{uri: publication.imgUser}} style={styles.imgUser} />
         <View style={styles.info}>
           <Text style={styles.titleText}>{publication.userName}</Text>
+          <Text style={styles.textDate}>{newDate}</Text>
         </View>
       </View>
       <View style={styles.contentImgPubli}>
@@ -95,7 +96,6 @@ export default function CardComunity(props) {
       </View>
       <View>
         <Text style={styles.textPubli}>{publication.title}</Text>
-        <Text style={styles.textDate}>{newDate}</Text>
         {!isComment ? (
           <View style={styles.containerComents}>
             <Pressable onPress={() => addComment()}>
@@ -123,8 +123,11 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'center',
-    marginBottom: 20,
+    marginBottom: 15,
     width: 400,
+    borderBottomColor: colors.Gray_400,
+    borderBottomWidth: 0.5,
+    paddingBottom: 10,
   },
   titlePubli: {
     alignItems: 'center',
@@ -153,6 +156,7 @@ const styles = StyleSheet.create({
     width: '98%',
     height: '100%',
     marginLeft: 10,
+    resizeMode: 'stretch',
   },
   containerLikes: {
     flexDirection: 'row',
@@ -186,9 +190,8 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
   textDate: {
-    color: colors.Gray_200,
+    color: colors.Gray_400,
     fontSize: 14,
-    marginLeft: 15,
   },
   pressComment: {
     alignItems: 'center',
