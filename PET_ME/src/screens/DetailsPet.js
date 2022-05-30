@@ -1,6 +1,6 @@
 import {View, StyleSheet, ScrollView} from 'react-native';
 import React, {useState} from 'react';
-import Carousel_Image from '../components/detailsPet/Carousel_Image';
+import SwiperImages from '../components/detailsPet/SwiperImages';
 import InfoDetails from '../components/detailsPet/InfoDetails';
 import PetDescription from '../components/detailsPet/PetDescription';
 import Title from '../components/Title';
@@ -65,7 +65,7 @@ const DetailsPet = ({route}) => {
   return (
     <>
       <View style={styles.screen}>
-        <Carousel_Image images={PetInfo.images} />
+        <SwiperImages data={PetInfo.images} />
         <ButtonPet
           text="Atrás"
           typeButton="E"
